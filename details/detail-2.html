@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>什么是防抖和节流？有什么区别？如何实现</title>
+	<style type="text/css">
+		#wrap {
+			width: 100%; height: 200px; line-height: 200px; text-align: center; color: #fff; background-color: #444; font-size: 30px;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap"></div>
+	<p>
+		防抖:触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间
+	</p>
+	<p>节流: 高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率。</p>
+	<p></p>
+	<script type="text/javascript">
+		var wrap = document.getElementById('wrap')
+		var count = 1
+		// function getMove() {
+		// 	wrap.innerHTML = count ++
+		// }
+		// wrap.onmousemove = getMove()
+
+		function debounce(func, wait) {
+			var timeout = null; // 创建一个标记用来存放定时器的返回值
+			return function () {
+				clearTimeout(timeout) // 每当用户输入的时候把前一个 setTimeout clear 掉
+				timeout = setTimeout(() => {
+					func.apply(this,arguments)
+				}, wait)
+			}
+		}
+		function getMove(e) {
+			console.log(this)
+			console.log(e)
+			wrap.innerHTML = count ++
+		}
+		// wrap.onmousemove = debounce(getMove, 1000)
+
+		/**
+		 * 节流
+		 * @param func 回调函数
+		 * @param wait
+		 * @returns {Function}
+		 */
+		function throttle(func, wait) {
+			var previous = 0;
+			var $this = this, arg = arguments;
+			return function () {
+				var now = + new Date()
+				if (now - previous > wait) {
+					func.apply($this, arguments)
+					previous = now
+				}
+			}
+		}
+		wrap.onmousemove = throttle(getMove, 1000)
+	</script>
+</body>
+</html>
