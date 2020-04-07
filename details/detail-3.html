@@ -36,7 +36,8 @@
 	</div>
 </body>
 <script>
-	var nodes = deepNodes(document.getElementById('parent'))
+	var $el = document.getElementById('parent')
+	var nodes = deepNodes($el)
 	function deepNodes(nodes, nodeList = []) {
 		if (nodes !== null) {
 			nodeList.push(nodes)
@@ -48,8 +49,29 @@
 		}
 		return nodeList
 	}
+	// console.log(nodes)
 
-	var
-	console.log(nodes)
+
+	var secondNodes = widthTraversal2($el)
+	function widthTraversal2(node) {
+		debugger
+		let nodes = []
+		let stack = []
+		if (node) {
+			stack.push(node)
+			while (stack.length) {
+				let item = stack.shift()
+				let children = item.children
+				nodes.push(item)
+				// 队列，先进先出
+				for (let i = 0; i < children.length; i++) {
+					stack.push(children[i])
+				}
+			}
+		}
+		console.log(nodes)
+		return nodes
+	}
+	console.log(secondNodes)
 </script>
 </html>
