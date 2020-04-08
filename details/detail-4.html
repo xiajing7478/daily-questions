@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象的深拷贝</title>
+</head>
+<body>
+
+</body>
+<script>
+let obj = { age: 18, name: 'vue', info: { a: 'a', b: 'b'}}
+// let result = obj
+let result = deepClone(obj)
+function deepClone(obj) {
+	if (obj && typeof obj === 'object') {
+		let constructor = obj.constructor
+		let result = new constructor()
+		for (let key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				result[key] = deepClone(obj[key])
+			}
+		}
+		return result
+	} else {
+		return obj
+	}
+}
+console.log('result before', result)
+result.info.c = 'c'
+console.log('result after', result)
+console.log('obj origin', obj)
+
+</script>
+</html>

@@ -61,6 +61,7 @@
 			stack.push(node)
 			while (stack.length) {
 				let item = stack.shift()
+				console.log('item', item)
 				let children = item.children
 				nodes.push(item)
 				// 队列，先进先出
@@ -69,7 +70,6 @@
 				}
 			}
 		}
-		console.log(nodes)
 		return nodes
 	}
 	console.log(secondNodes)
