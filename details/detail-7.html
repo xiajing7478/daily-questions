@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>如何实现一个 new</title>
+</head>
+<body>
+<script type="text/javascript">
+	/**
+	 * 1.创建一个新对象obj
+	 * 2.把obj的__proto__指向Dog.prototype 实现继承
+	 * 3.执行构造函数，传递参数，改变this指向Dog.call(obj, ..arguments)
+	 * 4.最后把obj赋值给dog
+	 * @param name
+	 * @constructor
+	 */
+	function Dog(name) {
+		this.name = name
+		this.sleep = function () {
+			console.log(this.name + ' is sleeping')
+		}
+	}
+	Dog.prototype.bark = function () {
+		console.log(this.name + ' wang wang')
+	}
+
+	var dog = new Dog('小黑')
+	dog.sleep()
+	dog.bark()
+
+	function _new(fn, ...arg) {
+		const obj = Object.create(fn.prototype)
+		const ret = fn.apply(obj, arg)
+		return ret instanceof Object ? ret : obj
+	}
+</script>
+</body>
+</html>
