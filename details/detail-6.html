@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>setTimeout、Promise、Async/Await的区别</title>
+</head>
+<body>
+	<p>
+		宏观任务: 在es3或更早的版本中,Javascript并无异步操作，所以代码给到Javascript引擎，它就直接按照顺序执行，这个任务是宿主发起
+		的任务我们就称为为宏观任务。
+	</p>
+	<p>
+		微观任务: 在ES5或之后的版本,Javascript出现Promise,这就不需要浏览器安排,引擎自己可以发起任务,这个任务就叫做微观任务。
+	</p>
+	<p>
+		事件循环中分为宏观任务队列和微观任务队列。其中setTimeout的回调函数放到宏观任务队列里，等到执行栈清空以后执行。
+		Promise.then里的回调函数放到相对应宏观任务的微观队列里，等宏观任务里面的同步代码执行完之后在执行;Async函数表示函数里面
+		可能会有异步方法，如果await后面跟一个表达式，async方法执行时，遇到await会立即执行表达式，然后把表达式的代码放到微观任务
+		队列里，让出执行栈让同步代码先执行。
+	</p>
+	<p>Promise本身是同步立即执行函数，当在executor中执行resolve或reject的时候，此时是异步操作，会先执行then/catch等，
+	当主栈完成后，才会调用resolve/reject中存放的方法执行</p>
+	<p>
+		常见的宏观任务，微观任务
+		<p>宏观任务(Macrotask)</p>
+		<ul>
+			<li>setTimeout</li>
+			<li>setImmediate</li>
+			<li>I/O</li>
+			<li>setInterval</li>
+			<li>UI渲染</li>
+		</ul>
+		<p>微观任务(Microtask)</p>
+		<ul>
+			<li>promise</li>
+			<li>promise.nextTick</li>
+			<li>MutationObserver</li>
+		</ul>
+	</p>
+</body>
+<script type="text/javascript">
+	/**
+	 * Promise demo
+	 * 执行顺序为 1,2,3,8,4,5,7
+	 */
+	// console.log('1')
+	// let promise1 = new Promise((resolve, reject) => {
+	// 	console.log('2')
+	// 	resolve()
+	// 	console.log('3')
+	// }).then(() => {
+	// 	console.log('4')
+	// }).then(() => {
+	// 	console.log('5')
+	// }).catch(() => {
+	// 	console.log('6')
+	// })
+	// setTimeout(() => {
+	// 	console.log('7')
+	// })
+	// console.log('8')
+
+	/**
+	 * 经典面试题
+	 * 执行结果为:script start,async1 start,async2,promise1,script end,async1 end,promise2,setTimeout
+	 */
+	async function async1() {
+		console.log('async1 start')
+		await async2()
+		console.log('async1 end')
+	}
+	async function async2() {
+		console.log('async2')
+	}
+	console.log('script start')
+	setTimeout(() => {
+		console.log('setTimeout')
+	}, 0)
+	async1()
+	new Promise(function (resolve) {
+		console.log('promise1')
+		resolve()
+	}).then(() => {
+		console.log('promise2')
+	})
+	console.log('script end')
+
+	// var arr = [[1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10]
+	// let flatArr = arr.flat(arr.length)
+	// console.log('flatArr', flatArr)
+	// const infinity = arr.flat(Infinity)
+	// console.log('infinity', infinity)
+	// const set = new Set(infinity)
+	// console.log('set', set)
+	// const from = Array.from(set)
+	// console.log('from', from)
+	// const sort = from.sort((a,b) => (a - b))
+	// console.log('sort', sort)
+	// // Array.from(new Set(arr.flat(Infinity))).sort((a,b)=>{ return a-b})
+	// const result = (Array.from(new Set(arr.flat(Infinity))).sort((a,b) => (a - b)))
+	// console.log(result)
+
+</script>
+</html>
