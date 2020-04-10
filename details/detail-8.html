@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>介绍下重绘和回流</title>
+</head>
+<body>
+	<p>
+		1. 浏览器渲染机制
+		<ul>
+			<li>浏览器采用的是流式布局模型。</li>
+			<li>浏览器会把html解析成DOM,css解析成CSSOM, DOM和CSSOM合并就产生渲染树(RenderTree)。</li>
+			<li>有了RenderTree, 就知道了所有节点的样式,然后计算它们在页面上的大小和位置,最后把节点绘制到页面上。</li>
+			<li>由于浏览器采用的是流式布局,对RenderTree的计算通常只需要遍历一次就可以完成,但table及其内部元素外,
+				他们可能需要多次计算，通常要花3倍于同等元素的时间，这也是为什么要避免使用table布局的原因之一。</li>
+		</ul>
+	</p>
+	<p>
+		2.重绘: 由于节点的几何属性发生改变或样式发生改变而不影响布局的，称为重绘。(eg:) outline, visibility,
+		color, background-color 等，重绘代价是高昂的，因为浏览器必须验证DOM树上其它节点元素的可见性。
+	</p>
+	<p>3.回流: 回流是布局或者几何属性需要改变就称为回流。回流是影响浏览器性能的关键因素，因为其变化涉及到部分页面或
+		整个页面的布局更新。一个元素的回流可能导致其所有子节点以及DOM中紧随其后的节点、祖先节点元素的随后的回流。
+	</p>
+	<p style="color: red; font-weight: bold;">总结: 回流必定会发生重绘, 重绘不一定会引发回流</p>
+</body>
+</html>

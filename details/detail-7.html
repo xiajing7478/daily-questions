@@ -11,7 +11,7 @@
 	 * 2.把obj的__proto__指向Dog.prototype 实现继承
 	 * 3.执行构造函数，传递参数，改变this指向Dog.call(obj, ..arguments)
 	 * 4.最后把obj赋值给dog
-	 * @param name
+	 * @param name+
 	 * @constructor
 	 */
 	function Dog(name) {
@@ -25,14 +25,25 @@
 	}
 
 	var dog = new Dog('小黑')
-	dog.sleep()
-	dog.bark()
+	console.log(Dog)
+	console.log(dog.__proto__)
+	// dog.sleep()
+	// dog.bark()
 
-	function _new(fn, ...arg) {
-		const obj = Object.create(fn.prototype)
-		const ret = fn.apply(obj, arg)
-		return ret instanceof Object ? ret : obj
-	}
+	/**
+	 * new 操作符干的三件事
+	 * @param fn
+	 * @param arg
+	 * @returns {fn}
+	 * @private
+	 */
+	// function _new(fn, ...arg) {
+	// 	const obj = Object.create(fn.prototype)
+	// 	const ret = fn.apply(obj, arg)
+	// 	return ret instanceof Object ? ret : obj
+	// }
+
+	// console.log(Object.prototype.toString.call(Dog)) // [Object Function]
 </script>
 </body>
 </html>
