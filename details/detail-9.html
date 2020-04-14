@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>介绍下观察者模式和订阅-发布模式的区别，各自适用于什么场景</title>
+</head>
+<body>
+	<p>观察者模式: 定义了对象间一种一对多的依赖关系,当目标对象(subject)的状态发生改变时，所有依赖它的对象Observer都会得到通知。</p>
+	<p>发布-订阅模式: 基于一个事件(主题)通道,希望接收通知的对象Subscriber通过自定义事件订阅主题, 被激活事件的对象Publiber通过发布
+		主题事件的方式通知各个订阅该主题的Subscriber对象，换句话说，发布-订阅模式用来处理不同系统组件的信息交流，
+		即使这些组件不知道对方的存在。</p>
+	<p><img src="../imgs/发布订阅模式VS观察者.png"></p>
+	<dl>
+		<dt>区别:</dt>
+		<dd>1.观察者模式，观察者是知道发布者的，发布者一直保持对观察者进行记录。在发布-订阅模式中，发布者和订阅者不知道对方的存在，
+			他们只有通过消息代理进行通信。</dd>
+		<dd>2.发布-订阅模式中，组件之间是松散耦合的，观察者模式正好相反。</dd>
+		<dd>3.观察者模式大多数都是同步的，比如当事件触发，发布者就会调用观察者的方法。
+			而发布-订阅模式大多数都是异步的（使用消息队列）</dd>
+		<dd>4.观察者模式所有的观察者都能收到通知，无法筛选过滤;发布-订阅则相反。</dd>
+		<dd>5.发布-订阅模式不易阅读，额外对象创建，消耗时间和内存(很多设计模式的通病)</dd>
+		<dd>6.观察者模式的场景: Vue的依赖追踪,原生事件</dd>
+		<dd>7.发布订阅模式的场景： React的合成事件，vue组件间通信的EventBus。</dd>
+	</dl>
+</body>
+<script type="text/javascript">
+	/**
+	 * 观察者模式
+	 */
+	// 目标者(被观察者)
+	class Subject {
+		constructor() {
+			this.observers = [] //观察者列表
+		}
+		notify() {
+			this.observers.forEach(observer => {
+				observer.update()
+			})
+		}
+		add(observer) {
+			this.observers.push(observer)
+		}
+	}
+	// 观察者
+	class Observer {
+		constructor(name) {
+			this.name = name
+		}
+		update() {
+			console.log(`目标者通知我更新了，我是：${this.name}`);
+		}
+	}
+	// let subject = new Subject()
+	// let observer1 = new Observer('观察者1')
+	// let observer2 = new Observer('观察者2')
+	// subject.add(observer1)
+	// subject.add(observer2)
+	// subject.notify()
+
+	/**
+	 * 发布-订阅模式
+	 */
+	// 控制中心
+	let pubSub = {
+		list: {},
+		// 订阅
+		subscribe: function(key, fn) {
+			if (!this.list[key]) {
+				this.list[key] = []
+			}
+			this.list[key].push(fn)
+		},
+		// 发布
+		publish: function (key, ...args) {
+			for (let fn of this.list[key]) {
+				fn.call(this, ...args)
+			}
+		},
+		// 取消订阅
+		removeSubscribe(key, fn) {
+			let fnList = this.list[key]
+			if (!fnList) {
+				return false
+			}
+			if (!fn) { // 不传入指定的方法，清空所有key下的订阅
+				fnList && (fnList.length = 0)
+			} else {
+				fnList.forEach((item, index) => {
+					item === fn && fnList.splice(index, 1)
+				})
+			}
+		}
+	}
+	// 订阅
+	pubSub.subscribe('onWork', function (time) {
+		console.log(`上班了：${time}`);
+	})
+	pubSub.subscribe('launch', function (time) {
+		console.log(`吃饭了：${time}`);
+	})
+	pubSub.subscribe('offWork', function (time) {
+		console.log(`下班了：${time}`);
+	})
+	// 发布
+	pubSub.publish('onWork', '9:00')
+	pubSub.publish('launch', '12:00')
+	pubSub.removeSubscribe('offWork')
+	pubSub.publish('offWork', '18:00')
+</script>
+</html>
