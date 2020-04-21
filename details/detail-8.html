@@ -27,7 +27,14 @@
 		5.减少重绘与回流
 		<dl>
 			<dt>1.css</dt>
-			<dd></dd>
+			<dd>使用transform替代top</dd>
+			<dd>尽量使用visibility替换display:none， 因为前者只会引起重绘,后者会引发回流</dd>
+			<dd>避免使用table布局</dd>
+			<dd>尽可能在dom树最末端改变class，减少回流的范围，尽可能减少影响的节点</dd>
+			<dt>2.js</dt>
+			<dd>避免频繁操作样式，最好一次性重写style， 或者定义class</dd>
+			<dd>避免频繁操作Dom, 创建documentFragment，在它上面操作dom, 最后再把它添加到文档中</dd>
+			<dd>使用复杂动画的元素使用绝对定义，使它脱离文档</dd>
 		</dl>
 	</p>
 </body>

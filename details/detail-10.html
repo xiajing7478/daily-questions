@@ -5,37 +5,61 @@
 	<title>浏览器与Node的事件循环(Event Loop)有何区别</title>
 </head>
 <body>
+<p>浏览器事件循环中异步队列有2中:macro(宏任务)队列和micro(微任务)。宏任务队列可以有多个，微任务队列只有一个。</p>
+<ul>
+	<li>常见的macro-task有: setTimeout, setInterval, script, UI渲染， i/o 操作等</li>
+	<li>常见的micro-task有: new Promise.then(callback), await， MutationObserver等</li>
+</ul>
+<p>一个完整的event loop过程，可以概况为以下阶段</p>
+<p>
+	<img src="https://user-gold-cdn.xitu.io/2019/1/10/1683863633586974?imageslim">
+</p>
+<p>当某个宏观任务执行完后,会查看是否有微任务队列。如果有，先执行微任务队列中的所有任务，如果没有，会读取宏任务队列中排在最前面的任务，执行宏任务过程
+中，遇到微任务，依次加入微任务队列。栈空后，再次读取微任务队列里的任务，以此类推。</p>
+<h3>Node与浏览器的 Event Loop 差异</h3>
+<p>浏览器环境下, microtask的任务队列是每个macrotask执行完之后执行。而在node.js中， microtask会在事件循环的各个阶段
+之间执行,也就是一个阶段执行完毕，就会去执行microtask队列的任务。</p>
+<p>
+	<img src="https://user-gold-cdn.xitu.io/2019/1/12/16841bad1cda741f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+</p>
+<h3>总结：
+	浏览器和node.js环境下，microtask 任务队列的执行时机不同
+</h3>
+<ul>
+	<li>node端，microtask在事件循环的各个阶段之间执行</li>
+	<li>浏览器端，microtask在事件循环的macrotask执行完之后执行</li>
+</ul>
 
 <script type="text/javascript">
-	// script start, a1 start, a2, promise2, script end, a1 end
 	async function async1() {
-		console.log('async1 start');
+		console.log('async1 start'); // 2
 		await async2();
 		//更改如下：
 		setTimeout(function() {
-			console.log('setTimeout1')
+			console.log('setTimeout1') // 8
 		},0)
 	}
 	async function async2() {
 		//更改如下：
 		setTimeout(function() {
-			console.log('setTimeout2')
+			console.log('setTimeout2') // 7
 		},0)
 	}
-	console.log('script start');
+	console.log('script start'); // 1
 
 	setTimeout(function() {
-		console.log('setTimeout3');
+		console.log('setTimeout3'); // 6
 	}, 0)
 	async1();
 
 	new Promise(function(resolve) {
-		console.log('promise1');
+		console.log('promise1'); // 3
 		resolve();
 	}).then(function() {
-		console.log('promise2');
+		console.log('promise2'); // 5
 	});
-	console.log('script end');
+	console.log('script end'); // 4
+
 </script>
 </body>
 </html>
