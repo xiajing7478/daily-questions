@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>AMD、CMD、ESM和CommonJS</title>
+</head>
+<body>
+	<p><img src="../imgs/cmd&amd.jpg"></p>
+	<p><img src="../imgs/es6module&commonjs.jpg"></p>
+	<script>
+		// var math = require('../js/commonjs/common.js')
+		// console.log(math)
+		/**
+		 * CommonJS
+		 */
+		let arr = [1, 2, [3, 4, 5, [6, 7], 8], 9, 10,[11, [12, 13]]]
+		function flatten(arr) {
+			while (arr.some(item => Array.isArray(item))) {
+				// console.log(...arr)
+				arr = [].concat(...arr)
+			}
+			return arr
+		}
+		console.log(flatten(arr))
+		// flatten(arr)
+		var res = []
+		function fall(arr) {
+			for (var i = 0; i<arr.length; i++){
+				if (Array.isArray(arr[i])) {
+					fall(arr[i])
+				}	else {
+					res.push(arr[i])
+				}
+			}
+			return res
+		}
+		console.log(fall(arr)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+	</script>
+</body>
+</html>
