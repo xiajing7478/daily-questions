@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>介绍 HTTPS 握手过程</title>
+</head>
+<body>
+	<p>
+		<img src="../imgs/HTTPS握手过程.webp">
+	</p>
+	<p>
+		<dl>
+			<dt>Client和Server之间会进行一下几个步骤的交互:</dt>
+			<dd>1.client发送https请求</dd>
+			<dd>2.Client和Server通过tcp三次握手建立连接,并且协商ssl(secure socket layer)的版本、加密算法</dd>
+			<dd>3.Server发送crt证书给Client</dd>
+			<dd>4.Client通过信任机构CA的证书，验证Server证书的有效性，如果证书有效，client随机生成一个字符串，
+					并使用server证书的公钥对随机字符串进行加密</dd>
+			<dd>5.Client发送加密后的随机字符串给Server</dd>
+			<dd>6.Server使用自己的私钥解密，获取Client产生的随机字符串，此后，
+					Client和Server之间的通信数据都是用该字符串进行对称加密</dd>
+			<dd>7.Server使用随机字符串加密数据, 并发送给Client</dd>
+			<dd>8.client使用随机字符串解密数据</dd>
+		</dl>
+	</p>
+</body>
+<script>
+	// function add(y) {
+	// 	return this.minus(x+y)
+	// }
+	// function minus(x,z) {
+	// 	return x - z
+	// }
+	//
+	// var x = 5
+	// console.log((x).add(3).minus(2))
+
+
+
+	Number.prototype.add = function (y) {
+		return this.valueOf() + y
+	}
+	Number.prototype.minus = function (z) {
+		return this.valueOf() - z
+	}
+
+	console.log((5).add(3).minus(2))
+</script>
+</html>

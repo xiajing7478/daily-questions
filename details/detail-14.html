@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue 的响应式原理中 Object.defineProperty 有什么缺陷？为什么在 Vue3.0 采用了 Proxy，抛弃了 Object.defineProperty？</title>
+</head>
+<body>
+	<p>
+		<dl>
+			<dt>1.为什么要取代Object.defineProperty</dt>
+			<dd></dd>
+		</dl>
+	</p>
+
+<script type="text/javascript">
+	let obj = {}
+	let handler = {
+		get(target, property) {
+			debugger
+			console.log(`${property} 被读取`)
+			return property in target ? target[property] : 3
+		},
+		set(target, property, value) {
+			debugger
+			console.log(`${property} 被设置为 ${value}`)
+			target[property] = value
+		}
+	}
+	let p = new Proxy(obj, handler)
+	p.name = 'tom'
+	p.age
+</script>
+</body>
+</html>

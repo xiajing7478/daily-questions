@@ -16,7 +16,8 @@
 		let arr = [1, 2, [3, 4, 5, [6, 7], 8], 9, 10,[11, [12, 13]]]
 		function flatten(arr) {
 			while (arr.some(item => Array.isArray(item))) {
-				// console.log(...arr)
+				console.log(...arr)
+				// console.log(item)
 				arr = [].concat(...arr)
 			}
 			return arr
@@ -34,7 +35,19 @@
 			}
 			return res
 		}
-		console.log(fall(arr)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+		// console.log(fall(arr)) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+
+
+		var a = {
+			i: 1,
+			toString() {
+				console.log(a.i ++)
+				return a.i ++
+			}
+		}
+		if(a == 1 && a == 2 && a == 3){
+			console.log(1);
+		}
 	</script>
 </body>
 </html>
