@@ -7,28 +7,123 @@
 <body>
 	<p>
 		<dl>
-			<dt>1.为什么要取代Object.defineProperty</dt>
-			<dd></dd>
+			<dt>一.为什么要取代Object.defineProperty</dt>
+			<dd>1.Object.defineProperty无法检测到数组下标的变化，导致直接通过数组下标给数组设置值，不能及时相应</dd>
+			<dd>2.Object.defineProperty只能劫持对象的属性,因此我们需要对每个对象的每个属性进行遍历。</dd>
+			<dd>3.Proxy可以劫持整个对象,并返回一个新的对象</dd>
+			<dd>4.有13种劫持操作</dd>
+		</dl>
+		<dl>
+			<dt>二.Proxy基本用法</dt>
+			<dd>
+				1. let p = new Proxy(target, handler);  target是用Proxy包装的被代理的对象（可以是任何类型的对象，包括原生
+					数组，函数，甚至是另外一个代理）, handler是一个对象，其声明了代理target的一些操作, 其属性是当执行一个操作时定义
+					代理的行为的函数， p时代理后的对象，当外界每次对p进行操作，就会执行handler对象上的一些方法。Proxy共有13种劫持操作，
+					handler代理的一些常用方法有如下几个： get, set, has(判断对象是否有该属性),construct(构造函数)
+				2.  let obj = {};
+						let handler = {
+						get(target, property) {
+						console.log(`${property} 被读取`);
+						return property in target ? target[property] : 3;
+						},
+						set(target, property, value) {
+						console.log(`${property} 被设置为 ${value}`);
+						target[property] = value;
+						}
+						}
+						let p = new Proxy(obj, handler);
+						p.name = 'tom' //name 被设置为 tom
+						p.age; //age 被读取 3
+			</dd>
 		</dl>
 	</p>
+	<hr>
+	<h3>demo</h3>
+	<div id="app">
+		<input type="text" id="input" />
+		<div>你输入的是: <span id="title"></span></div>
+		<button type="button" id="btn">添加到todolist</button>
+		<ul id="list"></ul>
+	</div>
 
 <script type="text/javascript">
-	let obj = {}
-	let handler = {
-		get(target, property) {
-			debugger
-			console.log(`${property} 被读取`)
-			return property in target ? target[property] : 3
+	let input = document.getElementById('input')
+	let title = document.getElementById('title')
+	let list = document.getElementById('list')
+	let btn = document.getElementById('btn')
+	const obj = {}
+	const handler = {
+		get: function (target, key, receiver) {
+			console.log(` gettting ${key} `)
+			return Reflect.get(target, key, receiver)
 		},
-		set(target, property, value) {
-			debugger
-			console.log(`${property} 被设置为 ${value}`)
-			target[property] = value
+		set: function (target, key, value, receiver) {
+			if (key === 'text') {
+				input.value = value
+				title.innerHTML = value
+			}
+			return Reflect.set(target, key, value, receiver)
 		}
 	}
-	let p = new Proxy(obj, handler)
-	p.name = 'tom'
-	p.age
+	const newObj = new Proxy(obj, handler)
+	input.addEventListener('keyup', function (e) {
+		newObj.text = e.target.value.trim()
+	})
+
+
+	// 渲染todolist列表
+	const Render = {
+		init: function (arr) {
+			const fragment = document.createDocumentFragment()
+			for(let i= 0; i<arr.length; i++) {
+				const li = document.createElement("li");
+				li.textContent = arr[i];
+				fragment.appendChild(li);
+			}
+			list.appendChild(fragment)
+		},
+		addList: function (val) {
+			const li = document.createElement('li')
+			li.textContent = val
+			list.appendChild(li)
+		}
+	}
+	const arr = []
+	const newArr = new Proxy(arr, {
+		get: function (target, key, receiver) {
+			return Reflect.get(target, key, receiver)
+		},
+		set: function (target, key, value, receiver) {
+			if (key !== 'length') {
+				Render.addList(value)
+			}
+			return Reflect.set(target, key, value, receiver)
+		}
+	})
+	window.onload = function () {
+		Render.init(arr)
+	}
+
+	btn.addEventListener('click', function () {
+		newArr.push(parseInt(newObj.text))
+	})
+
+
+
+	// let obj = {}
+	// let handler = {
+	// 	get(target, property) {
+	// 		console.log(`${property} 被读取`)
+	// 		return property in target ? target[property] : 3
+	// 	},
+	// 	set(target, property, value) {
+	// 		console.log(`${property} 被设置为 ${value}`)
+	// 		target[property] = value
+	// 	}
+	// }
+	// let p = new Proxy(obj, handler)
+	// p.name = 'tom' // set
+	// p.age // get
 </script>
 </body>
 </html>
