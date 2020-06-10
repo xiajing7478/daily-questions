@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设计 LazyMan 类，实现以下功能</title>
+</head>
+<body>
+    <p>
+        LazyMan('Tony');
+        // Hi I am Tony
+    </p>
+    <hr>
+    <p>
+        LazyMan('Tony').sleep(10).eat('lunch');
+        // Hi I am Tony
+        // 等待了10秒...
+        // I am eating lunch
+    </p>
+    <hr>
+    <p>
+        LazyMan('Tony').eat('lunch').sleep(10).eat('dinner');
+        // Hi I am Tony
+        // I am eating lunch
+        // 等待了10秒...
+        // I am eating diner
+    </p>
+    <hr>
+    <p>
+        LazyMan('Tony').eat('lunch').eat('dinner').sleepFirst(5).sleep(10).eat('junk food');
+        // Hi I am Tony
+        // 等待了5秒...
+        // I am eating lunch
+        // I am eating dinner
+        // 等待了10秒...
+        // I am eating junk food
+    </p>
+</body>
+<script type="text/javascript">
+    class LazyMan {
+        constructor(name) {
+            this.taskList = []
+            this.name = name
+            console.log('Hi I am Tony', this.name)
+            setTimeout(() => {
+                this.next()
+            }, 0)
+        }
+        eat(name) {
+            var that = this;
+            var fn = (function (n) {
+                return function () {
+                    console.log(`I am eating ${n}`)
+                    that.next();
+                }
+            })(name);
+            this.taskList.push(fn);
+            return this;
+        }
+        sleep(time) {
+            var that = this
+            var fn = (function (t) {
+                return function () {
+                    setTimeout(() => {
+                        console.log(`等待了${t}秒...`)
+                        that.next()
+                    }, t* 1000)
+                }
+            })(time)
+            this.taskList.push(fn)
+            return this
+        }
+        next() {
+            var fn = this.taskList.shift()
+            fn && fn()
+        }
+    }
+
+    var lazyMan = new LazyMan('Tony')
+
+</script>
+</html>
