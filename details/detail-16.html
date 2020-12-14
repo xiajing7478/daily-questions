@@ -6,98 +6,15 @@
 </head>
 <body>
 	<script type="text/javascript">
-		// var arr = [2,4,6,1,7]
-
-    /**
-     * 快速排序
-     * @param arr
-     * @returns {any[]|string|*}
-     */
-		// function quickSort(arr) {
-		// 	if (arr.length == 0) {
-		// 	  return arr
-		// 	}
-		// 	let pirotIndex = Math.floor(arr.length / 2)
-    //   let porit = arr.splice(pirotIndex, 1)[0]
-    //   let left = [], right = []
-		// 	for (let i = 0; i < arr.length; i++) {
-		// 	  if (arr[i] > porit) {
-		// 	    right.push(arr[i])
-		// 	  } else {
-		// 	    left.push(arr[i])
-		// 	  }
-		// 	}
-    //   // console.log(left)
-    //   // console.log(right)
-    //   // console.log(left.concat(porit).concat(right))
-		// 	return quickSort(left).concat(porit, quickSort(right))
-		// 	// return quickSort(left).concat(porit).concat(quickSort(right))
-    // }
-    // var result = quickSort(arr)
-		// console.log('result', result)
-
-		// function insertionSort(arr) {
-		// 	let preIndex, current
-	  //   for(let i = 1; i < arr.length; i++) {
-	  //     preIndex = i - 1
-		//     current = arr[i]
-		//     while (preIndex >= 0 && arr[preIndex] > current) {
-	  //       arr[preIndex + 1] = arr[preIndex]
-		// 	    preIndex --
-		//     }
-		//     arr[preIndex + 1] = current
-	  //   }
-	  //   return arr
-    // }
-		// let result =  insertionSort(arr)
-		// console.log(result)
-
-
-		// let arr = [8,5,2,6,9,3,1,4,0,7]
-		// function selectSort(arr) {
-    //   for (let i = 0; i < arr.length; i++) {
-    //     let minIndex = i
-	  //     for (let j = i + 1; j < arr.length; j++) {
-	  //       if (arr[j] < arr[minIndex]) {
-	  //         minIndex = j
-	  //       }
-    //       let tmp = arr[minIndex]
-    //       arr[minIndex] = arr[i]
-    //       arr[i] = tmp
-	  //       // swap(arr, minIndex, i)
-	  //     }
-	  //     // return swap(arr, minIndex, i)
-    //   }
-    //   return arr
-    // }
-
-    // function abc(arr) {
-    //   var len = arr.length
-	  //   for (var i = 0; i < len; i++) {
-    //     var min = i
-		//     for (var j = i + 1; j < len; j++) {
-		//       if (arr[min] > arr[j]) {
-		//         min = j
-		//       }
-		//     }
-		//     swap(arr, min, i)
-	  //   }
-	  //   return arr
-    // }
-		//
-    // function swap (arr, minIndex, i) {
-		//   let tmp = arr[minIndex]
-	  //   arr[minIndex] = arr[i]
-	  //   arr[i] = tmp
-    // }
-    // let result = abc(arr)
-		// console.log(result)
-
     /**
      * 选择排序
      * 首先找到数组中最小的元素，将它和数组的第一个元素交换位置
      * 在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置
      * 如此往复，直到将整个数组排序。这种方法我们称之为选择排序。
+     * 不稳定排序（排序后，数组相同的元素可能相对位置发生改变）
+     * 时间复杂度: i为0是，为n-1, 1为n-2
+     * 则一共比较(n-1)+(n-2)+...+2+1 = n(n-1)/2 = 1/2n^2 -1/2
+     * 所有复杂度为O(n^2)
      * @type {number[]}
      */
     let arr = [8,5,2,6,9,3,1,4,7,0]
@@ -120,8 +37,40 @@
       arr[minIndex] = arr[i]
       arr[i] = tmp
 		}
-		console.log(selectSort(arr))
+		// console.log(selectSort(arr))
 
+    /**
+     * 插入排序
+     * 当我们给无序数组做排序的时候，为了要插入元素，我们需要腾出空间，
+     * 将其余所有元素在插入之前都向右移动一位，这种算法我们称之为插入排序。
+     * 1、从数组第2个元素开始抽取元素。
+     * 2、把它与左边第一个元素比较，如果左边第一个元素比它大，则继续与左边第二个元素比较下去，直到遇到不比它大的元素，然后插到这个元素的右边。
+     * 3、继续选取第3，4，....n个元素,重复步骤 2 ，选择适当的位置插入。
+     * 稳定排序（在比较的时候，过两个数相等的话，不会进行移动，前后两个数的次序不会发生改变）
+     * 时间复杂度: i为0是，为n-1, 1为n-2
+     * 则一共比较(n-1)+(n-2)+...+2+1 = n(n-1)/2 = 1/2n^2 -1/2
+     * 所有复杂度为O(n^2)
+     * @type {number[]}
+     */
+		let s = [8,5,3,9]
+    s = [8,5,2,6,9,3,1,4,7,0]
+		function insertionSort(arr) {
+      if(arr == null || arr.length < 2)
+        return arr;
+			for (let i = 1; i < arr.length; i++) {
+			  insertToRightPosition(arr, i)
+			}
+			return arr
+    }
+    function insertToRightPosition(arr, i) {
+			let tmp = arr[i]
+	    let j = i - 1
+	    for (; j>=0 && arr[j] > tmp; j--) {
+	      arr[j+1] = arr[j]
+	    }
+	    arr[j+1] = tmp
+    }
+    console.log(insertionSort(s))
 
 	</script>
 </body>
