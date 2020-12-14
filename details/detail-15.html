@@ -56,6 +56,19 @@
             this.taskList.push(fn);
             return this;
         }
+        sleepFirst(time) {
+            var that = this
+            var fn = (function (t) {
+                return function () {
+                    setTimeout(() => {
+                        console.log(`等待了${t}秒...`)
+                        that.next()
+                    }, t * 1000)
+                }
+            })(time)
+            this.taskList.unshift(fn)
+            return this
+        }
         sleep(time) {
             var that = this
             var fn = (function (t) {
@@ -63,7 +76,7 @@
                     setTimeout(() => {
                         console.log(`等待了${t}秒...`)
                         that.next()
-                    }, t* 1000)
+                    }, t * 1000)
                 }
             })(time)
             this.taskList.push(fn)
@@ -75,7 +88,17 @@
         }
     }
 
-    var lazyMan = new LazyMan('Tony')
+    // var lazyMan = new LazyMan('Tony').sleep(3).eat('lunch')
+
+    var obj = {1:222, 2:123, 5:888}
+
+
+    var c = new Array(12).fill(null).reduce((prev, cur, key) => {
+        prev[key] = obj[key + 1]
+        return prev
+    }, [])
+
+    console.log(c)
 
 </script>
 </html>

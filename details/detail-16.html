@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tit常见排序算法( JavaScript版 )le</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// var arr = [2,4,6,1,7]
+
+    /**
+     * 快速排序
+     * @param arr
+     * @returns {any[]|string|*}
+     */
+		// function quickSort(arr) {
+		// 	if (arr.length == 0) {
+		// 	  return arr
+		// 	}
+		// 	let pirotIndex = Math.floor(arr.length / 2)
+    //   let porit = arr.splice(pirotIndex, 1)[0]
+    //   let left = [], right = []
+		// 	for (let i = 0; i < arr.length; i++) {
+		// 	  if (arr[i] > porit) {
+		// 	    right.push(arr[i])
+		// 	  } else {
+		// 	    left.push(arr[i])
+		// 	  }
+		// 	}
+    //   // console.log(left)
+    //   // console.log(right)
+    //   // console.log(left.concat(porit).concat(right))
+		// 	return quickSort(left).concat(porit, quickSort(right))
+		// 	// return quickSort(left).concat(porit).concat(quickSort(right))
+    // }
+    // var result = quickSort(arr)
+		// console.log('result', result)
+
+		// function insertionSort(arr) {
+		// 	let preIndex, current
+	  //   for(let i = 1; i < arr.length; i++) {
+	  //     preIndex = i - 1
+		//     current = arr[i]
+		//     while (preIndex >= 0 && arr[preIndex] > current) {
+	  //       arr[preIndex + 1] = arr[preIndex]
+		// 	    preIndex --
+		//     }
+		//     arr[preIndex + 1] = current
+	  //   }
+	  //   return arr
+    // }
+		// let result =  insertionSort(arr)
+		// console.log(result)
+
+
+		// let arr = [8,5,2,6,9,3,1,4,0,7]
+		// function selectSort(arr) {
+    //   for (let i = 0; i < arr.length; i++) {
+    //     let minIndex = i
+	  //     for (let j = i + 1; j < arr.length; j++) {
+	  //       if (arr[j] < arr[minIndex]) {
+	  //         minIndex = j
+	  //       }
+    //       let tmp = arr[minIndex]
+    //       arr[minIndex] = arr[i]
+    //       arr[i] = tmp
+	  //       // swap(arr, minIndex, i)
+	  //     }
+	  //     // return swap(arr, minIndex, i)
+    //   }
+    //   return arr
+    // }
+
+    // function abc(arr) {
+    //   var len = arr.length
+	  //   for (var i = 0; i < len; i++) {
+    //     var min = i
+		//     for (var j = i + 1; j < len; j++) {
+		//       if (arr[min] > arr[j]) {
+		//         min = j
+		//       }
+		//     }
+		//     swap(arr, min, i)
+	  //   }
+	  //   return arr
+    // }
+		//
+    // function swap (arr, minIndex, i) {
+		//   let tmp = arr[minIndex]
+	  //   arr[minIndex] = arr[i]
+	  //   arr[i] = tmp
+    // }
+    // let result = abc(arr)
+		// console.log(result)
+
+    /**
+     * 选择排序
+     * 首先找到数组中最小的元素，将它和数组的第一个元素交换位置
+     * 在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置
+     * 如此往复，直到将整个数组排序。这种方法我们称之为选择排序。
+     * @type {number[]}
+     */
+    let arr = [8,5,2,6,9,3,1,4,7,0]
+		function selectSort(arr) {
+			let n = arr.length
+			for (let i = 0; i < n; i++) {
+			  let minIndex = i
+				for (let j = i + 1; j < n; j++) {
+				  if (arr[j] < arr[minIndex]) {
+				    minIndex = j
+				  }
+				}
+				swap(arr, minIndex, i)
+			}
+			return arr
+    }
+
+    function swap(arr, minIndex, i) {
+      let tmp = arr[minIndex]
+      arr[minIndex] = arr[i]
+      arr[i] = tmp
+		}
+		console.log(selectSort(arr))
+
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .parent {
+            position: relative;
+            border: 1px solid red; width: 300px; height: 300px;
+        }
+        .child {
+            border: 1px solid green; width: 100px; height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .parent1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid red; width: 300px; height: 300px;
+        }
+        .child1 {
+            border: 1px solid green; width: 100px; height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="parent1">
+    <div class="child1"></div>
+</div>
+<script type="text/javascript">
+    // console.log(Number.prototype)
+    Number.prototype.add = function (y) {
+        return this.valueOf() + y
+    }
+    Number.prototype.minus = function(z) {
+        return this.valueOf() - z
+    }
+    Number.prototype.sq = function(x) {
+        return this.valueOf() * x
+    }
+    Number.prototype.cf = function(n) {
+        return this.valueOf() / n
+    }
+    // console.log((5).add(3).minus(2).sq(10-2))
+
+    var arr = [222, 123, null, null, 888, null, null, null, null, null, null, null]
+    var obj = {1:222, 2:123, 5:888}
+    var r = []
+    var result = Array.from({ length: 12 }).map((_, index) => obj[index + 1] || null)
+    // console.log(result)
+    // result.map((_, index) => (return obj[index + 1] || null))
+    // console.log(result)
+
+    // function LazyMan(name) {
+    //     this.name = name
+    // }
+    // LazyMan.prototype.f = function() {
+    //     console.log('Hi, I am ' + this.name)
+    // }
+    // LazyMan.prototype.sleep = function (second) {
+    //     setTimeout(() => {
+    //
+    //     }, second)
+    // }
+    // var lazyMan = new LazyMan('Tony')
+    // lazyMan.f()
+    // lazyMan.f().sleep(10).eat('lauch')
+    // LazyMan('Tony')
+    var s = []
+    var nums1 = [1, 2, 2, 1], nums2 = [2, 2]
+    nums1.forEach(item => {
+        if (nums2.includes(item)) {
+            s.push(item)
+        }
+    })
+    console.log(s)
+</script>
+</body>
+</html>

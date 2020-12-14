@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<a href="https://www.baidu.com/" @click="alert('none')">无修饰符</a >//无任何修饰符
+<a href="https://www.baidu.com/" @click.prevent="alert('prevent')">prevent修饰符</a >//prevent修饰符
+<a href="https://www.baidu.com/" @click.self="alert('self')">self修饰符</a>//self修饰符
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<script>
+	// function fn() {
+	// 	var max = 10
+	// 	return function bar(x) {
+	// 	  console.log(this)
+	// 		if (x > max) {
+	// 		  console.log(x)
+	// 		}
+  //   }
+  // }
+	//
+  // var f1 = fn()
+	// var max = 100
+	// f1(15)
+
+
+	function Animal(name) {
+		this.name = name
+		this.showName = function () {
+			console.log(this.name)
+    }
+  }
+
+  function Cat(name) {
+	  this.name = name
+  }
+
+  var animal = new Animal('')
+	var cat = new Cat('White')
+	animal.showName.call(cat, 'black cat')
+
+</script>
+</body>
+</html>
