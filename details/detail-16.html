@@ -17,27 +17,44 @@
      * 所有复杂度为O(n^2)
      * @type {number[]}
      */
-    let arr = [8,5,2,6,9,3,1,4,7,0]
-		function selectSort(arr) {
-			let n = arr.length
-			for (let i = 0; i < n; i++) {
-			  let minIndex = i
-				for (let j = i + 1; j < n; j++) {
-				  if (arr[j] < arr[minIndex]) {
-				    minIndex = j
-				  }
+	let arr = [8,5,2,6,9,3,1,4,7,0]
+
+	function bubbleSort(arr) {
+		let len = arr.length
+		for (let i = 0; i < len; i++) {
+			for (let j = 0 ; j < len - 1; j++) {
+				if (arr[i] < arr[j]) {
+					let temp = arr[i]
+					arr[i] = arr[j]
+					arr[j] = temp
 				}
-				swap(arr, minIndex, i)
 			}
-			return arr
+		}
+		return arr
+	}
+	console.log(bubbleSort(arr))
+
+
+	function selectSort(arr) {
+		let n = arr.length
+		for (let i = 0; i < n; i++) {
+		  let minIndex = i
+			for (let j = i + 1; j < n; j++) {
+			  if (arr[j] < arr[minIndex]) {
+				minIndex = j
+			  }
+			}
+			swap(arr, minIndex, i)
+		}
+		return arr
     }
 
-    function swap(arr, minIndex, i) {
-      let tmp = arr[minIndex]
-      arr[minIndex] = arr[i]
-      arr[i] = tmp
-		}
-		// console.log(selectSort(arr))
+	function swap(arr, minIndex, i) {
+		let tmp = arr[minIndex]
+		arr[minIndex] = arr[i]
+		arr[i] = tmp
+	}
+	// console.log(selectSort(arr))
 
     /**
      * 插入排序
@@ -52,14 +69,14 @@
      * 所有复杂度为O(n^2)
      * @type {number[]}
      */
-		let s = [8,5,3,9]
-    s = [8,5,2,6,9,3,1,4,7,0]
-		function insertionSort(arr) {
-      if(arr == null || arr.length < 2)
-        return arr;
-			for (let i = 1; i < arr.length; i++) {
-			  insertToRightPosition(arr, i)
-			}
+	let s = [8,5,3,9]
+	s = [8,5,2,6,9,3,1,4,7,0]
+	function insertionSort(arr) {
+		if(arr == null || arr.length < 2)
+			return arr;
+		for (let i = 1; i < arr.length; i++) {
+		  insertToRightPosition(arr, i)
+		}
 			return arr
     }
     function insertToRightPosition(arr, i) {
