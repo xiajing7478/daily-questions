@@ -19,56 +19,36 @@
      */
 	let arr = [8,5,2,6,9,3,1,4,7,0]
 
-	function bubbleSort(arr) {
+	function selectSort(arr) {
 		let len = arr.length
 		for (let i = 0; i < len; i++) {
-			for (let j = 0 ; j < len - 1; j++) {
-				if (arr[i] < arr[j]) {
-					let temp = arr[i]
-					arr[i] = arr[j]
-					arr[j] = temp
+			let minIndex = i
+			for (let j = i + 1; j < len; j++) {
+				if (arr[minIndex] > arr[j]) {
+					minIndex = j
 				}
 			}
+			let tmp = arr[minIndex]
+			arr[minIndex] = arr[i]
+			arr[i] = tmp
 		}
 		return arr
 	}
-	console.log(bubbleSort(arr))
+	console.log(selectSort(arr))
 
-
-	function selectSort(arr) {
-		let n = arr.length
-		for (let i = 0; i < n; i++) {
-		  let minIndex = i
-			for (let j = i + 1; j < n; j++) {
-			  if (arr[j] < arr[minIndex]) {
-				minIndex = j
-			  }
-			}
-			swap(arr, minIndex, i)
-		}
-		return arr
-    }
-
-	function swap(arr, minIndex, i) {
-		let tmp = arr[minIndex]
-		arr[minIndex] = arr[i]
-		arr[i] = tmp
-	}
-	// console.log(selectSort(arr))
-
-    /**
-     * 插入排序
-     * 当我们给无序数组做排序的时候，为了要插入元素，我们需要腾出空间，
-     * 将其余所有元素在插入之前都向右移动一位，这种算法我们称之为插入排序。
-     * 1、从数组第2个元素开始抽取元素。
-     * 2、把它与左边第一个元素比较，如果左边第一个元素比它大，则继续与左边第二个元素比较下去，直到遇到不比它大的元素，然后插到这个元素的右边。
-     * 3、继续选取第3，4，....n个元素,重复步骤 2 ，选择适当的位置插入。
-     * 稳定排序（在比较的时候，过两个数相等的话，不会进行移动，前后两个数的次序不会发生改变）
-     * 时间复杂度: i为0是，为n-1, 1为n-2
-     * 则一共比较(n-1)+(n-2)+...+2+1 = n(n-1)/2 = 1/2n^2 -1/2
-     * 所有复杂度为O(n^2)
-     * @type {number[]}
-     */
+	/**
+	 * 插入排序
+	 * 当我们给无序数组做排序的时候，为了要插入元素，我们需要腾出空间，
+	 * 将其余所有元素在插入之前都向右移动一位，这种算法我们称之为插入排序。
+	 * 1、从数组第2个元素开始抽取元素。
+	 * 2、把它与左边第一个元素比较，如果左边第一个元素比它大，则继续与左边第二个元素比较下去，直到遇到不比它大的元素，然后插到这个元素的右边。
+	 * 3、继续选取第3，4，....n个元素,重复步骤 2 ，选择适当的位置插入。
+	 * 稳定排序（在比较的时候，过两个数相等的话，不会进行移动，前后两个数的次序不会发生改变）
+	 * 时间复杂度: i为0是，为n-1, 1为n-2
+	 * 则一共比较(n-1)+(n-2)+...+2+1 = n(n-1)/2 = 1/2n^2 -1/2
+	 * 所有复杂度为O(n^2)
+	 * @type {number[]}
+	 */
 	let s = [8,5,3,9]
 	s = [8,5,2,6,9,3,1,4,7,0]
 	function insertionSort(arr) {
@@ -88,6 +68,25 @@
 	    arr[j+1] = tmp
     }
     console.log(insertionSort(s))
+
+
+		/**
+		 * 冒泡排序
+		 */
+		function bubbleSort(arr) {
+			let len = arr.length
+			for (let i = 0; i < len; i++) {
+				for (let j = 0; j < len - 1; j++) {
+					if (arr[j] > arr[j + 1]) {
+						let tmp = arr[j + 1]
+						arr[j + 1] = arr[j]
+						arr[j] = tmp
+					}
+				}
+			}
+			return arr
+		}
+		console.log(bubbleSort(arr))
 
 	</script>
 </body>
