@@ -10,7 +10,7 @@
 		的任务我们就称为为宏观任务。
 	</p>
 	<p>
-		微观任务: 在ES5或之后的版本,Javascript出现Promise,这就不需要浏览器安排,引擎自己可以发起任务,这个任务就叫做微观任务。
+		微观任务: 在ES5或之后的版本,Javascript出现Promise, async,这就不需要浏览器安排,引擎自己可以发起任务,这个任务就叫做微观任务。
 	</p>
 	<p>
 		事件循环中分为宏观任务队列和微观任务队列。其中setTimeout的回调函数放到宏观任务队列里，等到执行栈清空以后执行。
@@ -35,6 +35,7 @@
 			<li>promise</li>
 			<li>promise.nextTick</li>
 			<li>MutationObserver</li>
+			<li>async</li>
 		</ul>
 	</p>
 </body>
@@ -43,49 +44,54 @@
 	 * Promise demo
 	 * 执行顺序为 1,2,3,8,4,5,7
 	 */
-	// console.log('1')
+	// console.log('1') // 1
 	// let promise1 = new Promise((resolve, reject) => {
-	// 	console.log('2')
+	// 	console.log('2') // 2
 	// 	resolve()
-	// 	console.log('3')
+	// 	console.log('3') // 3
 	// }).then(() => {
-	// 	console.log('4')
+	// 	console.log('4') // 5
 	// }).then(() => {
-	// 	console.log('5')
+	// 	console.log('5') // 6
 	// }).catch(() => {
 	// 	console.log('6')
 	// })
 	// setTimeout(() => {
-	// 	console.log('7')
+	// 	console.log('7') // 7
 	// })
-	// console.log('8')
+	// console.log('8') // 4
 
 	/**
 	 * 经典面试题
 	 * 执行结果为:script start,async1 start,async2,promise1,script end,async1 end,promise2,setTimeout
 	 */
-	async function async1() {
-		console.log('async1 start')
-		await async2()
-		console.log('async1 end')
-	}
-	async function async2() {
-		console.log('async2')
-	}
-	console.log('script start')
-	setTimeout(() => {
-		console.log('setTimeout')
-	}, 0)
-	async1()
-	new Promise(function (resolve) {
-		console.log('promise1')
-		resolve()
-	}).then(() => {
-		console.log('promise2')
-	})
-	console.log('script end')
+	// async function async1() {
+	// 	console.log('async1 start') // 2
+	// 	await async2()
+	// 	console.log('async1 end') // 6
+	// }
+	// async function async2() {
+	// 	console.log('async2') // 3
+	// }
+	// console.log('script start') // 1
+	// setTimeout(() => {
+	// 	console.log('setTimeout') // 8
+	// }, 0)
+	// async1()
+	// new Promise(function (resolve) {
+	// 	console.log('promise1') // 4
+	// 	resolve()
+	// }).then(() => {
+	// 	console.log('promise2') // 7
+	// })
+	// console.log('script end') // 5
 
-	// var arr = [[1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10]
+	var arr = [[1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10]
+
+	const result = Array.from(new Set(arr.flat(arr.length))).sort(function (a, b) {
+		return b -a
+  })
+	console.log(result)
 	// let flatArr = arr.flat(arr.length)
 	// console.log('flatArr', flatArr)
 	// const infinity = arr.flat(Infinity)
@@ -99,6 +105,23 @@
 	// // Array.from(new Set(arr.flat(Infinity))).sort((a,b)=>{ return a-b})
 	// const result = (Array.from(new Set(arr.flat(Infinity))).sort((a,b) => (a - b)))
 	// console.log(result)
+
+
+	// function one() {
+	// 	// return Promise.resolve('One...')
+	// 	return new Promise((resolve) => {
+	// 	  resolve('One......')
+	// 	})
+  // }
+	// async function getOne() {
+	// 	console.log('in function.....')
+	//   const res = await one()
+	//   console.log(res)
+  // }
+	//
+  // console.log('before function')
+	// getOne()
+  // console.log('after function')
 
 </script>
 </html>
