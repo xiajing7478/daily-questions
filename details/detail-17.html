@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>常见前端面试手写题</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+	const obj = {
+	  name: 'xj',
+		birth: {
+	    year: '1988',
+			month: '11',
+			info: {
+				b: [3, 4]
+			}
+		}
+	}
+
+  /**
+   * 深拷贝
+   * @param obj
+   * @returns {[]|{}|*}
+   * let tmp = JSON.stringify(obj)
+   * let result = JSON.parse(tmp)
+   * 这种方式如果对象中包含函数，函数无法被拷贝下来,
+   * 无法拷贝copyObj对象原型链上的属性和方法,
+   * 当数据层次很深，可以会栈溢出
+   */
+	function deepClone(obj) {
+	  if (!(typeof obj === 'object' && obj !== null)) {
+	    return obj
+	  }
+		let copy = obj instanceof Array ? [] : {}
+		for (let key in obj) {
+			if (obj.hasOwnProperty(key)) {
+        copy[key] = typeof obj[key] === 'object' ? deepClone(obj[key]) : obj[key]
+			}
+		}
+		return copy
+  }
+  let result = deepClone(obj)
+  console.log(result)
+
+
+
+
+</script>
+</body>
+</html>
