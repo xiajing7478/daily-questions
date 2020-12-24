@@ -41,11 +41,27 @@
 		}
 		return copy
   }
-  let result = deepClone(obj)
-  console.log(result)
+  // let result = deepClone(obj)
+  // console.log(result)
 
 
-
+  /**
+   * 函数柯里化
+   * @returns {any}
+   */
+	function add() {
+		let args = [...arguments]
+    // var _args=Array.prototype.slice.call(arguments)
+		let fn = function () {
+			args.push(...arguments)
+			return fn
+    }
+    fn.toString = function () {
+			return args.reduce((prev,next) => prev + next)
+    }
+    return fn
+  }
+  console.log(add(1)(3,5)(4)())
 
 </script>
 </body>
