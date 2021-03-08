@@ -5,10 +5,8 @@
 	<title>什么是防抖和节流？有什么区别？如何实现</title>
 </head>
 <body>
-	<p>
-		防抖:触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间
-	</p>
-	<p>节流: 高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率。</p>
+	<p>防抖:触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间</p>
+	<p>节流:高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率。</p>
 	<p>
 		<span>防抖</span>
 		<input id="inp">
@@ -55,7 +53,6 @@
 			// var $this = this, arg = arguments;
 			return function () {
 				now = + new Date()
-				// debugger
 				if (now - previous > wait) {
 					fn.apply(this, arguments)
 					previous = now

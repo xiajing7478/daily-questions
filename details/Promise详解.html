@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Promise详解</title>
+</head>
+<body>
+	<div>
+		<dl>
+			<dt>Promise 的基本特征</dt>
+			<dd>1.promise 有三个状态：pending，fulfilled，rejected</dd>
+			<dd>2.new promise时， 需要传递一个executor()执行器，执行器立即执行</dd>
+			<dd>3.executor接受两个参数，分别是resolve和reject</dd>
+			<dd>4.promise 的默认状态是 pending</dd>
+			<dd>5.promise 有一个value保存成功状态的值，可以是undefined/thenable/promise</dd>
+			<dd>6.promise 有一个reason保存失败状态的值</dd>
+			<dd>7.promise 只能从pending到rejected, 或者从pending到fulfilled，状态一旦确认，就不会再改变</dd>
+			<dd>8.promise 必须有一个then方法，then 接收两个参数，分别是 promise 成功的回调 onFulfilled, 和 promise 失败的回调 onRejected</dd>
+			<dd>9.如果调用 then 时，promise 已经成功，则执行onFulfilled，参数是promise的value</dd>
+			<dd>10.如果调用 then 时，promise 已经成功，则执行onFulfilled，参数是promise的value</dd>
+			<dd>11.如果调用 then 时，promise 已经失败，那么执行onRejected, 参数是promise的reason</dd>
+			<dd>12.如果 then 中抛出了异常，那么就会把这个异常作为参数，传递给下一个 then 的失败的回调onRejected</dd>
+		</dl>
+	</div>
+
+<script>
+
+	Promise.all = function(values) {
+	  if (!Array.isArray(values)) {
+	    const type = typeof values
+      return new TypeError(`TypeError: ${type} ${values} is not iterable`)
+	  }
+
+	  return new Promise((resolve, reject) => {
+	    let resultArr = []
+		  let oldIndex = 0
+
+		  const processResultByKey = (value, index) => {
+	      resultArr[index] = value
+			  if (++oldIndex === values.length) {
+			    resolve(resultArr)
+			  }
+		  }
+		  for (let i = 0; i < values.length; i++) {
+		    let value = values[i]
+			  if (value && typeof value === 'function') {
+			    value.then((val) => {
+			      processResultByKey(val, i)
+			    }, reject)
+			  } else {
+			    processResultByKey(value, i)
+			  }
+		  }
+	  })
+	}
+  let p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('ok1');
+    }, 1000);
+  })
+
+  let p2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('ok2');
+    }, 1000);
+  })
+
+  Promise.all([1,2,3,p1,p2]).then(data => {
+    console.log('resolve', data);
+  }, err => {
+    console.log('reject', err);
+  })
+
+
+	const PENDING = 'PENDING'
+	const FULFILLED = 'FULFILLED'
+	const REJECTED = 'REJECTED'
+
+  /**
+   * 手写Promise
+   */
+	class Promise {
+	  constructor(excutor) {
+	    this.status = PENDING
+		  this.value = undefined
+		  this.reason = undefined
+		  this.onResolvedCallbacks = [] // 存放成功的回调
+      this.onRejectedCallbacks= []; // 存放失败的回调
+
+      let resolve = (value) => {
+	      if (this.status === PENDING) {
+	        this.status = FULFILLED
+		      this.value = value
+		      this.onResolvedCallbacks.forEach(fn => fn())
+	      }
+		  }
+
+		  let rejected = (reason) => {
+	      if (this.status === REJECTED) {
+	        this.status = REJECTED
+		      this.reason = reason
+          this.onRejectedCallbacks.forEach(fn=>fn())
+	      }
+		  }
+
+		  try {
+	      excutor(resolve, rejected)
+		  } catch (error) {
+			  rejected(error)
+      }
+    }
+    then(onFulfilled, onRejected) {
+	    if (this.status === FULFILLED) {
+	      onFulfilled(this.value)
+	    }
+	    if (this.status === REJECTED) {
+	      onRejected(this.reason)
+	    }
+	    if (this.status === PENDING) {
+	      this.onResolvedCallbacks.push(() => {
+	        onFulfilled(this.value)
+	      })
+		    this.onRejectedCallbacks.push(() => {
+		      onRejected(this.reason)
+		    })
+	    }
+    }
+	}
+
+  const promise = new Promise((resolve, reject) => {
+    // resolve('成功'); // 同步操作
+	  setTimeout(() => {
+	    resolve('成功') // 异步
+	  }, 1000)
+  }).then(
+    (data) => {
+      console.log('success', data)
+    },
+    (err) => {
+      console.log('faild', err)
+    }
+  )
+
+	// const p1 = new Promise((resolve, reject) => {
+	//   console.log('create a promise....') // 1
+	// 	resolve('成功了')
+	// })
+	// console.log('after new promise') // 2
+	//
+	//
+	// const p2 = p1.then(data => {
+	//   console.log(data) // 3 成功了
+	// 	throw new Error('失败了')
+	// })
+	//
+	// const p3 = p2.then(data => {
+	//   console.log('success', data)
+	// }, err => {
+	//   console.log('failed', err)  // 4
+	// })
+</script>
+</body>
+</html>
