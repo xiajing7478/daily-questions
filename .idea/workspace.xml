@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c568b877-204e-4725-b5a5-f115e18a4f00" name="Default Changelist" comment="Promise">
+    <list default="true" id="c568b877-204e-4725-b5a5-f115e18a4f00" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/实现柯里化.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details/Promise详解.html" beforeDir="false" afterPath="$PROJECT_DIR$/details/Promise详解.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +32,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="su&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AlphaMetal-web" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -73,7 +73,7 @@
       <workItem from="1608803257186" duration="1190000" />
       <workItem from="1608861499484" duration="8976000" />
       <workItem from="1615192733487" duration="13733000" />
-      <workItem from="1615276503440" duration="9684000" />
+      <workItem from="1615276503440" duration="23118000" />
     </task>
     <task id="LOCAL-00001" summary="深度优先遍历和广度优先遍历">
       <created>1586254404268</created>
@@ -201,7 +201,21 @@
       <option name="project" value="LOCAL" />
       <updated>1615339684660</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Promise">
+      <created>1615341292180</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1615341292180</updated>
+    </task>
+    <task id="LOCAL-00020" summary="如何判断一个对象是不是空对象">
+      <created>1615344552098</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1615344552099</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,32 +236,33 @@
     <MESSAGE value="增加数组拍平、去重、排序" />
     <MESSAGE value="Promise详解" />
     <MESSAGE value="Promise" />
-    <option name="LAST_COMMIT_MESSAGE" value="Promise" />
+    <MESSAGE value="如何判断一个对象是不是空对象" />
+    <option name="LAST_COMMIT_MESSAGE" value="如何判断一个对象是不是空对象" />
   </component>
   <component name="WindowStateProjectService">
     <state x="647" y="0" width="1090" height="1040" key="#HTML" timestamp="1606716476919">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="647" y="0" width="1090" height="1040" key="#HTML/0.0.1920.1040@0.0.1920.1040" timestamp="1606716476919" />
-    <state x="442" y="0" key="CommitChangelistDialog2" timestamp="1615339683553">
+    <state x="442" y="0" key="CommitChangelistDialog2" timestamp="1615344550836">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="442" y="0" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615339683553" />
+    <state x="442" y="0" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615344550836" />
     <state x="442" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1608868192937" />
     <state x="266" y="86" key="DiffContextDialog" timestamp="1615339680924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="266" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615339680924" />
     <state x="266" y="86" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608789524301" />
-    <state x="653" y="300" key="FileChooserDialogImpl" timestamp="1615273345345">
+    <state x="653" y="300" key="FileChooserDialogImpl" timestamp="1615360077537">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615273345345" />
+    <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615360077537" />
     <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607064641901" />
-    <state x="434" y="158" key="Vcs.Push.Dialog.v2" timestamp="1615339685835">
+    <state x="434" y="158" key="Vcs.Push.Dialog.v2" timestamp="1615344553438">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="434" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615339685835" />
+    <state x="434" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615344553438" />
     <state x="434" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608868196345" />
   </component>
 </project>

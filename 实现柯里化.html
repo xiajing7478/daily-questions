@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>实现柯里化详解</title>
+</head>
+<body>
+<div>
+	<dl>
+		<dt>柯里化: 接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。</dt>
+		<dd>优点：1.让参数能够复用，调用起来也更方便</dd>
+		<dd>2.提前返回</dd>
+		<dd>3.延迟计算/运行</dd>
+		<dd>缺点：1.存取arguments对象通常要比存取命名参数要慢一点</dd>
+		<dd>2.使用fn.apply(…) 和 fn.call(…)通常比直接调用fn(…) 稍微慢点</dd>
+		<dd>3.创建大量嵌套作用域和闭包函数会带来花销，无论是在内存还是速度上</dd>
+	</dl>
+</div>
+<script>
+	// 普通的函数
+	const add = (x, y) => {
+	  return x + y
+	}
+	// 柯里化
+	const curryingAdd = (x) => {
+	  return (y) => {
+	    return x + y
+	  }
+	}
+	// console.log(add(5,8))
+	// console.log(curryingAdd(5)(8))
+
+
+  // 正常正则验证字符串 reg.test(txt)
+  // 函数封装后
+  // function check(reg, txt) {
+  //   return reg.test(txt)
+  // }
+	//
+  // check(/\d+/g, 'test')       //false
+  // check(/[a-z]+/g, 'test')    //true
+  // // Currying后
+  // function curryingCheck(reg) {
+  //   return function(txt) {
+  //     return reg.test(txt)
+  //   }
+  // }
+	//
+  // var hasNumber = curryingCheck(/\d+/g)
+  // var hasLetter = curryingCheck(/[a-z]+/g)
+	//
+  // hasNumber('test1')      // true
+  // hasNumber('testtest')   // false
+  // hasLetter('21212')      // false
+
+  const currying = function(fn) {
+    debugger
+    // 获取第一个方法内的全部参数
+    let args = Array.prototype.slice.call(arguments, 1)
+	  return function () {
+      console.log(fn)
+      // 将后面参数方法里的全部参数和args进行合并
+      let newArgs = args.concat(Array.prototype.slice.call(arguments))
+      // 合并后的参数通过apply作为fn的参数，并且执行
+      return fn.apply(this, newArgs)
+    }
+  }
+
+  // const progressCurrying = (fn, args) => {
+	//   let _this = this
+	// 	let len = fn.length
+	// 	var args = args || []
+	// 	return function () {
+	//     let _args = Array.prototype.slice.call(arguments)
+	// 		Array.prototype.push.apply(args, _args)
+  //     // 如果参数个数小于最初的fn.length，则递归调用，继续收集参数
+	// 		if (_args.length < len) {
+	// 		  return progressCurrying.call(_this, fn, _args)
+	// 		}
+  //     // 参数收集完毕，则执行fn
+	// 		return fn.apply(this, _args)
+  //   }
+	// }
+
+
+	function curryFn() {
+	  debugger
+	  var _args = Array.prototype.slice.call(arguments)
+	  // var _args = arguments
+		var _adder = function () {
+	    debugger
+			_args.push(...arguments)
+			return _adder
+    }
+    _adder.toString = function () {
+	    debugger
+			return _args.reduce(function (a, b) {
+				return a + b
+      })
+    }
+    return _adder
+  }
+
+  console.log(curryFn(10,50)(40)()(30))
+
+
+  /**
+   * reduce
+   * arr.reduce(callback, initialValue)
+   * callback包含4个参数
+   * 1. previousValue 上一次调用回调返回的值，或者是提供的初始值（initialValue）
+   * 2. currentValue 数组中当前被处理的元素
+   * 3. index 当前元素在数组中的索引
+   * 4. array 调用 reduce 的数组
+   *
+   * 如果没有提供initialValue, reduce会从索引为1的地方开始执行callback方法,跳过第一个索引。
+   * 如果提供initialValue, 从索引0开始，即第一个元素为initialValue
+   */
+	let arr = [10,20,30,40,50]
+	function ss(arr) {
+		return arr.reduce(function (a,b, index) {
+		  console.log('a', a)
+		  console.log('b', b)
+		  console.log('index',index)
+			if (index <= 3) {
+        return a + b
+			} else {
+			  return a
+			}
+    }, 0)
+  }
+  console.log(ss(arr))
+
+
+</script>
+</body>
+</html>
