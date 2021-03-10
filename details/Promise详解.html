@@ -189,6 +189,12 @@
 
 
 
+  // Promise.all([1, read2(file1), 3]).then(data => {
+  //   console.log(data)
+  // },error => {
+  //   console.log(error)
+  // })
+
   Promise.all = function(values) {
 	  if (!Array.isArray(values)) {
 	    const type = typeof values
@@ -196,27 +202,37 @@
 	  }
 
 	  return new Promise((resolve, reject) => {
-	    let resultArr = []
-		  let oldIndex = 0
-
-		  const processResultByKey = (value, index) => {
-	      resultArr[index] = value
-			  if (++oldIndex === values.length) {
-			    resolve(resultArr)
+	    let result = []
+		  let counter  = 0
+		  const processData = (value, key) => {
+	      result[key] = value
+			  //  每成功一次计数器就会加1，直到所有都成功的时候会与values长度一致，则认定为都成功了，所以能避免异步问题
+			  if (++counter === values.length) {
+			    resolve(result)
 			  }
 		  }
 		  for (let i = 0; i < values.length; i++) {
 		    let value = values[i]
-			  if (value && typeof value === 'function') {
-			    value.then((val) => {
-			      processResultByKey(val, i)
+			  if (isPromise(value)) {
+			    value.then(data => {
+			      processData(data, i)
 			    }, reject)
 			  } else {
-			    processResultByKey(value, i)
+			    processData(value, i)
 			  }
 		  }
 	  })
 	}
+
+	function isPromise(value) {
+    if ((typeof value === 'object' && value !== null) || typeof value === 'function') {
+      if (typeof value.then === 'function') {
+        return true
+      }
+    }
+    return false
+	}
+
   let p1 = new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve('ok1');
@@ -229,7 +245,7 @@
     }, 1000);
   })
 
-  Promise.all([1,2,3,p1,p2]).then(data => {
+  Promise.all([1,p1,p2]).then(data => {
     console.log('resolve', data);
   }, err => {
     console.log('reject', err);

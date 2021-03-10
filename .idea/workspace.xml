@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c568b877-204e-4725-b5a5-f115e18a4f00" name="Default Changelist" comment="js常见的几种方式增加插入排序">
+    <list default="true" id="c568b877-204e-4725-b5a5-f115e18a4f00" name="Default Changelist" comment="Promise">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details/detail-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/details/detail-6.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/details/Promise详解.html" beforeDir="false" afterPath="$PROJECT_DIR$/details/Promise详解.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +69,11 @@
       <workItem from="1607482654508" duration="14152000" />
       <workItem from="1607917247418" duration="11424000" />
       <workItem from="1608520438510" duration="3128000" />
-      <workItem from="1608778699620" duration="8865000" />
+      <workItem from="1608778699620" duration="15665000" />
+      <workItem from="1608803257186" duration="1190000" />
+      <workItem from="1608861499484" duration="8976000" />
+      <workItem from="1615192733487" duration="13733000" />
+      <workItem from="1615276503440" duration="9684000" />
     </task>
     <task id="LOCAL-00001" summary="深度优先遍历和广度优先遍历">
       <created>1586254404268</created>
@@ -113,49 +117,137 @@
       <option name="project" value="LOCAL" />
       <updated>1608781761707</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="数组排序、拍平、去重">
+      <created>1608792664527</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1608792664527</updated>
+    </task>
+    <task id="LOCAL-00008" summary="js深拷贝">
+      <created>1608799210686</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1608799210686</updated>
+    </task>
+    <task id="LOCAL-00009" summary="js函数柯里化">
+      <created>1608801611121</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1608801611121</updated>
+    </task>
+    <task id="LOCAL-00010" summary="增加快速排序方法">
+      <created>1608804408293</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1608804408293</updated>
+    </task>
+    <task id="LOCAL-00011" summary="js函数柯里化">
+      <created>1608804437057</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1608804437057</updated>
+    </task>
+    <task id="LOCAL-00012" summary="增加数组拍平、去重、排序">
+      <created>1608868194356</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1608868194356</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Promise详解">
+      <created>1615197727587</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1615197727587</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Promise详解">
+      <created>1615197784583</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1615197784583</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Promise详解">
+      <created>1615260851547</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1615260851548</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Promise详解">
+      <created>1615283577811</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1615283577811</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Promise详解">
+      <created>1615283652325</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1615283652325</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Promise">
+      <created>1615339684660</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1615339684660</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="深度优先遍历和广度优先遍历" />
     <MESSAGE value="生成LazyMan类" />
     <MESSAGE value="js常见的几种方式" />
     <MESSAGE value="js常见的几种方式增加插入排序" />
     <MESSAGE value="js常见的几种方式增加冒泡排序" />
     <MESSAGE value="宏观和微观任务" />
-    <option name="LAST_COMMIT_MESSAGE" value="宏观和微观任务" />
+    <MESSAGE value="数组排序、拍平、去重" />
+    <MESSAGE value="js深拷贝" />
+    <MESSAGE value="增加快速排序方法" />
+    <MESSAGE value="js函数柯里化" />
+    <MESSAGE value="增加数组拍平、去重、排序" />
+    <MESSAGE value="Promise详解" />
+    <MESSAGE value="Promise" />
+    <option name="LAST_COMMIT_MESSAGE" value="Promise" />
   </component>
   <component name="WindowStateProjectService">
     <state x="647" y="0" width="1090" height="1040" key="#HTML" timestamp="1606716476919">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="647" y="0" width="1090" height="1040" key="#HTML/0.0.1920.1040@0.0.1920.1040" timestamp="1606716476919" />
-    <state x="630" y="143" key="#JavaScript" timestamp="1606287344598">
+    <state x="442" y="0" key="CommitChangelistDialog2" timestamp="1615339683553">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="630" y="143" key="#JavaScript/0.0.1920.1040@0.0.1920.1040" timestamp="1606287344598" />
-    <state x="442" y="0" key="CommitChangelistDialog2" timestamp="1608789525986">
+    <state x="442" y="0" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615339683553" />
+    <state x="442" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1608868192937" />
+    <state x="266" y="86" key="DiffContextDialog" timestamp="1615339680924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="442" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1608789525986" />
-    <state x="266" y="86" key="DiffContextDialog" timestamp="1608789524301">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
+    <state x="266" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615339680924" />
     <state x="266" y="86" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608789524301" />
-    <state x="653" y="300" key="FileChooserDialogImpl" timestamp="1607064641901">
+    <state x="653" y="300" key="FileChooserDialogImpl" timestamp="1615273345345">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615273345345" />
     <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607064641901" />
-    <state x="434" y="158" key="Vcs.Push.Dialog.v2" timestamp="1608781763388">
+    <state x="434" y="158" key="Vcs.Push.Dialog.v2" timestamp="1615339685835">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="434" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608781763388" />
-    <state x="792" y="-2" width="1009" height="1470" key="search.everywhere.popup" timestamp="1606295582537">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="792" y="-2" width="1009" height="1470" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606295582537" />
+    <state x="434" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615339685835" />
+    <state x="434" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608868196345" />
   </component>
 </project>
