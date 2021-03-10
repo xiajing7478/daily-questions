@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>如何判断一个对象是不是空对象</title>
+</head>
+<body>
+
+<script>
+	let obj = null
+	let fn = function() {}
+	let arr = []
+	let emptyObj = {}
+	let person = {
+	  name: 'aaa',
+		age: 10
+	}
+	let under = undefined
+	let na = NaN
+	// console.log(typeof obj === 'object') // true
+	// console.log(typeof fn === 'object') // false
+	// console.log(typeof arr === 'object') // true
+	// console.log(typeof emptyObj === 'object') // true
+	// console.log(emptyObj instanceof Object) // true
+	// console.log(obj instanceof Object) // false
+  // console.log(typeof under) // undefined
+	// console.log(Object.prototype.toString.call(obj)) // [object Null]
+	// console.log(Object.prototype.toString.call(arr) === '[object Object]') // false
+	// console.log(Object.prototype.toString.call(arr) === '[object Array]') // true
+	// console.log(Object.prototype.toString.call(emptyObj) === '[object Object]') // true
+  // console.log(typeof na) // number
+  // console.log(typeof under === 'object') // false
+
+	console.log(isEmptyObj(obj)) // false
+	console.log(isEmptyObj(emptyObj)) // true
+	console.log(isEmptyObj(person)) // false
+
+  /**
+   * 判断一个对象是否为空对象
+   * @param obj
+   * @returns {boolean}
+   */
+	function isEmptyObj(obj) {
+		if (Object.prototype.toString.call(obj) !== '[object Object]')
+		  return false
+		return Object.keys(obj).length == 0 ? true : false
+  }
+
+</script>
+</body>
+</html>
