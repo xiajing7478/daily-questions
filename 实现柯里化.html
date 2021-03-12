@@ -82,26 +82,21 @@
   //   }
 	// }
 
-
-	function curryFn() {
-	  debugger
-	  var _args = Array.prototype.slice.call(arguments)
-	  // var _args = arguments
-		var _adder = function () {
-	    debugger
-			_args.push(...arguments)
-			return _adder
+	function curryFun() {
+	  const args = Array.prototype.slice.call(arguments)
+		function adder() {
+			args.push(...arguments)
+			return adder
     }
-    _adder.toString = function () {
-	    debugger
-			return _args.reduce(function (a, b) {
-				return a + b
+    adder.toString = function() {
+	    console.log(args)
+			return args.reduce(function (a, b) {
+			  return a + b
       })
     }
-    return _adder
-  }
-
-  console.log(curryFn(10,50)(40)()(30))
+    return adder
+	}
+  console.log(curryFun(10,50)(40)()(30))
 
 
   /**
@@ -129,7 +124,7 @@
 			}
     }, 0)
   }
-  console.log(ss(arr))
+  // console.log(ss(arr))
 
 
 </script>
