@@ -12,8 +12,22 @@
 	</div>
 	<dl>
 		<dt>vue组件间通信6种方式</dt>
-		<dd>1.props</dd>
-		<dd>2.emit/on</dd>
+		<dd>1.props/$emit</dd>
+		<dd>
+			父组件向子组件传值(props)
+			子组件向父组件传值($emit)
+		</dd>
+		<dd>2.$emit/$on</dd>
+		<dd>
+			这种方法通过一个空的 Vue 实例作为中央事件总线（事件中心），用它来触发事件和监听事件,巧妙而轻量地实现了任何组件间的通信，
+			包括父子、兄弟、跨级。当我们的项目比较大时，可以选择更好的状态管理解决方案 vuex。
+			<br>
+			var Event = new Vue()
+			Event.$emit('data-a', 'hello')
+			Event.$emit('data-b', 'vue')
+			Event.on('data-a', (name) => { console.log(name) })
+			Event.on('data-b', (name) => { console.log(name) })
+		</dd>
 		<dd>3.vuex</dd>
 		<dd>4.bus</dd>
 		<dd>5.provide/inject</dd>
