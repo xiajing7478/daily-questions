@@ -12,6 +12,24 @@
 		<dd>this.$router.push({ path: 'user/useInfo', query: { id: 5 } })</dd>
 		<dd>this.$router.push({ path: '/user/useInfo', query: { id: 5 } })</dd>
 		<dd>以/开头的会被当做绝对路径，就不会一直嵌套之前的路径，否则反之。</dd>
+		<dd>
+
+			history
+			window.history.pushState(stateObject, title, URL)
+			window.history.replaceState(stateObject, title, URL)
+			hash: hash模式背后的原理是onhaschange事件
+			<br>
+			hash => http://www.abc.com/#/index
+			hash值为#/index， hash特点在于hash出现早url中，但是不会包括在http请求中，对后端没有影响，不会重新加载页面.
+
+			<br>
+
+			history => http://abc.com/user/index
+
+			通过history api，我们丢弃了丑陋的#，但是有一个缺点，当刷新时，如果服务器中没有相应的相应或者资源，会分分钟刷出一个404来（刷新需要请求服务器）。
+			所以history模式不怕前进，不怕后退，就怕刷新。
+
+		</dd>
 	</dl>
 </div>
 </body>
