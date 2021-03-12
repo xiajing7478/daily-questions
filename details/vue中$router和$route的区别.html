@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue中$router和$route的区别</title>
+</head>
+<body>
+<div>
+	<dl>
+		<dt>$router: $router是vueRouter的一个对象,通过Vue.use(VueRouter)和Vue构造函数得到一个router的实例对象。这个对象是一个全局对象,它包含了所有的路由信息。</dt>
+		<dt>$route是一个跳转路由对象,每一个路由都有一个$route对象，是一个全部变量，可以获取对应的name,query,path,params等</dt>
+		<dd>this.$router.push({ path: 'user/useInfo', query: { id: 5 } })</dd>
+		<dd>this.$router.push({ path: '/user/useInfo', query: { id: 5 } })</dd>
+		<dd>以/开头的会被当做绝对路径，就不会一直嵌套之前的路径，否则反之。</dd>
+	</dl>
+</div>
+</body>
+</html>
