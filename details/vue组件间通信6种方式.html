@@ -29,10 +29,13 @@
 			Event.on('data-b', (name) => { console.log(name) })
 		</dd>
 		<dd>3.vuex</dd>
-		<dd>4.bus</dd>
-		<dd>5.provide/inject</dd>
-		<dd>6.$parent/$children</dd>
-		<dd>7.$attrs/$listeners</dd>
+		<dd>4.provide/inject</dd>
+		<dd>5.$parent/$children</dd>
+		<dd>6.$attrs/$listeners</dd>
+		<dd>
+			$attrs表示没有继承数据的对象，格式为{属性名:属性值}。简单地说，$attrs与$listeners是2个对象，$attrs存放的是父组件中绑定
+			的非props属性，$listeners存放的是父组件中绑定的非原生事件。
+		</dd>
 	</dl>
 </div>
 </body>
