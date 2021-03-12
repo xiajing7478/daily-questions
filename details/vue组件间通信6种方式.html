@@ -12,12 +12,12 @@
 	</div>
 	<dl>
 		<dt>vue组件间通信6种方式</dt>
-		<dd>1.props/$emit</dd>
+		<dt>1.props/$emit</dt>
 		<dd>
 			父组件向子组件传值(props)
 			子组件向父组件传值($emit)
 		</dd>
-		<dd>2.$emit/$on</dd>
+		<dt>2.$emit/$on</dt>
 		<dd>
 			这种方法通过一个空的 Vue 实例作为中央事件总线（事件中心），用它来触发事件和监听事件,巧妙而轻量地实现了任何组件间的通信，
 			包括父子、兄弟、跨级。当我们的项目比较大时，可以选择更好的状态管理解决方案 vuex。
@@ -28,10 +28,35 @@
 			Event.on('data-a', (name) => { console.log(name) })
 			Event.on('data-b', (name) => { console.log(name) })
 		</dd>
-		<dd>3.vuex</dd>
-		<dd>4.provide/inject</dd>
-		<dd>5.$parent/$children</dd>
-		<dd>6.$attrs/$listeners</dd>
+		<dt>3.vuex</dt>
+		<dt>4.provide/inject</dt>
+		<dd>
+			// A.vue
+			export default {
+			provide: {
+				name: '浪里行舟'
+			}
+			}
+			// B.vue
+			export default {
+			  inject: ['name'],
+			  mounted () {
+				console.log(this.name);  // 浪里行舟
+			  }
+			}
+
+		</dd>
+		<dt>5.$parent/$children 与 ref</dt>
+		<dd>
+			ref 如果用在普通的DOM元素上，引用指向的是DOM元素，如果用在子组件上，引用指向组件实例。
+			$parent/$children 访问父/子实例。
+			需要注意的是，这2种都是直接得到组件实例，使用后都可以直接调用组件的方法和数据。
+			<component-a ref="comA"></component-a>
+			const comA = this.$refs.comA;
+      		console.log(comA.title);  // Vue.js
+      		comA.sayHello();  // 弹窗
+		</dd>
+		<dt>6.$attrs/$listeners</dt>
 		<dd>
 			$attrs表示没有继承数据的对象，格式为{属性名:属性值}。简单地说，$attrs与$listeners是2个对象，$attrs存放的是父组件中绑定
 			的非props属性，$listeners存放的是父组件中绑定的非原生事件。
