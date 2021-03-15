@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>React/Vue 项目时为什么要在列表组件中写 key，其作用是什么</title>
+    <meta charset="UTF-8">
+    <title>React/Vue 项目时为什么要在列表组件中写 key，其作用是什么</title>
 </head>
+
 <body>
-	<p>在使用简单模板，不带key，可以更有效的复用节点，从diff速度来看也是不带key更快，因为带key在增删节点上有消耗。这就是vue文档所说的默认模式，
-		但这并不是key的作用，而是没有key的情况下可以对节点就地复用，提高性能。</p>
-	<p>key的作用是什么？</p>
-	<p>key是给每一个vnode的唯一id,可以依靠key更准确、更快拿到oldVnode中对应的vnode节点。</p>
-	<p>
-		<dl>
-			<dt>1.更准确</dt>
-			<dd>因为带key就不是就地复用了，在sameNode函数 a.key === b.key对比中可以避免就地复用的情况。所以会更加准确。</dd>
-			<dt>2.更快</dt>
-			<dd>利用key的唯一性生成map对象来获取对应节点，比遍历方式更快。(map会比遍历更快)</dd>
-		</dl>
-	</p>
+    <p>在使用简单模板，不带key，可以更有效的复用节点，从diff速度来看也是不带key更快，因为带key在增删节点上有消耗。这就是vue文档所说的默认模式， 但这并不是key的作用，而是没有key的情况下可以对节点就地复用，提高性能。
+    </p>
+    <p>key的作用是什么？</p>
+    <p>key是给每一个vnode的唯一id,可以依靠key更准确、更快拿到oldVnode中对应的vnode节点。</p>
+    <p>
+        <dl>
+            <dt>1.更准确</dt>
+            <dd>因为带key就不是就地复用了，在sameNode函数 a.key === b.key对比中可以避免就地复用的情况。所以会更加准确。</dd>
+            <dt>2.更快</dt>
+            <dd>利用key的唯一性生成map对象来获取对应节点，比遍历方式更快。(map会比遍历更快)</dd>
+        </dl>
+    </p>
 </body>
+
 </html>
