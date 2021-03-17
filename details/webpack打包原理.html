@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webpack打包原理</title>
+</head>
+
+<body>
+    <div>
+        <dl>
+            <!--参考https://www.jianshu.com/p/e24ed38d89fd -->
+            <dt>webpack打包原理</dt>
+            <dd>
+                webpack只是一个打包模块的机制，只是把依赖的模块转化成可以代表这些包的静态文件。并不是什么common.js或者amd之类模块化规范。
+            </dd>
+            <dd>
+                webpack就是识别你的入口文件，识别模块依赖，来打包代码。至于代码使用的是common.js、amd、es6的import，webpack都会对其进行分析，来获取依赖。
+            </dd>
+            <dd>
+                webpack做的就是分析代码、转换代码、编译代码、输出代码。webpack本身是一个node模块，所有webpack.config.js是以common.js形式书写(node中的模块化是common.js规范)。
+            </dd>
+            <dd>
+                webpack中每个模块有一个唯一的id，是从0开始递增的。整个打包后的bundle.js是一个匿名函数自执行。参数则为一个数组。数组的每一项都为个function。 function的内容则为每个模块的内容，并按照require的顺序排列。
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>如何实现一个简单的webpack</dt>
+            <dd>1.读取文件分析模块依赖</dd>
+            <dd>2.对模块进行解析执行(深度遍历)</dd>
+            <dd>3.针对不同的模块使用相应的loader</dd>
+            <dd>4.编译模块，生成抽象语法树AST</dd>
+            <dd>5.循环遍历AST树，拼接输出js</dd>
+        </dl>
+    </div>
+</body>
+
+</html>
