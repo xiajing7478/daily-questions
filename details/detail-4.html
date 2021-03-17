@@ -1,34 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>对象的深拷贝</title>
+    <meta charset="UTF-8">
+    <title>对象的深拷贝</title>
 </head>
+
 <body>
 
 </body>
 <script>
-let obj = { age: 18, name: 'vue', info: { a: 'a', b: 'b'}}
-// let result = obj
-let result = deepClone(obj)
-function deepClone(obj) {
-	if (obj && typeof obj === 'object') {
-		let constructor = obj.constructor
-		let result = new constructor()
-		for (let key in obj) {
-			if (obj.hasOwnProperty(key)) {
-				result[key] = deepClone(obj[key])
-			}
-		}
-		return result
-	} else {
-		return obj
-	}
-}
-console.log('result before', result)
-result.info.c = 'c'
-console.log('result after', result)
-console.log('obj origin', obj)
+    let obj = {
+        age: 18,
+        name: 'vue',
+        info: {
+            a: 'a',
+            b: 'b'
+        }
+    }
+    let _arr = [{
+            id: 1,
+            name: 'tim',
+            age: 18
+        }, {
+            id: 2,
+            name: 'jimmy',
+            age: 28
+        }, {
+            id: 3,
+            name: 'alice',
+            age: 38
+        }]
+        // let result = obj
+        // let result = deepClone(obj)
+        /**
+         * 判断数组最正确的做法
+         **/
+    function isArray(obj) {
+        return Object.prototype.toString.call(_arr) == '[object Array]'
+    }
+    /**
+     * 利用对象或数组的构造函数
+     **/
+    function deepClone(obj) {
+        if (obj && typeof of === 'object') {
+            var constructor = obj.constructor
+            var result = new constructor()
+            for (let key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    result[key] = deepClone(obj[key])
+                }
+            }
+            return result
+        } else {
+            return obj
+        }
+    }
 
+    /**
+     * 判断对象是数组、对象
+     **/
+    function clone(obj) {
+        var buf
+        if (obj instanceof Array) {
+            buf = []
+            var i = obj.length
+            while (i--) {
+                buf[i] = clone(obj[i])
+            }
+            return buf
+        } else if (obj instanceof Object) {
+            buf = {}
+            for (var key in obj) {
+                buf[key] = clone(obj[key])
+            }
+            return buf
+        } else {
+            return obj
+        }
+    }
+
+    let newResult = deepClone(_arr)
+    console.log(newResult)
+    let _newResult = clone(_arr)
+    console.log(_newResult)
+
+
+    // console.log('result before', result)
+    // result.info.c = 'c'
+    // console.log('result after', result)
+    // console.log('obj origin', obj)
 </script>
+
 </html>
