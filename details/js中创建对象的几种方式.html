@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js中创建对象的几种方式</title>
+</head>
+
+<body>
+    <script>
+        var arr = [4, 7, 8, 9]
+        console.log(Math.max.apply({}, arr))
+
+
+        // 如果是forEach，result的返回值undefined
+        // 可以看出map和forEach区别
+        var result = arr.map(item => {
+            return item * item
+        })
+        console.log('result', result) // [16, 49, 64, 81] 
+
+        // 通过字面量形式
+        var obj = {}
+
+        // 通过构造函数
+        var obj = new Object()
+
+        // 工厂模式
+        // 可以创建多个相似的对象，但不能解决对象标识的问题，（即怎样知道一个对象的类型）
+        function createObject(name, sex, grade) {
+            var _obj = new Object()
+            _obj.name = name
+            _obj.sex = sex
+            _obj.grade = grade
+            _obj.say = function() {
+                console.log(this.name)
+            }
+            return _obj
+        }
+        var obj = createObject('tim', 'men', 1)
+
+        // 构造函数
+        /**
+         * 1.创建一个新对象
+         * 2.把构造函数的作用域赋值给了新对象，改变this指向(Person.call(obj, argument))
+         * 3.执行构造函数
+         * 4.最后把obj赋值给Person
+         * 
+         * 构造函数缺点：每个方法都要在每个实例创建一遍
+         **/
+        function Person(name, sex, grade) {
+            this.name = name
+            this.sex = sex
+            this.grade = grade
+            this.say = function() {
+                console.log(this.name)
+            }
+        }
+        var obj = new Person('tim', 'men', 1)
+        var obj1 = new Person('tim', 'men', 1)
+        console.log(obj.say == obj1.say) // false
+
+        // 原型链
+        // 原型链模式可以让所有实例共享原型对象上的属性和方法，不必再构造函数中定义对象实例信息
+        function Person1(name, sex, grade) {
+            this.name = name
+            this.sex = sex
+            this.grade = grade
+        }
+        Person1.prototype.say = function() {
+            console.log(this.name)
+        }
+        var obj3 = new Person1('tim', 'men', 1)
+        var obj4 = new Person1('tim', 'men', 1)
+        console.log(obj3.say == obj4.say) // true
+
+
+        console.log('a', null instanceof Object)
+        console.log('ab', typeof null)
+    </script>
+</body>
+
+</html>
