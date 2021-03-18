@@ -21,6 +21,33 @@
         })
         console.log('result', result) // [16, 49, 64, 81] 
 
+
+        // 通过Class
+        class Persons {
+            constructor(name, age, sex) {
+                this.name = name
+                this.age = age
+                this.sex = sex
+            }
+            isMan() {
+                let men = this.sex ? 'men' : 'women'
+                console.log(`${this.name} is ${men}`)
+            }
+            eat() {
+                console.log(`${this.name} is eatting`)
+            }
+        }
+
+        var person1 = new Persons('小明', 18, 1)
+        var person2 = new Persons('小花', 28, 0)
+        person1.isMan()
+        person1.eat()
+        person2.isMan()
+        person2.eat()
+        console.log(person1.eat == person2.eat) // true
+
+
+
         // 通过字面量形式
         var obj = {}
 
