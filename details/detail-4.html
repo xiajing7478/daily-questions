@@ -19,26 +19,37 @@
         }
     }
     let _arr = [{
-            id: 1,
-            name: 'tim',
-            age: 18
-        }, {
-            id: 2,
-            name: 'jimmy',
-            age: 28
-        }, {
-            id: 3,
-            name: 'alice',
-            age: 38
-        }]
-        // let result = obj
-        // let result = deepClone(obj)
-        /**
-         * 判断数组最正确的做法
-         **/
+        id: 1,
+        name: 'tim',
+        age: 18
+    }, {
+        id: 2,
+        name: 'jimmy',
+        age: 28
+    }, {
+        id: 3,
+        name: 'alice',
+        age: 38
+    }]
+
+    // console.log(_arr.constructor)
+    // console.log(obj.constructor)
+    // console.log(Array.prototype.constructor)
+    // console.log(Object.prototype.constructor)
+    // console.log(Array.__proto__.constructor)
+    // console.log(Object.__proto__.constructor)
+
+
+    // let result = obj
+    // let result = deepClone(obj)
+    /**
+     * 判断数组最正确的做法
+     **/
     function isArray(obj) {
         return Object.prototype.toString.call(_arr) == '[object Array]'
     }
+
+
     /**
      * 利用对象或数组的构造函数
      **/
@@ -48,6 +59,8 @@
             var result = new constructor()
             for (let key in obj) {
                 if (obj.hasOwnProperty(key)) {
+                    // 如果这么写，改变数组或对象的某一个属性值,原先的属性值也会被修改
+                    // result[key] = obj[key]
                     result[key] = deepClone(obj[key])
                 }
             }

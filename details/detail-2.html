@@ -1,83 +1,119 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-10 16:53:53
+ * @LastEditTime: 2021-03-19 14:50:44
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \daily-questions\details\detail-2.html
+-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>什么是防抖和节流？有什么区别？如何实现</title>
+    <meta charset="UTF-8">
+    <title>什么是防抖和节流？有什么区别？如何实现</title>
 </head>
+
 <body>
-	<p>防抖:触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间</p>
-	<p>节流:高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率。</p>
-	<p>
-		<span>防抖</span>
-		<input id="inp">
-	</p>
-	<p>
-		<span>节流</span>
-		<input id="inp_throttle">
-	</p>
-	<script type="text/javascript">
-		var inp = document.getElementById('inp')
-		inp.addEventListener('input', debounce(sayHi, 2000))
-		/**
-		 * 防抖
-		 */
-		function debounce(fn, wait) {
-			var timeout = null
-			return function () {
-				clearTimeout(timeout)
-				timeout = setTimeout(() => {
-					fn.apply(this, arguments)
-				}, wait)
-			}
-		}
-		function sayHi() {
-			console.log(this)
-			console.log(arguments)
-			console.log('防抖成功....')
-		}
+    <p>防抖: 触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发， 则重新计算时间。(即在事件被触发n秒后再执行回调函数, 如果在这n秒内又被触发, 则重新计算)</p>
+    <p>
+        1. 用户在输入框中连续输入一串字符后，只会在输入完后去执行最后一次的查询ajax请求
+    </p>
+    <p>
+        2. window的resize、scroll事件，不断地调整浏览器的窗口大小、或者滚动时会触发对应事件，防抖让其只触发一次
+    </p>
+    <p>
+        防抖实例: <input type="text" name="debounce" id="debounce"></input>
+    </p>
+    <p>节流:高频事件触发，但在n秒内只会执行一次，所以节流会稀释函数的执行频率。</p>
+    <p>
+        1. 鼠标连续不断地触发某事件（如点击），只在单位时间内只触发一次；
+    </p>
+    <p>
+        2.在页面的无限加载场景下，需要用户在滚动页面时，每隔一段时间发一次 ajax 请求，而不是在用户停下滚动页面操作时才去请求数据；
+    </p>
+    <p>
+        节流实例: <input type="text" name="throttle" id="throttle"></input>
+    </p>
+    <p>
+        <dl>
+            <dt>区别:</dt>
+            <dd>1.防抖是在某一段时间内只执行一次; 节流是间隔时间执行，不管事件触发有多频繁, 都会在规定时间内执行一次事件。</dd>
+            <dd>2.防抖是维护一个计时器, 规定delay事件后触发，但是在delay时间内再次触发的话，都会清除当前的 timer 然后重新设置超时调用, 即重新计算。这样一来，只有最后一次操作能被触发。 节流是通过判断是否到达一定时间来触发，若没到规定时间则使用计时器延后，而下一次事件则会重新设定计时器。
+            </dd>
+        </dl>
+    </p>
+    <!-- <p>
+        <span>防抖</span>
+        <input id="inp">
+    </p>
+    <p>
+        <span>节流</span>
+        <input id="inp_throttle">
+    </p> -->
+    <script type="text/javascript">
+        /**
+         * 防抖
+         */
+        var inputDebounce = document.getElementById('debounce')
+        inputDebounce.addEventListener('keyup', debounce(fn, 500))
+
+        function debounce(fn, wait) {
+            var timeout = null
+            return function() {
+                clearTimeout(timeout)
+                timeout = setTimeout(() => {
+                    fn.apply(this, arguments)
+                }, wait)
+            }
+        }
+
+        function fn(e) {
+            console.log('ajax request ' + e.target.value)
+        }
 
 
-		/**
-		 * 节流
-		 */
-		var inp_throttle = document.getElementById('inp_throttle')
-		inp_throttle.addEventListener('input', throttle(sayThrottle, 2000))
-		function sayThrottle() {
-			console.log(this)
-			console.log(arguments)
-			console.log('节流成功....')
-		}
+        /**
+         * 节流
+         */
+        var inpThrottle = document.getElementById('throttle')
+        inpThrottle.addEventListener('keyup', throttle(fun, 500))
 
-		function throttle(fn, wait) {
-			var previous = 0
-			// var $this = this, arg = arguments;
-			return function () {
-				now = + new Date()
-				if (now - previous > wait) {
-					fn.apply(this, arguments)
-					previous = now
-				}
-			}
-		}
+        function throttle(fun, wait) {
+            var pervious = 0,
+                now
+            return function() {
+                now = +new Date()
+                if (now > pervious + wait) {
+                    fun.apply(this, arguments)
+                    pervious = now
+                }
+            }
+        }
 
-		/**
-		 * 节流
-		 * @param func 回调函数
-		 * @param wait
-		 * @returns {Function}
-		 */
-		// function throttle(func, wait) {
-		// 	var previous = 0;
-		// 	var $this = this, arg = arguments;
-		// 	return function () {
-		// 		var now = + new Date()
-		// 		if (now - previous > wait) {
-		// 			func.apply($this, arguments)
-		// 			previous = now
-		// 		}
-		// 	}
-		// }
-		// wrap.onmousemove = throttle(getMove, 1000)
-	</script>
+        function fun(e) {
+            console.log('ajax request ' + e.target.value)
+        }
+
+        /**
+         * 节流
+         * @param func 回调函数
+         * @param wait
+         * @returns {Function}
+         */
+        // function throttle(func, wait) {
+        // 	var previous = 0;
+        // 	var $this = this, arg = arguments;
+        // 	return function () {
+        // 		var now = + new Date()
+        // 		if (now - previous > wait) {
+        // 			func.apply($this, arguments)
+        // 			previous = now
+        // 		}
+        // 	}
+        // }
+        // wrap.onmousemove = throttle(getMove, 1000)
+    </script>
 </body>
+
 </html>

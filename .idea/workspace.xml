@@ -29,7 +29,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="su&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AlphaMetal-web" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SG-web" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -254,10 +254,10 @@
     </state>
     <state x="266" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615865895817" />
     <state x="266" y="86" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608789524301" />
-    <state x="653" y="300" key="FileChooserDialogImpl" timestamp="1615360077537">
+    <state x="653" y="300" key="FileChooserDialogImpl" timestamp="1616062406643">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615360077537" />
+    <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1616062406643" />
     <state x="434" y="158" key="Vcs.Push.Dialog.v2" timestamp="1615865917566">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

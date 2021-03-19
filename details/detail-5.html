@@ -1,54 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>ES5/ES6有什么区别</title>
+    <meta charset="UTF-8">
+    <title>ES5/ES6有什么区别</title>
 </head>
+
 <body>
-	<dl>
-		<dt>ES5/ES6有什么区别?</dt>
-		<dd>1.class声明会提升,但不会初始化赋值,Foo进入暂时性死区,类似let,const声明变量</dd>
-		<dd>2.class声明内部会启用严格模式</dd>
-		<dd>3.class所有方法(包括静态方法和实例方法)都是不可枚举的</dd>
-		<dd>4.class所有方法(包括静态方法和实例方法)都是没有原型对象prototype,所以也没有construct, 不能使用new来调用</dd>
-		<dd>5.class必须使用new来调用</dd>
-	</dl>
+    <dl>
+        <dt>ES5/ES6有什么区别?</dt>
+        <dd>1.class声明会提升,但不会初始化赋值,Foo进入暂时性死区,类似let,const声明变量</dd>
+        <dd>2.class声明内部会启用严格模式</dd>
+        <dd>3.class所有方法(包括静态方法和实例方法)都是不可枚举的</dd>
+        <dd>4.class所有方法(包括静态方法和实例方法)都是没有原型对象prototype,所以也没有construct, 不能使用new来调用</dd>
+        <dd>5.class必须使用new来调用</dd>
+    </dl>
 </body>
 <script type="text/javascript">
-	/**
-	 * 1
-	 */
-	function Bar() {
-		this.number = 42
-	}
-	Bar.prototype.sleep = function() {
-		console.log('bar sleep.....')
-	}
-	Bar.say = function () {
-		return 444
-	}
-	let bar = new Bar()
-	console.log(bar.number)
-	console.log(Object.keys(Bar)) // ['say']
-	console.log(Object.keys(Bar.prototype)) // ['sleep']
+    /**
+     * 1.构造方法
+     */
+    function Bar() {
+        this.number = 42
+    }
+    Bar.prototype.sleep = function() {
+        console.log('bar sleep.....')
+    }
+    Bar.say = function() {
+        return 444
+    }
+    let bar = new Bar()
+    console.log(bar.number)
+    console.log(Object.keys(Bar)) // ['say']
+    console.log(Object.keys(Bar.prototype)) // ['sleep']
 
-	// let foo = new Foo() // error Cannot access 'Foo' before initialization
-	class Foo {
-		constructor() {
-			// number = 43 //error
-			this.number= 43
-		}
-		static print() {
-			console.log('print')
-		}
-		answer() {
-			console.log('Foo answer....')
-		}
-	}
-	let foo = new Foo() // right
-	console.log(foo.number)
-	foo.answer()
-	console.log(Object.keys(Foo)) // []
-	console.log(Object.keys(Foo.prototype)) // []
+    // let foo = new Foo() // error Cannot access 'Foo' before initialization
+    class Foo {
+        constructor() {
+            // number = 43 //error
+            this.number = 43
+        }
+        static print() {
+            console.log('print')
+        }
+        answer() {
+            console.log('Foo answer....')
+        }
+    }
+    let foo = new Foo() // right
+    console.log(foo.number)
+    foo.answer()
+    console.log(Object.keys(Foo)) // []
+    console.log(Object.keys(Foo.prototype)) // []
 </script>
+
 </html>
