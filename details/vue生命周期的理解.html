@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue生命周期的理解</title>
+</head>
+
+<body>
+    <div>
+        <dl>
+            <dt>Vue生命周期总共分为8个阶段。创建前后、载入前后、更新前后、销毁前后</dt>
+            <dd>1.创建前后: 在beforeCreated阶段, vue实例$el还没有被挂载。</dd>
+            <dd>2.载入前后: 在beforeMounted阶段,vue实例的$el和data都被初始化了，但还是挂载之前为虚拟的dom节点，data.msg还没有被替换。 在mounted阶段，vue实例对象挂载完成，data.msg被渲染。
+            </dd>
+            <dd>3.更新前后: 当数据发生变化时，会触发beforeUpdate和updated方法。</dd>
+            <dd>4.销毁前后: 在执行destroy方法后，对data数据的改变不会再触发周期函数，说明vue实例已经解除了事件监听和dom绑定，但是dom结果还在。</dd>
+        </dl>
+
+        <dl>
+            <dt>vue的双向数据绑定原理的理解: vue采用数据劫持结合发布-订阅模式的方法，通过对Object.definedProperty来劫持各个
+            属性的getter、setter方法，在数据发生改变时，发布消息给订阅者，触发相应的监听回调。</dt>
+            <dd>1.需要observe对数据对象进行递归遍历，包括子属性对象属性，加上getter、setter。给这个对象的某个值赋值，就会触发setter，那么就能监听到了数据变化</dd>
+            <dd>2.compile解析模板指令，将模板的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者， 一旦数据有变动，收到通知，更新视图
+            </dd>
+            <dd>3.watcher订阅者是observe和compile之间通信桥梁。主要做的事情
+                <p>1).在自身实例化时往属性订阅器(dep)里面添加自己</p>
+                <p>2).自身必须有update方法</p>
+                <p>3).待属性变动dep.notice()通知时，能调用自身的update()方法，并触发Compile中绑定的回调，则功成身退</p>
+            </dd>
+            <dd>4.第四步：MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者，通过Observer来监听自己的model数据变化，通过Compile来解析编 译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -> 视图更新； 视图交互变化(input) -> 数据model变更的双向绑定效果。</dd>
+            <dd>5.简而言之，就是先转化成AST树，再得到的render函数返回VNode（Vue的虚拟DOM节点）</dd>
+        </dl>
+    </div>
+</body>
+
+</html>
