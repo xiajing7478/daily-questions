@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下面的代码打印什么内容，为什么</title>
+</head>
+
+<body>
+    <script>
+        // var b = 10;
+        // (function b() {
+        //     /**
+        //      * 内部作用域，会先去查找是否已有变量b的声明，有就直接赋值，确实有了呀。发现了具名函数 function b(){}，拿此b做赋值；
+        //      *  IIFE的函数无法进行赋值（内部机制，类似const定义的常量），所以无效。
+        //      * 具名自执行函数的变量为只读属性，不可修改
+        //      **/
+        //     b = 20;
+        //     console.log(b); // function b() { b = 20; console.log(b)}
+        // })();
+
+        // var b = 10;
+        // (function b() {
+        //     console.log(window.b)
+        //     var b = 20;
+        //     console.log(b);
+        // })();
+
+        var arr1 = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2']
+        var arr2 = ['A', 'B', 'C', 'D']
+            //合并为 [‘A1’, ‘A2’, ‘A’, ‘B1’, ‘B2’, ‘B’, ‘C1’, ‘C2’, ‘C’, ‘D1’, ‘D2’, ‘D’]。
+
+
+        // 1 arr2变为['A3', 'B3', 'C3', 'D3']
+        var _arr2 = arr2.map(item => {
+            return item.concat('3')
+        })
+        var result = arr1.concat(_arr2).sort().map((item, idx) => {
+            if (item.includes('3')) {
+                return item.split('')[0]
+            }
+            return item
+        })
+
+        // 2
+        // arr1.concat(arr2).sort() = ["A", "A1", "A2", "B", "B1", "B2", "C", "C1", "C2", "D", "D1", "D2"]
+        var _result = arr1.concat(arr2).sort().sort((a, b) => {
+            // 第一次 a=A1, b=A
+            // 第二次 a=A2, b=A1
+            // ....
+            if (a.charAt(0) == b.charAt(0) && a.length > b.length) {
+                return -1
+            }
+        })
+        console.log(_result)
+
+        function changeObjProperty(o) {
+            o.siteUrl = "http://www.baidu.com"
+            o = new Object()
+            o.siteUrl = "http://www.google.com"
+        }
+        let webSite = new Object();
+        changeObjProperty(webSite);
+        console.log(webSite.siteUrl); // http://www.baidu.com
+
+
+        var nums = [2, 4, 7, 11, 5, 15]
+        var target = 9
+
+        function getValue(nums) {
+            let res = []
+            for (let i = 0; i < nums.length; i++) {
+                for (let j = i + 1; j < nums.length - i; j++) {
+                    if (nums[i] + nums[j] == target) {
+                        res.push(i)
+                        res.push(j)
+                    }
+                }
+            }
+            return res
+        }
+        var result = getValue(nums)
+        console.log('result', result)
+    </script>
+</body>
+
+</html>

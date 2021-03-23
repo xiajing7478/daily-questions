@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>改造下面的代码，使之输出0 - 9，写出你能想到的所有解法</title>
+</head>
+
+<body>
+
+    <script>
+        for (var i = 0; i < 10; i++) {
+            setTimeout(() => {
+                console.log(i)
+            }, 100)
+        }
+
+        // 1
+        // for (let i = 0; i < 10; i++) {
+        //     setTimeout(() => {
+        //         console.log(i)
+        //     }, 100)
+        // }
+
+        // 2
+        // for (var i = 0; i < 10; i++) {
+        //     setTimeout((i) => {
+        //         console.log(i)
+        //     }, 100, i)
+        // }
+
+        // 3
+        // for (var i = 0; i < 10; i++) {
+        //     ((i) => {
+        //         setTimeout(() => {
+        //             console.log(i)
+        //         }, 100)
+        //     })(i)
+        // }
+
+        // 4
+        for (var i = 0; i < 10; i++) {
+            setTimeout((i => () => {
+                console.log(i)
+            })(i), 100)
+        }
+    </script>
+</body>
+
+</html>
