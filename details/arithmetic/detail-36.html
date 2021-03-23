@@ -48,9 +48,59 @@
                     // return `${num2}${fun(num1)}`
             }
         }
-        var result = fun(1234)
-        console.log(result)
-        console.log(typeof result)
+        // var result = fun(1234)
+        // console.log(result)
+        // console.log(typeof result)
+
+
+        function add() {
+            let arg = [].slice.call(arguments)
+
+            function _adder() {
+                arg.push(...arguments)
+                return _adder
+            }
+
+            _adder.toString = function() {
+                return arg.reduce((a, b) => {
+                    return a + b
+                })
+            }
+            return _adder
+        }
+        // console.log(add(1, 2)(3))
+
+
+        // 11 121 1111 1331
+        function getCC() {
+            let result = []
+            for (let i = 10; i < 10000; i++) {
+                if (i.toString().split('').reverse().join('') === i.toString()) {
+                    result.push(i)
+                }
+            }
+            return result
+        }
+        // console.log(getCC())
+
+
+        // let arrNum = [1, 2, 3, 4, 5, 6, 7]
+        let arrNum = [1, 6, 3, 7, 5, 2, 4] // [6, 1, 3, 7, 5, 2, 4]
+        let k = 3
+
+        function sortArray(arr) {
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = i + 1; j < arr.length; i++) {
+                    if (arr[i] < arr[j]) {
+                        var tmp = arr[i]
+                        arr[i] = arr[j]
+                        arr[j] = tmp
+                    }
+                }
+            }
+            return arr
+        }
+        console.log(sortArray(arrNum))
     </script>
 </body>
 

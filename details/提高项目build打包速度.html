@@ -28,136 +28,57 @@
         </dd>
     </dl>
     <dl>
-      <dt>
+        <dt>
         二、配置装载机的 include & exclude
       </dt>
-      <dd>webpack的装载机(loaders)里每个子项都有include和exclude属性</dd>
-      <dd>1.include: 导入文件将由加载程序转换的路径或文件数组</dd>
-      <dd>exclude: 排除不需要处理的目录</dd>
-      <dd>
-          module: { rules: [ { test: /\.vue$/, loader: 'vue-loader', options: vueLoaderConfig, include: [resolve('src'), resolve('node_modules/vue-easytable/libs')] }, { test: /\.js$/, loader: 'babel-loader', include: [resolve('src')], exclude: /node_modules/ },
-      </dd>
+        <dd>webpack的装载机(loaders)里每个子项都有include和exclude属性</dd>
+        <dd>1.include: 导入文件将由加载程序转换的路径或文件数组</dd>
+        <dd>exclude: 排除不需要处理的目录</dd>
+        <dd>
+            module: { rules: [ { test: /\.vue$/, loader: 'vue-loader', options: vueLoaderConfig, include: [resolve('src'), resolve('node_modules/vue-easytable/libs')] }, { test: /\.js$/, loader: 'babel-loader', include: [resolve('src')], exclude: /node_modules/ },
+        </dd>
     </dl>
     <dl>
-      <dt>三、使用 webpack-parallel-uglify-plugin 插件来压缩代码</dt>
-      <dd>
-        npm i webpack-parallel-uglify-plugin -D
-      </dd>
-      <dd>
-        new ParallelUglifyPlugin({
-        cacheDir: '.cache/',
-        uglifyJS:{
-        output: {
-        comments: false
-        },
-        compress: {
-        warnings: false
-        }
-        }
-        }),
-      </dd>
+        <dt>三、使用 webpack-parallel-uglify-plugin 插件来压缩代码</dt>
+        <dd>
+            npm i webpack-parallel-uglify-plugin -D
+        </dd>
+        <dd>
+            new ParallelUglifyPlugin({ cacheDir: '.cache/', uglifyJS:{ output: { comments: false }, compress: { warnings: false } } }),
+        </dd>
     </dl>
     <dl>
-      <dt>四、使用 HappyPack 来加速代码构建</dt>
-      <dd>
-        HappyPack 的处理思路是：将原有的 webpack 对 loader 的执行过程，从单一进程的形式扩展多进程模式，从而加速代码构建。
-      </dd>
-      <dd>
-        const HappyPack = require('happypack');
-        const os = require('os');
-        const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-
-        module.exports = {
-        module: {
-        rules: [
-        {
-        test: /\.js$/,
-        //把对.js 的文件处理交给id为happyBabel 的HappyPack 的实例执行
-        loader: 'happypack/loader?id=happyBabel',
-        include: [resolve('src')],
-        //排除node_modules 目录下的文件
-        exclude: /node_modules/
-        },
-        ]
-        },
-        plugins: [
-        new HappyPack({
-        //用id来标识 happypack处理那里类文件
-        id: 'happyBabel',
-        //如何处理  用法和loader 的配置一样
-        loaders: [{
-        loader: 'babel-loader?cacheDirectory=true',
-        }],
-        //共享进程池
-        threadPool: happyThreadPool,
-        //允许 HappyPack 输出日志
-        verbose: true,
-        })
-        ]
-        }
-      </dd>
+        <dt>四、使用 HappyPack 来加速代码构建</dt>
+        <dd>
+            HappyPack 的处理思路是：将原有的 webpack 对 loader 的执行过程，从单一进程的形式扩展多进程模式，从而加速代码构建。
+        </dd>
+        <dd>
+            const HappyPack = require('happypack'); const os = require('os'); const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length }); module.exports = { module: { rules: [ { test: /\.js$/, //把对.js 的文件处理交给id为happyBabel 的HappyPack 的实例执行 loader: 'happypack/loader?id=happyBabel',
+            include: [resolve('src')], //排除node_modules 目录下的文件 exclude: /node_modules/ }, ] }, plugins: [ new HappyPack({ //用id来标识 happypack处理那里类文件 id: 'happyBabel', //如何处理 用法和loader 的配置一样 loaders: [{ loader: 'babel-loader?cacheDirectory=true', }], //共享进程池
+            threadPool: happyThreadPool, //允许 HappyPack 输出日志 verbose: true, }) ] }
+        </dd>
     </dl>
     <dl>
-      <dt>五、利用 DllPlugin 和 DllReferencePlugin 预编译资源模块</dt>
-      <dd>
-        1.DllPlugin: 作用是预编译一些模块
-      </dd>
-      <dd>2.DllReferencePlugin: 作用是把这些预先编译好的模块引用起来。</dd>
-      <dd>
-        3.在 build 文件夹中新建 webpack.dll.conf.js 文件。 内容如下:
-        const path = require('path');
-        const webpack = require('webpack');
-
-        module.exports = {
-        entry: {
-        vendor: ['vue/dist/vue.common.js', 'vue-router', 'axios', 'mint-ui'] },
-        output: {
-        path: path.join(__dirname, '../static/js'),
-        filename: '[name].dll.js',
-        library: '[name]_library'       // vendor.dll.js中暴露出的全局变量名
-        },
-        plugins: [
-        new webpack.DllPlugin({
-        path: path.join(__dirname, '.', '[name]-manifest.json'),
-        name: '[name]_library'
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-        compress: {
-        warnings: false,
-        drop_console: true,
-        drop_debugger: true
-        },
-        output: {
-        comments: false
-        },
-        sourceMap: true
-
-        })
-        ]
-      </dd>
-      <dd>编译package.json. "build:dll" : "webpack --config build/webpack.dll.conf.js", 编译完生成vendor.dll.js</dd>
-      <dd>
-        在webpack.prod.conf.js增加对DllPlugin引用
-        new webpack.DllReferencePlugin({
-        }
-        context: path.resolve(__dirname, '..'),
-        }),
-        manifest: require('./vendor-manifest.json')
-        })
-      </dd>
-      <dd>也可以手动在index.html将 vendor.dll.js 引入进来。</dd>
-      <dd>
-        也可以借助add-asset-html-webpack-plugin自动注入到index.html中，
-        但要放在new HtmlWebpackPlugin({...})后
-        new AddAssetHtmlPlugin({
-        filepath: path.resolve(__dirname, '../static/js/vendor.dll.js'),
-        outputPath: utils.assetsPath('js'),
-        publicPath: path.posix.join(config.build.assetsPublicPath, 'static/js'),
-        includeSourcemap: false,
-        hash: true
-        }),
-      </dd>
+        <dt>五、利用 DllPlugin 和 DllReferencePlugin 预编译资源模块</dt>
+        <dd>
+            1.DllPlugin: 作用是预编译一些模块
+        </dd>
+        <dd>2.DllReferencePlugin: 作用是把这些预先编译好的模块引用起来。</dd>
+        <dd>
+            3.在 build 文件夹中新建 webpack.dll.conf.js 文件。 内容如下: const path = require('path'); const webpack = require('webpack'); module.exports = { entry: { vendor: ['vue/dist/vue.common.js', 'vue-router', 'axios', 'mint-ui'] }, output: { path: path.join(__dirname, '../static/js'),
+            filename: '[name].dll.js', library: '[name]_library' // vendor.dll.js中暴露出的全局变量名 }, plugins: [ new webpack.DllPlugin({ path: path.join(__dirname, '.', '[name]-manifest.json'), name: '[name]_library' }), new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false, drop_console: true, drop_debugger: true }, output: { comments: false }, sourceMap: true }) ]
+        </dd>
+        <dd>编译package.json. "build:dll" : "webpack --config build/webpack.dll.conf.js", 编译完生成vendor.dll.js</dd>
+        <dd>
+            在webpack.prod.conf.js增加对DllPlugin引用 new webpack.DllReferencePlugin({ } context: path.resolve(__dirname, '..'), }), manifest: require('./vendor-manifest.json') })
+        </dd>
+        <dd>也可以手动在index.html将 vendor.dll.js 引入进来。</dd>
+        <dd>
+            也可以借助add-asset-html-webpack-plugin自动注入到index.html中， 但要放在new HtmlWebpackPlugin({...})后 new AddAssetHtmlPlugin({ filepath: path.resolve(__dirname, '../static/js/vendor.dll.js'), outputPath: utils.assetsPath('js'), publicPath: path.posix.join(config.build.assetsPublicPath,
+            'static/js'), includeSourcemap: false, hash: true }),
+        </dd>
     </dl>
-  </body>
+</body>
 
 </html>
