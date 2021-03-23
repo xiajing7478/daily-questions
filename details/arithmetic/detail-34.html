@@ -32,7 +32,6 @@
         var arr2 = ['A', 'B', 'C', 'D']
             //合并为 [‘A1’, ‘A2’, ‘A’, ‘B1’, ‘B2’, ‘B’, ‘C1’, ‘C2’, ‘C’, ‘D1’, ‘D2’, ‘D’]。
 
-
         // 1 arr2变为['A3', 'B3', 'C3', 'D3']
         var _arr2 = arr2.map(item => {
             return item.concat('3')
@@ -55,34 +54,6 @@
             }
         })
         console.log(_result)
-
-        function changeObjProperty(o) {
-            o.siteUrl = "http://www.baidu.com"
-            o = new Object()
-            o.siteUrl = "http://www.google.com"
-        }
-        let webSite = new Object();
-        changeObjProperty(webSite);
-        console.log(webSite.siteUrl); // http://www.baidu.com
-
-
-        var nums = [2, 4, 7, 11, 5, 15]
-        var target = 9
-
-        function getValue(nums) {
-            let res = []
-            for (let i = 0; i < nums.length; i++) {
-                for (let j = i + 1; j < nums.length - i; j++) {
-                    if (nums[i] + nums[j] == target) {
-                        res.push(i)
-                        res.push(j)
-                    }
-                }
-            }
-            return res
-        }
-        var result = getValue(nums)
-        console.log('result', result)
     </script>
 </body>
 

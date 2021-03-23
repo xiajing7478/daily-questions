@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        用 JavaScript 写一个函数，输入 int 型，返回整数逆序后的字符串。如：输入整型 1234， 返回字符串“4321”。 要求必须使用递归函数调用，不能用全局变量，输入函数必须只有一个参数传入，必须返回字符串。
+    </div>
+    <script>
+        function reverseInt(num) {
+            var arr = num.toString().split('').sort((a, b) => (b - a))
+            var result = []
+            for (let val of arr) {
+                result.push(val)
+            }
+            return result.join('')
+        }
+        // var result = reverseInt(1234)
+        // console.log(typeof result)
+
+
+        function test(num) {
+            num = typeof num == 'number' ? num.toString() : num
+            if (num.length <= 1) {
+                return num
+            } else {
+                return num[num.length - 1] + test(num.substring(0, num.length - 1))
+            }
+        }
+        // var result = test(1234)
+        // console.log(result)
+
+
+        function fun(num) {
+            let num1 = num / 10 // 123
+            let num2 = num % 10 // 4
+            if (num1 < 1) {
+                return num
+            } else {
+                num1 = Math.floor(num1)
+                return num2.toString().concat(fun(num1))
+                    // return `${num2}${fun(num1)}`
+            }
+        }
+        var result = fun(1234)
+        console.log(result)
+        console.log(typeof result)
+    </script>
+</body>
+
+</html>
