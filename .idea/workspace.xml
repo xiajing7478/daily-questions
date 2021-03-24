@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c568b877-204e-4725-b5a5-f115e18a4f00" name="Default Changelist" comment="" />
+    <list default="true" id="c568b877-204e-4725-b5a5-f115e18a4f00" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,6 +74,7 @@
       <workItem from="1608861499484" duration="8976000" />
       <workItem from="1615192733487" duration="13733000" />
       <workItem from="1615276503440" duration="23118000" />
+      <workItem from="1616491814233" duration="221000" />
     </task>
     <task id="LOCAL-00001" summary="深度优先遍历和广度优先遍历">
       <created>1586254404268</created>
@@ -263,5 +267,9 @@
     </state>
     <state x="434" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615865917566" />
     <state x="434" y="158" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1608868196345" />
+    <state x="453" y="-2" width="1009" height="1470" key="search.everywhere.popup" timestamp="1616491920622">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="453" y="-2" width="1009" height="1470" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1616491920622" />
   </component>
 </project>
