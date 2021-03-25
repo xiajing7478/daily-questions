@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c568b877-204e-4725-b5a5-f115e18a4f00" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/details/webpack热更新原理不刷新浏览器更新页面.html" beforeDir="false" afterPath="$PROJECT_DIR$/details/webpack热更新原理不刷新浏览器更新页面.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +31,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="su&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SG-web" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AlphaMetal-web" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -75,6 +74,7 @@
       <workItem from="1615192733487" duration="13733000" />
       <workItem from="1615276503440" duration="23118000" />
       <workItem from="1616491814233" duration="221000" />
+      <workItem from="1616575508850" duration="13000" />
     </task>
     <task id="LOCAL-00001" summary="深度优先遍历和广度优先遍历">
       <created>1586254404268</created>
@@ -258,10 +258,10 @@
     </state>
     <state x="266" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615865895817" />
     <state x="266" y="86" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608789524301" />
-    <state x="653" y="300" key="FileChooserDialogImpl" timestamp="1616062406643">
+    <state x="653" y="300" key="FileChooserDialogImpl" timestamp="1616575518112">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1616062406643" />
+    <state x="653" y="300" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1616575518112" />
     <state x="434" y="158" key="Vcs.Push.Dialog.v2" timestamp="1615865917566">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
