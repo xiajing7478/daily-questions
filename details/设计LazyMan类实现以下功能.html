@@ -59,6 +59,16 @@
             this.queue.push(fn)
             return this
         }
+        sleepFirst(time) {
+            const fn = () => {
+                setTimeout(() => {
+                    console.log(`等待了${time}秒...`)
+                    this.next()
+                }, time)
+            }
+            this.queue.unshift(fn)
+            return this
+        }
         eat(food) {
             const fn = () => {
                 console.log(`I am eating ${food}`)
@@ -68,6 +78,7 @@
             return this
         }
         next() {
+            // this.queue.forEach(fn => fn()) // this.next()如果不调用，最后输出的是2000和5000
             const fn = this.queue.shift()
             fn && fn()
         }
@@ -76,8 +87,9 @@
     function LazyMan(name) {
         return new LazyManClass(name)
     }
-
-    LazyMan('Tony').sleep(5000).eat('lunch')
+    LazyMan('Tony').eat('lunch').eat('dinner').sleepFirst(2000).sleep(5000).eat('junk food')
+        // LazyMan('Tony').eat('lunch').sleep(3000).eat('dinner')
+        // LazyMan('Tony').sleep(5000).eat('lunch')
 </script>
 
 </html>
