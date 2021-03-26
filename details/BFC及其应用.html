@@ -1,76 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>介绍下 BFC 及其应用</title>
-	<style type="text/css">
-		/*div {*/
-			/*width: 100px;*/
-			/*height: 100px;*/
-			/*background-color: lightblue;*/
-			/*margin: 100px;*/
-		/*}*/
-
-		.container {
-			overflow: hidden;
-		}
-		p {
-			width: 100px;
-			height: 100px;
-			background-color: lightblue;
-			margin: 100px;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <title>介绍下 BFC 及其应用</title>
+    <style type="text/css">
+        /*div {*/
+        /*width: 100px;*/
+        /*height: 100px;*/
+        /*background-color: lightblue;*/
+        /*margin: 100px;*/
+        /*}*/
+        /* .container {
+            overflow: hidden;
+        }
+        
+        p {
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            margin: 100px;
+        } */
+        /* demo1 */
+        
+        #demo1 .demo1Class {
+            width: 100px;
+            height: 100px;
+            background: lightblue;
+            margin: 100px;
+        }
+    </style>
 </head>
+
 <body>
-	<p>BFC: Block Formatting Contexts(块级格式化上下文),是页面盒模式布局中的一种css渲染模式,相当于一个对立的容器,里面的元素和外部的元素
-	相互不影响。</p>
-	<dl>
-		<dt>创建BFC的方式:</dt>
-		<dd>1.html跟元素</dd>
-		<dd>2.float浮动</dd>
-		<dd>3.绝对定位</dd>
-		<dd>4.overflow不为visible</dd>
-		<dd>5.display为表格布局或弹性布局</dd>
-		<dd>1.html跟元素</dd>
-	</dl>
-	<dl>
-		<dt>BFC主要作用:</dt>
-		<dd>1.清除浮动</dd>
-		<dd>2.防止同一BFC容器中的相邻元素间的外边距重叠问题</dd>
-	</dl>
-	<!--<div class="container"><p></p></div>-->
-	<!--<div class="container"><p></p></div>-->
-	<!--<div style="border: 1px solid #000;">-->
-		<!--<div style="width: 100px; height: 100px;-->
-		<!--background-color: #eee;"></div>-->
-	<!--</div>-->
+    <p>BFC: Block Formatting Contexts(块级格式化上下文),是页面盒模式布局中的一种css渲染模式,相当于一个独立的容器,里面的元素和外部的元素 相互不影响。
+    </p>
+    <dl>
+        <dt>创建BFC的方式:</dt>
+        <dd>1.html跟元素</dd>
+        <dd>2.float浮动</dd>
+        <dd>3.绝对定位</dd>
+        <dd>4.overflow 除了 visible 以外的值</dd>
+        <dd>5.display 为 inline-block、table-cells、flex</dd>
+    </dl>
+    <dl>
+        <dt>BFC主要作用:</dt>
+        <dd>1.清除浮动</dd>
+        <dd>2.防止同一BFC容器中的相邻元素间的外边距重叠问题</dd>
+        <dd>3.BFC可以阻止元素被浮动元素覆盖</dd>
+    </dl>
+    <hr>
+    <p>demo1</p>
+    <p>从效果上看，因为两个div元素都处于同一个BFC容器下(这里指demo1元素) 所以第一个 div 的下边距和第二个 div 的上边距发生了重叠，所以两个盒子之间距离只有 100px，而不是 200px。 首先这不是 CSS 的 bug，我们可以理解为一种规范，如果想要避免外边距的重叠，可以将其放在不同的 BFC 容器中。
+    </p>
+    <div id="demo1">
+        <div class="demo1Class"></div>
+        <div class="demo1Class"></div>
+    </div>
 
-	<!--<hr>-->
-	<!--<div style="border: 1px solid #000; overflow: hidden;">-->
-		<!--<div style="width: 100px; height: 100px;-->
-		<!--background-color: #eee; float: left;"></div>-->
-	<!--</div>-->
-	<!--<hr>-->
-	<!--<div>-->
-		<!--<div style="height: 100px; width: 100px; background-color: lightblue; float: left;">我是一个左浮动的元素</div>-->
-		<!--<div style="width: 200px; height: 200px; background-color: #eeeeee; overflow: hidden;">我是一个没有设置浮动,-->
-			<!--也没有触发 BFC 元素, width: 200px; height:200px; background: #eee;</div>-->
-	<!--</div>-->
+    <p>demo2</p>
+    <div id="demo2">
+
+    </div>
+
+
+    <!--<div class="container"><p></p></div>-->
+    <!--<div class="container"><p></p></div>-->
+    <!--<div style="border: 1px solid #000;">-->
+    <!--<div style="width: 100px; height: 100px;-->
+    <!--background-color: #eee;"></div>-->
+    <!--</div>-->
+
+    <!--<hr>-->
+    <!--<div style="border: 1px solid #000; overflow: hidden;">-->
+    <!--<div style="width: 100px; height: 100px;-->
+    <!--background-color: #eee; float: left;"></div>-->
+    <!--</div>-->
+    <!--<hr>-->
+    <!--<div>-->
+    <!--<div style="height: 100px; width: 100px; background-color: lightblue; float: left;">我是一个左浮动的元素</div>-->
+    <!--<div style="width: 200px; height: 200px; background-color: #eeeeee; overflow: hidden;">我是一个没有设置浮动,-->
+    <!--也没有触发 BFC 元素, width: 200px; height:200px; background: #eee;</div>-->
+    <!--</div>-->
 </body>
-<script type="text/javascript">
-	// var a = 10;
-	// (function () {
-	// 	console.log(a)
-	// 	a = 5
-	// 	console.log(window.a)
-	// 	var a = 20;
-	// 	console.log(a)
-	// })()
 
-	var arr = [3, 15, 8, 29, 102, 22]
-	// console.log(arr.sort()) // 102 15 22 29 3 8
-	var s = arr.sort((a,b) => { return a - b  })
-	console.log(s)
-</script>
 </html>
