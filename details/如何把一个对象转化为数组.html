@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何把一个对象转化为数组</title>
+</head>
+
+<body>
+    <div>
+        <p>
+            某公司 1 到 12 月份的销售额存在一个对象里面
+        </p>
+        <p>
+            如下：{1:222, 2:123, 5:888}，请把数据处理为如下结构：[222, 123, null, null, 888, null, null, null, null, null, null, null]。
+        </p>
+    </div>
+    <script>
+        var obj = {
+            1: 222,
+            2: 123,
+            5: 888
+        }
+
+        function objToArray(obj) {
+            if (Object.prototype.toString.call(obj) !== '[object Object]') {
+                return obj
+            }
+            return Array.from({
+                length: 12
+            }).map((item, idx) => {
+                return obj[idx + 1] || null
+            })
+        }
+        var result = objToArray(obj)
+        console.log(result)
+    </script>
+</body>
+
+</html>
