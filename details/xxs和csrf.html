@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xxs&csrf</title>
+</head>
+
+<body>
+    <div>
+        <dl>
+            <dt>cookie和token 都存放在header中，为什么不会劫持token</dt>
+            <dd>1.cookie: 登录后后端会生成一个sessionid放在cookie中返回给客户端，并且服务端一直记录着这个sessionid， 客户端以后每次请求都会带上这个sessionid， 服务端通过这个sessionid来验证身份之类的操作。所以别人拿到了cookie拿到了sessionid后，就可以完全替代你。
+            </dd>
+            <dd>2.token: 登陆后后端返回一个token给客户端，客户端将这个token存储起来，然后每次客户端请求都需要开发者手动将token放在header中带过去， 服务端每次只需要对这个token进行验证就能使用token中的信息来进行下一步操作了。
+            </dd>
+            <dd>3.xxs: 用户通过各种方式将恶意代码注入到其他用户的页面中。就可以通过脚本获取信息，发起请求，之类的操作。</dd>
+            <dd>4.csrf(跨站请求伪造): 是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并运行一些操作。简单的身份验证只能保证请求发自某个用户的浏览器， 却不能保证请求本身是用户自愿发出的。csrf并不能够拿到用户的任何信息，它只是欺骗用户浏览器，让其以用户的名义进行操作。
+            </dd>
+            <dd>5. 上面2种攻击方法，如果被xxs攻击，不管是cookie还是token, 都能被拿到。并没有什么区别。 对csrf来说，cookie未失效，导致发起请求后后端以为是用户正常操作。 浏览器不会自动带上token，所以即使发了请求，后端的token验证不会通过
+            </dd>
+        </dl>
+    </div>
+</body>
+
+</html>
