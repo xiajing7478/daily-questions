@@ -1,255 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Promise详解</title>
+    <meta charset="UTF-8">
+    <title>Promise详解</title>
 </head>
+
 <body>
-	<div>
-		<dl>
-			<dt>Promise 的基本特征</dt>
-			<dd>1.promise 有三个状态：pending，fulfilled，rejected</dd>
-			<dd>2.new promise时，需要传递一个executor()执行器，执行器立即执行</dd>
-			<dd>3.executor接受两个参数，分别是resolve和reject</dd>
-			<dd>4.promise 的默认状态是 pending</dd>
-			<dd>5.promise 有一个value保存成功状态的值，可以是undefined/thenable/promise</dd>
-			<dd>6.promise 有一个reason保存失败状态的值</dd>
-			<dd>7.promise 只能从pending到rejected, 或者从pending到fulfilled，状态一旦确认，就不会再改变</dd>
-			<dd>8.promise 必须有一个then方法，then 接收两个参数，分别是 promise 成功的回调 onFulfilled, 和 promise 失败的回调 onRejected</dd>
-			<dd>9.如果调用 then 时，promise 已经成功，则执行onFulfilled，参数是promise的value</dd>
-			<dd>10.如果调用 then 时，promise 已经成功，则执行onFulfilled，参数是promise的value</dd>
-			<dd>11.如果调用 then 时，promise 已经失败，那么执行onRejected, 参数是promise的reason</dd>
-			<dd>12.如果 then 中抛出了异常，那么就会把这个异常作为参数，传递给下一个 then 的失败的回调onRejected</dd>
-		</dl>
-	</div>
+    <div>
+        <dl>
+            <dt>Promise 的基本特征</dt>
+            <dd>1.promise 有三个状态：pending，fulfilled，rejected</dd>
+            <dd>2.new promise时，需要传递一个executor()执行器，执行器立即执行</dd>
+            <dd>3.executor接受两个参数，分别是resolve和reject</dd>
+            <dd>4.promise 的默认状态是 pending</dd>
+            <dd>5.promise 有一个value保存成功状态的值，可以是undefined/thenable/promise</dd>
+            <dd>6.promise 有一个reason保存失败状态的值</dd>
+            <dd>7.promise 只能从pending到rejected, 或者从pending到fulfilled，状态一旦确认，就不会再改变</dd>
+            <dd>8.promise 必须有一个then方法，then 接收两个参数，分别是 promise 成功的回调 onFulfilled, 和 promise 失败的回调 onRejected</dd>
+            <dd>9.如果调用 then 时，promise 已经成功，则执行onFulfilled，参数是promise的value</dd>
+            <dd>10.如果调用 then 时，promise 已经成功，则执行onFulfilled，参数是promise的value</dd>
+            <dd>11.如果调用 then 时，promise 已经失败，那么执行onRejected, 参数是promise的reason</dd>
+            <dd>12.如果 then 中抛出了异常，那么就会把这个异常作为参数，传递给下一个 then 的失败的回调onRejected</dd>
+        </dl>
+    </div>
 
-<script>
-	// 参考 https://zhuanlan.zhihu.com/p/183801144
-  const PENDING = 'PENDING'
-  const FULFILLED = 'FULFILLED'
-  const REJECTED = 'REJECTED'
+    <script>
+        // 参考 https://zhuanlan.zhihu.com/p/183801144
+        const PENDING = 'PENDING'
+        const FULFILLED = 'FULFILLED'
+        const REJECTED = 'REJECTED'
 
-  class MyPromise {
-    // executor: MyPromise实例对象在构造器种传入的参数，一般是一个函数function(resolve, reject){}
-	  // status: 每当被调用到resolve和reject方式时，就会改变其值，在后面的then方法中会用到
-	  // _resolve：声明_resolve方法在构造器内，通过传入的executor方法传入其中，用以给使用者回调
-    constructor(executor) {
-      this.status = PENDING
-	    this.error = undefined
-	    this.value = undefined
-	    this.onResolveCbs = []
-	    this.onRejectCbs = []
-	    let _resolve = (data) => {
-        if (this.status === PENDING) {
-          this.status = FULFILLED
-	        this.value = data
-	        this.onResolveCbs.forEach(cb => cb())
+        class MyPromise {
+            // executor: MyPromise实例对象在构造器种传入的参数，一般是一个函数function(resolve, reject){}
+            // status: 每当被调用到resolve和reject方式时，就会改变其值，在后面的then方法中会用到
+            // _resolve：声明_resolve方法在构造器内，通过传入的executor方法传入其中，用以给使用者回调
+            constructor(executor) {
+                this.status = PENDING
+                this.error = undefined
+                this.value = undefined
+                this.onResolveCbs = []
+                this.onRejectCbs = []
+                let _resolve = (data) => {
+                    if (this.status === PENDING) {
+                        this.status = FULFILLED
+                        this.value = data
+                        this.onResolveCbs.forEach(cb => cb())
+                    }
+                }
+                let _reject = (error) => {
+                    if (this.status === PENDING) {
+                        this.status = REJECTED
+                        this.error = error
+                        this.onRejectCbs.forEach(cb => cb())
+                    }
+                }
+                try {
+                    // 将resolve和reject函数给使用者
+                    executor(_resolve, _reject)
+                } catch (error) {
+                    _reject(error)
+                }
+            }
+            then(onFulfilled, onRejected) {
+
+                /**
+                 * then 的链式调用
+                 * 值的穿透
+                 **/
+                // onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
+                // //因为错误的值要让后面访问到，所以这里也要跑出个错误，不然会在之后 then 的 resolve 中捕获
+                // onRejected = typeof onRejected === 'function' ? onRejected: err => { throw err }
+                //
+                // let promise2 = new MyPromise((resolve, reject) => {
+                //   if (this.status === FULFILLED) {
+                //     setTimeout(() => {
+                //       try {
+                //         let x = onFulfilled(this.value)
+                //         resolvePromise(promise2, x, resolve, reject)
+                //       } catch (e) {
+                //         reject(e)
+                //       }
+                //     }, 0)
+                //   }
+                //
+                //   if (this.status === REJECTED) {
+                //     setTimeout(() => {
+                //       try {
+                //         let x = onRejected(this.error);
+                //         resolvePromise(promise2, x, resolve, reject);
+                //       } catch (e) {
+                //         reject(e)
+                //       }
+                //     }, 0);
+                //   }
+                //
+                //   if (this.status === PENDING) {
+                //     this.onResolveCbs.push(() => {
+                //       setTimeout(() => {
+                //         try {
+                //           let x = onFulfilled(this.value);
+                //           resolvePromise(promise2, x, resolve, reject);
+                //         } catch (e) {
+                //           reject(e)
+                //         }
+                //       }, 0);
+                //     });
+                //
+                //     this.onRejectCbs.push(()=> {
+                //       setTimeout(() => {
+                //         try {
+                //           let x = onRejected(this.reason);
+                //           resolvePromise(promise2, x, resolve, reject)
+                //         } catch (e) {
+                //           reject(e)
+                //         }
+                //       }, 0);
+                //     });
+                //   }
+                // })
+                // return promise2
+                if (this.status === FULFILLED) {
+                    onFulfilled(this.value)
+                }
+                if (this.status === REJECTED) {
+                    onRejected(this.error)
+                }
+                if (this.status === PENDING) {
+                    this.onResolveCbs.push(() => onFulfilled(this.value))
+                    this.onRejectCbs.push(() => onRejected(this.error))
+                }
+            }
         }
-	    }
-	    let _reject = (error) => {
-        if (this.status === PENDING) {
-          this.status = REJECTED
-	        this.error = error
-	        this.onRejectCbs.forEach(cb => cb())
+
+        const resolvePromise = (promise2, x, resolve, reject) => {
+            if (promise2 === x) { // 自己等待自己完成是错误的实现，用一个类型错误，结束掉 promise
+                return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+            }
+            let called
+            if ((typeof x === 'object' && x != null) || typeof x === 'function') {
+                try {
+                    // 为了判断 resolve 过的就不用再 reject 了（比如 reject 和 resolve 同时调用的时候）
+                    let then = x.then
+                    if (typeof then === 'function') {
+                        then.call(x, y => {
+                            if (called) return
+                            called = true
+                                // 递归解析的过程（因为可能 promise 中还有 promise）
+                            resolvePromise(promise2, y, resolve, reject)
+                        }, r => {
+                            // 只要失败就失败
+                            if (called) return
+                            called = true
+                            reject(r)
+                        })
+                    } else {
+                        // 如果 x.then 是个普通值就直接返回 resolve 作为结果
+                        resolve(x)
+                    }
+                } catch (e) {
+                    if (called) return
+                    called = true
+                    reject(e)
+                }
+            }
         }
-	    }
-	    try {
-        // 将resolve和reject函数给使用者
-        executor(_resolve, _reject)
-      } catch (error) {
-        _reject(error)
-      }
-    }
-    then(onFulfilled, onRejected) {
 
-      /**
-       * then 的链式调用
-       * 值的穿透
-       **/
-      // onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
-      // //因为错误的值要让后面访问到，所以这里也要跑出个错误，不然会在之后 then 的 resolve 中捕获
-	    // onRejected = typeof onRejected === 'function' ? onRejected: err => { throw err }
-			//
-	    // let promise2 = new MyPromise((resolve, reject) => {
-	    //   if (this.status === FULFILLED) {
-	    //     setTimeout(() => {
-	    //       try {
-		  //         let x = onFulfilled(this.value)
-		  //         resolvePromise(promise2, x, resolve, reject)
-      //       } catch (e) {
-		  //         reject(e)
-      //       }
-	    //     }, 0)
-	    //   }
-			//
-      //   if (this.status === REJECTED) {
-      //     setTimeout(() => {
-      //       try {
-      //         let x = onRejected(this.error);
-      //         resolvePromise(promise2, x, resolve, reject);
-      //       } catch (e) {
-      //         reject(e)
-      //       }
-      //     }, 0);
-      //   }
-			//
-      //   if (this.status === PENDING) {
-      //     this.onResolveCbs.push(() => {
-      //       setTimeout(() => {
-      //         try {
-      //           let x = onFulfilled(this.value);
-      //           resolvePromise(promise2, x, resolve, reject);
-      //         } catch (e) {
-      //           reject(e)
-      //         }
-      //       }, 0);
-      //     });
-			//
-      //     this.onRejectCbs.push(()=> {
-      //       setTimeout(() => {
-      //         try {
-      //           let x = onRejected(this.reason);
-      //           resolvePromise(promise2, x, resolve, reject)
-      //         } catch (e) {
-      //           reject(e)
-      //         }
-      //       }, 0);
-      //     });
-      //   }
-	    // })
-			// return promise2
-      if (this.status === FULFILLED) {
-        onFulfilled(this.value)
-      }
-      if (this.status === REJECTED) {
-        onRejected(this.error)
-      }
-      if (this.status === PENDING) {
-        this.onResolveCbs.push(() => onFulfilled(this.value))
-	      this.onRejectCbs.push(() => onRejected(this.error))
-      }
-    }
-  }
+        const p = new MyPromise((resolve, reject) => {
+            // resolve('成功') // 同步
+            setTimeout(() => { // 异步,其实是一个发布订阅模式，这种收集依赖->触发通知->取出依赖执行
+                resolve('成功')
+            }, 1000)
+        }).then(res => {
+            console.log('res', res)
+        }, error => {
+            console.log('error', error)
+        })
 
-  const resolvePromise = (promise2, x, resolve, reject) => {
-    if (promise2 === x) { // 自己等待自己完成是错误的实现，用一个类型错误，结束掉 promise
-      return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
-    }
-    let called
-	  if ((typeof x === 'object' && x != null) || typeof x === 'function') {
-	    try {
-        // 为了判断 resolve 过的就不用再 reject 了（比如 reject 和 resolve 同时调用的时候）
-		    let then = x.then
-		    if (typeof then === 'function') {
-		      then.call(x, y => {
-		        if (called) return
-			      called = true
-            // 递归解析的过程（因为可能 promise 中还有 promise）
-			      resolvePromise(promise2, y, resolve, reject)
-		      }, r => {
-            // 只要失败就失败
-		        if (called) return
-			      called = true
-			      reject(r)
-		      })
-		    } else {
-          // 如果 x.then 是个普通值就直接返回 resolve 作为结果
-		      resolve(x)
-		    }
-      } catch (e) {
-		    if (called) return
-		    called = true
-		    reject(e)
-      }
-	  }
-  }
-
-  const p = new MyPromise((resolve, reject) => {
-    // resolve('成功') // 同步
-	  setTimeout(() => { // 异步,其实是一个发布订阅模式，这种收集依赖->触发通知->取出依赖执行
-      resolve('成功')
-	  }, 1000)
-  }).then(res => {
-    console.log('res', res)
-  }, error => {
-    console.log('error', error)
-  })
-
-  /**
-   * then 的链式调用
-   * 值的穿透
-   **/
-  // const promise = new MyPromise((resolve, reject) => {
-  //   reject('失败');
-  // }).then().then().then(data=>{
-  //   console.log(data);
-  // },err=>{
-  //   console.log('err',err);
-  // })
+        /**
+         * then 的链式调用
+         * 值的穿透
+         **/
+        // const promise = new MyPromise((resolve, reject) => {
+        //   reject('失败');
+        // }).then().then().then(data=>{
+        //   console.log(data);
+        // },err=>{
+        //   console.log('err',err);
+        // })
 
 
 
-  // Promise.all([1, read2(file1), 3]).then(data => {
-  //   console.log(data)
-  // },error => {
-  //   console.log(error)
-  // })
+        // Promise.all([1, read2(file1), 3]).then(data => {
+        //   console.log(data)
+        // },error => {
+        //   console.log(error)
+        // })
 
-  Promise.all = function(values) {
-	  if (!Array.isArray(values)) {
-	    const type = typeof values
-      return new TypeError(`TypeError: ${type} ${values} is not iterable`)
-	  }
+        Promise.all = function(values) {
+            if (!Array.isArray(values)) {
+                const type = typeof values
+                return new TypeError(`TypeError: ${type} ${values} is not iterable`)
+            }
 
-	  return new Promise((resolve, reject) => {
-	    let result = []
-		  let counter  = 0
-		  const processData = (value, key) => {
-	      result[key] = value
-			  //  每成功一次计数器就会加1，直到所有都成功的时候会与values长度一致，则认定为都成功了，所以能避免异步问题
-			  if (++counter === values.length) {
-			    resolve(result)
-			  }
-		  }
-		  for (let i = 0; i < values.length; i++) {
-		    let value = values[i]
-			  if (isPromise(value)) {
-			    value.then(data => {
-			      processData(data, i)
-			    }, reject)
-			  } else {
-			    processData(value, i)
-			  }
-		  }
-	  })
-	}
+            return new Promise((resolve, reject) => {
+                let result = []
+                let counter = 0
+                const processData = (value, key) => {
+                    result[key] = value
+                        //  每成功一次计数器就会加1，直到所有都成功的时候会与values长度一致，则认定为都成功了，所以能避免异步问题
+                    if (++counter === values.length) {
+                        resolve(result)
+                    }
+                }
+                for (let i = 0; i < values.length; i++) {
+                    let value = values[i]
+                    if (isPromise(value)) {
+                        value.then(data => {
+                            processData(data, i)
+                        }, reject)
+                    } else {
+                        processData(value, i)
+                    }
+                }
+            })
+        }
 
-	function isPromise(value) {
-    if ((typeof value === 'object' && value !== null) || typeof value === 'function') {
-      if (typeof value.then === 'function') {
-        return true
-      }
-    }
-    return false
-	}
+        function isPromise(value) {
+            if ((typeof value === 'object' && value !== null) || typeof value === 'function') {
+                if (typeof value.then === 'function') {
+                    return true
+                }
+            }
+            return false
+        }
 
-  let p1 = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve('ok1');
-    }, 1000);
-  })
+        let p1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('ok1');
+            }, 1000);
+        })
 
-  let p2 = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve('ok2');
-    }, 1000);
-  })
+        let p2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('ok2');
+            }, 1000);
+        })
 
-  Promise.all([1,p1,p2]).then(data => {
-    console.log('resolve', data);
-  }, err => {
-    console.log('reject', err);
-  })
-</script>
+        Promise.all([1, p1, p2]).then(data => {
+            console.log('resolve', data);
+        }, err => {
+            console.log('reject', err);
+        })
+    </script>
 </body>
+
 </html>
