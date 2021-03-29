@@ -60,7 +60,17 @@
 
     <p>demo2</p>
     <div id="demo2">
+        <!-- overflow: auto; -->
+        <div style="border: 1px solid #000;">
+            <div style="width: 100px;height: 100px;background: #eee;float: left;"></div>
+        </div>
+    </div>
 
+
+    <p style="margin-top: 200px;">demo3</p>
+    <div id="demo3">
+        <div style="height: 100px;width: 100px;float: left;background: lightblue">我是一个左浮动的元素</div>
+        <div style="width: 200px; height: 200px;background: #eee">我是一个没有设置浮动, 也没有触发 BFC 元素, width: 200px; height:200px; background: #eee;</div>
     </div>
 
 

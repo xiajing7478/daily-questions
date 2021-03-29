@@ -1,113 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>常见排序算法( JavaScript版 )le</title>
+    <meta charset="UTF-8">
+    <title>常见排序算法( JavaScript版 )le</title>
 </head>
+
 <body>
-	<script type="text/javascript">
-    /**
-     * https://github.com/Mayandev/fe-interview-handwrite
-     * 选择排序
-     * 首先找到数组中最小的元素，将它和数组的第一个元素交换位置
-     * 在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置
-     * 如此往复，直到将整个数组排序。这种方法我们称之为选择排序。
-     * 不稳定排序（排序后，数组相同的元素可能相对位置发生改变）
-     * 时间复杂度: i为0是，为n-1, 1为n-2
-     * 则一共比较(n-1)+(n-2)+...+2+1 = n(n-1)/2 = 1/2n^2 -1/2
-     * 所有复杂度为O(n^2)
-     * @type {number[]}
-     */
-	let arr = [8,5,2,6,9,3,1,4,7,0]
+    <script type="text/javascript">
+        /**
+         * https://github.com/Mayandev/fe-interview-handwrite
+         * 选择排序
+         * 首先找到数组中最小的元素，将它和数组的第一个元素交换位置
+         * 在剩下的元素中找到最小的元素，将它与数组的第二个元素交换位置
+         * 如此往复，直到将整个数组排序。这种方法我们称之为选择排序。
+         * 不稳定排序（排序后，数组相同的元素可能相对位置发生改变）
+         * 时间复杂度: i为0是，为n-1, 1为n-2
+         * 则一共比较(n-1)+(n-2)+...+2+1 = n(n-1)/2 = 1/2n^2 -1/2
+         * 所有复杂度为O(n^2)
+         * @type {number[]}
+         */
+        let arr = [8, 5, 2, 6, 9, 3, 1, 4, 7, 0]
+        var newArr = [4, 3, 5, 2, 6]
 
-	function selectSort(arr) {
-		let len = arr.length
-		for (let i = 0; i < len; i++) {
-			let minIndex = i
-			for (let j = i + 1; j < len; j++) {
-				if (arr[minIndex] > arr[j]) {
-					minIndex = j
-				}
-			}
-			let tmp = arr[minIndex]
-			arr[minIndex] = arr[i]
-			arr[i] = tmp
-		}
-		return arr
-	}
-	console.log(selectSort(arr))
+        function selectedSort(arr) {
+            let len = arr.length
+            for (var i = 0; i < arr.length; i++) {
+                let minIndex = i
+                for (var j = i + 1; j < len; j++) {
+                    if (arr[minIndex] > arr[j]) {
+                        minIndex = j
+                    }
+                }
+                var tmp = arr[i]
+                arr[i] = arr[minIndex]
+                arr[minIndex] = tmp
+            }
+            return arr
+        }
 
-	/**
-	 * 插入排序
-	 * 当我们给无序数组做排序的时候，为了要插入元素，我们需要腾出空间，
-	 * 将其余所有元素在插入之前都向右移动一位，这种算法我们称之为插入排序。
-	 * 1、从数组第2个元素开始抽取元素。
-	 * 2、把它与左边第一个元素比较，如果左边第一个元素比它大，则继续与左边第二个元素比较下去，直到遇到不比它大的元素，然后插到这个元素的右边。
-	 * 3、继续选取第3，4，....n个元素,重复步骤 2 ，选择适当的位置插入。
-	 * 稳定排序（在比较的时候，过两个数相等的话，不会进行移动，前后两个数的次序不会发生改变）
-	 * 时间复杂度: i为0是，为n-1, 1为n-2
-	 * 则一共比较(n-1)+(n-2)+...+2+1 = n(n-1)/2 = 1/2n^2 -1/2
-	 * 所有复杂度为O(n^2)
-	 * @type {number[]}
-	 */
-	let s = [8,5,3,9]
-	s = [8,5,2,6,9,3,1,4,7,0]
-	function insertionSort(arr) {
-		if(arr == null || arr.length < 2)
-			return arr;
-		for (let i = 1; i < arr.length; i++) {
-		  insertToRightPosition(arr, i)
-		}
-			return arr
-    }
-    function insertToRightPosition(arr, i) {
-			let tmp = arr[i]
-	    let j = i - 1
-	    for (; j>=0 && arr[j] > tmp; j--) {
-	      arr[j+1] = arr[j]
-	    }
-	    arr[j+1] = tmp
-    }
-    console.log(insertionSort(s))
+        // console.log(selectedSort(newArr))
+
+        function selectSort(arr) {
+            let len = arr.length
+            for (let i = 0; i < len; i++) {
+                let minIndex = i
+                for (let j = i + 1; j < len; j++) {
+                    if (arr[minIndex] > arr[j]) {
+                        minIndex = j
+                    }
+                }
+                let tmp = arr[minIndex]
+                arr[minIndex] = arr[i]
+                arr[i] = tmp
+            }
+            return arr
+        }
+        // console.log(selectSort(arr))
+
+        /**
+         * 插入排序
+         * 当我们给无序数组做排序的时候，为了要插入元素，我们需要腾出空间，
+         * 将其余所有元素在插入之前都向右移动一位，这种算法我们称之为插入排序。
+         * 1、从数组第2个元素开始抽取元素。
+         * 2、把它与左边第一个元素比较，如果左边第一个元素比它大，则继续与左边第二个元素比较下去，直到遇到不比它大的元素，然后插到这个元素的右边。
+         * 3、继续选取第3，4，....n个元素,重复步骤 2 ，选择适当的位置插入。
+         * 稳定排序（在比较的时候，过两个数相等的话，不会进行移动，前后两个数的次序不会发生改变）
+         * 时间复杂度: i为0是，为n-1, 1为n-2
+         * 则一共比较(n-1)+(n-2)+...+2+1 = n(n-1)/2 = 1/2n^2 -1/2
+         * 所有复杂度为O(n^2)
+         * @type {number[]}
+         */
+        let s = [4, 3, 5, 1, 2, 6]
 
 
-	/**
-	 * 冒泡排序
-	 */
-	function bubbleSort(arr) {
-		let len = arr.length
-		for (let i = 0; i < len; i++) {
-			for (let j = 0; j < len - 1; j++) {
-				if (arr[j] > arr[j + 1]) {
-					let tmp = arr[j + 1]
-					arr[j + 1] = arr[j]
-					arr[j] = tmp
-				}
-			}
-		}
-		return arr
-	}
-	// console.log(bubbleSort(arr))
+        function insertedNum(arr) {
+            var len = arr.length
+            if (len <= 1) {
+                return arr
+            }
+            for (var i = 1; i < len; i++) {
+                var tmp = arr[i]
+                for (var j = i - 1; j >= 0; j--) {
+                    if (arr[j] > tmp) {
+                        arr[j + 1] = arr[j] // 不能直接用arr[i]= arr[j], 因为i是最外层循环，值没有改变 
+                        arr[j] = tmp
+                    }
+                }
+                console.log(arr)
+            }
+        }
 
-	let _arr = [4,3,5,2,1,6]
-	function quickSort(arr) {
-		if (arr.length <= 1) {
-		  return arr
-		}
-		let pivotIndex = arr.length >> 1
-		let pivot = arr.splice(pivotIndex, 1)[0]
-		let left = []
-		let right = []
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] <= pivot)  {
-        left.push(arr[i]);
-      } else {
-        right.push(arr[i]);
-      }
-    }
-    return quickSort(left).concat(pivot, quickSort(right));
-  }
-  console.log(quickSort(_arr))
-	</script>
+        // console.log(insertedNum(s))
+        // s = [8, 5, 2, 6, 9, 3, 1, 4, 7, 0]
+
+        function insertionSort(arr) {
+            if (arr == null || arr.length < 2)
+                return arr;
+            for (let i = 1; i < arr.length; i++) {
+                console.log(arr)
+                insertToRightPosition(arr, i)
+            }
+            return arr
+        }
+
+        function insertToRightPosition(arr, i) {
+            let tmp = arr[i]
+            let j = i - 1
+            for (; j >= 0 && arr[j] > tmp; j--) {
+                arr[j + 1] = arr[j]
+            }
+            arr[j + 1] = tmp
+        }
+        // console.log(insertionSort(s))
+
+
+        /**
+         * 冒泡排序
+         */
+        function bubbleSort(arr) {
+            let len = arr.length
+            for (let i = 0; i < len; i++) {
+                for (let j = 0; j < len - 1; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        let tmp = arr[j + 1]
+                        arr[j + 1] = arr[j]
+                        arr[j] = tmp
+                    }
+                }
+                console.log('bubbleSort', arr)
+            }
+            return arr
+        }
+
+        function bubbleSortFn(arr) {
+            let len = arr.length
+            for (var i = 0; i < len; i++) {
+                for (var j = i + 1; j < len; j++) {
+                    if (arr[i] > arr[j]) {
+                        var tmp = arr[j]
+                        arr[j] = arr[i]
+                        arr[i] = tmp
+                    }
+                }
+            }
+            return arr
+        }
+
+        // console.log(bubbleSort(arr))
+        var newArr = [4, 3, 5, 2, 6]
+            // [5, 8, 2, 6, 9, 3, 1, 4, 7, 0]
+            // console.log(bubbleSortFn(newArr))
+
+        let _arr = [4, 3, 5, 2, 6]
+
+        function quickSortFn(arr) {
+            var len = arr.length,
+                left = [],
+                right = []
+            if (len < 2) {
+                return arr
+            }
+            let midIndex = Math.floor(len / 2)
+                // 这2句话等于下面一句话
+                // let curVal = arr[midIndex]
+                // arr.splice(midIndex, 1)
+            let curVal = arr.splice(midIndex, 1)[0]
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] <= curVal) {
+                    left.push(arr[i])
+                } else {
+                    right.push(arr[i])
+                }
+            }
+            return quickSortFn(left).concat(curVal, quickSortFn(right))
+
+        }
+        console.log(quickSortFn(_arr))
+
+
+        function quickSort(arr) {
+            if (arr.length <= 1) {
+                return arr
+            }
+            let pivotIndex = arr.length >> 1
+            let pivot = arr.splice(pivotIndex, 1)[0]
+            let left = []
+            let right = []
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] <= pivot) {
+                    left.push(arr[i]);
+                } else {
+                    right.push(arr[i]);
+                }
+            }
+            return quickSort(left).concat(pivot, quickSort(right));
+        }
+        // console.log(quickSort(_arr))
+    </script>
 </body>
+
 </html>
