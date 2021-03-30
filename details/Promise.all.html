@@ -114,22 +114,23 @@
         // })
 
         let p1 = new Promise((resolve, reject) => {
-            // setTimeout(() => {
-            resolve('ok1');
-            // }, 1000);
+            setTimeout(() => {
+                resolve('ok1');
+            }, 1000);
         })
         let p2 = new Promise((resolve, reject) => {
-            // setTimeout(() => {
-            resolve('ok2');
-            // }, 1000);
-        })
-        Promise.alls([1, 3, 5, p1, p2]).then(data => {
+                setTimeout(() => {
+                    resolve('ok2');
+                }, 2000);
+            })
+            // promise all
+        Promise.all([1, 3, p1, 5, p2]).then(data => {
             console.log(data)
         }, err => {
             console.log(err)
         })
 
-        Promise.alls = (arr) => {
+        Promise.all = (arr) => {
             if (!Array.isArray(arr)) {
                 console.log('arr is not array....')
             }
@@ -153,6 +154,63 @@
                 }
             })
         }
+
+        // promise race //  用来处理多个请求，采用最快的（谁先完成用谁的）
+        Promise.race = (arr) => {
+            if (!Array.isArray(arr)) {
+                return arr
+            }
+            return new Promise((resolve, reject) => {
+                for (let i = 0; i < arr.length; i++) {
+                    let value = arr[i]
+                    if (value && typeof value.then === 'function') {
+                        value.then(resolve, reject)
+                    } else {
+                        resolve(value)
+                    }
+                }
+            })
+        }
+
+        Promise.race([p2, p1, 5]).then(data => {
+            console.log(data)
+        }, err => {
+            console.log(err)
+        })
+
+        /**
+         * 特别需要注意的是：因为Promise是没有中断方法的，xhr.abort()、ajax 有自己的中断方法，
+         * axios 是基于 ajax 实现的；fetch 基于 promise，所以他的请求是无法中断的。
+         * 这也是 promise 存在的缺陷，我们可以使用 race 来自己封装中断方法：
+         **/
+
+        function wrap(promise) {
+            let abort = null
+            let newPromise = new Promise((resolve, reject) => {
+                abort = reject
+            })
+            let p = Promise.race([promise, newPromise])
+            p.abort = abort
+            return p
+        }
+        const promise = new Promise((resolve, reject) => {
+            setTimeout(() => { // 模拟的接口调用 ajax 肯定有超时设置
+                resolve('成功');
+            }, 1000);
+        });
+
+        let newPromise = wrap(promise);
+
+        setTimeout(() => {
+            // 超过3秒 就算超时 应该让 proimise 走到失败态
+            newPromise.abort('超时了');
+        }, 3000);
+
+        newPromise.then((data => {
+            console.log('成功的结果' + data)
+        })).catch(e => {
+            console.log('失败的结果' + e)
+        })
     </script>
 </body>
 
