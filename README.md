@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-21 11:14:36
+ * @LastEditTime: 2021-04-02 18:07:02
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \daily-questions\README.md
+-->
 1. Node.js运用场景
 2. 熟悉flex布局
 3. 使用过相关框架（ express/koa 等）的项目经验
@@ -38,6 +46,7 @@ B) 1.基本信息 2.工作年限 3.技术栈 4.闪光点 5. 历史项目
   1.入职三年多，参与了4个项目(3个新项目、1个重构项目)。主要负责完成产品的架构分析、设计和核心功能开发。参与系统架构、性能、安全、扩展等优化设计和实现。
   制定团队前端开发规范，协调前端技术工作和测试开发人员工作。
   采用vue+vueRouter+vuex+axios+webpack+websocket+node.js技术方案。
+  采用前端工程化、模块化、组件化，增加项目可维护性和解耦、复用、多人协作。
   基于element-ui组件库，2次封装了表单、表格、对话框等组件，
   解决大量页面风格和结构时，通过简单的配置即可生成页面。大大降低研发成本。在产品线中开始推广。
 
