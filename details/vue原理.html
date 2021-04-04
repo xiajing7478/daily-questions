@@ -6,8 +6,32 @@
   <title>vue原理.png</title>
 </head>
 <body>
-  <div>
+  <div id="app">
+    <div>{{msg}}</div>
     <img src="../imgs/vue原理.png"/>
   </div>
 </body>
+<script>
+  class MVVM {
+    constructor(el, options, mv, data) {
+      this.el = el
+      this.data = data
+      this.options = options
+      this.mv = mv
+      this.init()
+    }
+    init() {
+
+    }
+  }
+
+  new MVVM({
+    el: '#app',
+    data() {
+      return {
+        msg: 'hello vue'
+      }
+    },
+  })
+</script>
 </html>

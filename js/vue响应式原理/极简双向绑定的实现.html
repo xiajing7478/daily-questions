@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>极简双向绑定的实现</title>
+</head>
+<body>
+  <input type="text" id="a"></input>
+  <div id="b"></div>
+  <script>
+    var obj = {}
+    Object.defineProperty(obj, 'hello', {
+      get(value) {
+        return value
+      },
+      set(newVal) {
+        document.getElementById('b').value = newVal
+        document.getElementById('b').innerText = newVal
+      }
+    })
+    document.getElementById('a').addEventListener('input', function(e){
+      obj.hello = e.target.value
+    })
+  </script>
+</body>
+</html>
