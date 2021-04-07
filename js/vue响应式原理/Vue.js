@@ -1,4 +1,5 @@
     /**
+     * https://www.cnblogs.com/kidney/p/6052935.html
      * 1.输入框以及文本节点与data中的数据绑定
      * 2.输入框内容变化时，data中的数据同步变化。即 view => model 的变化。
      * 3.data中的数据变化时，文本节点的内容同步变化。即 model => view 的变化。
