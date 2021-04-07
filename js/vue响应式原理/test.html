@@ -8,24 +8,22 @@
 
 <body>
     <div id="app">
-        <input v-model="school.name">
-        <p>{{school.name}}</p>
-        {{school.age}} {{school.grade}}
-        <!--<input v-model="school.age">-->
-        <!--<p>{{school.age}}</p>-->
-        <!--<p>{{school.grade}}</p>-->
-        <!--<p>{{getNewName}}</p>-->
+        <input type="text" v-model="msg"></input>
         <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>{{school.name}}</li>
+            <li>{{msg}}</li>
         </ul>
+        <p>
+            <input type="text" v-model="msg" />
+        </p>
     </div>
-    <script src="./MVVM.js"></script>
+    <!-- <script src="./MVVM.js"></script> -->
+    <script src="./Vue.js"></script>
     <script>
         const vm = new Vue({
             el: '#app',
             data: {
+                msg: 'hello, vue',
+                otherMsg: '!!!!!!!!!!!!',
                 school: {
                     name: '珠峰',
                     age: 18,
