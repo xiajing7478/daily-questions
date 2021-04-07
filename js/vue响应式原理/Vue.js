@@ -12,6 +12,42 @@
             new Compile(this.el, this)
         }
     }
+    // 观察者模式 被观察者
+    class Dep {
+        constructor() {
+            this.subs = []
+        }
+        addSub(sub) {
+            this.subs.push(sub)
+        }
+        notify() {
+            this.subs.forEach(sub => {
+                sub.update()
+            })
+        }
+    }
+
+    // 观察者
+    class Watcher {
+        constructor(vm, expr, cb) {
+            this.vm = vm
+            this.expr = expr
+            this.cb = cb
+            this.oldValue = this.get()
+        }
+        get() {
+            Dep.target = this
+            let value = Utils.getValue(this.vm, this.expr)
+            Dep.target = null
+            return value
+        }
+        update() {
+            let newValue = Utils.getValue(this.vm, this.expr)
+            if (newValue !== this.oldValue) {
+                this.cb(newValue)
+            }
+        }
+    }
 
     class Observe {
         constructor(data) {
