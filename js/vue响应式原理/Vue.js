@@ -11,6 +11,16 @@
      * 我们已经实现：修改输入框内容 => 在事件回调函数中修改属性值 => 触发属性的 set 方法。
      * 接下来我们要实现的是：发出通知 dep.notify() => 触发订阅者的 update 方法 => 更新视图。
      * 这里的关键逻辑是：如何将 watcher 添加到关联属性的 dep 中。
+     * 
+     * 
+     * 
+     * 总结：
+     * 1.定义Vue对象，声明vue的data里面的属性值，准备初始化触发observe方法
+     * 2.在Observe定义过响应式方法Object.defineProperty()的属性，在初始化的时候，通过Watcher对象进行addDep的操作。即每定义一个vue的data的属性值，就添加到一个Watcher对象到订阅者里面去。
+     * 3.每当形成一个Watcher对象的时候，去定义它的响应式。即Object.defineProperty()定义。这就导致了一个Observe里面的getter&setter方法与订阅者形成一种依赖关系。
+     * 4.由于依赖关系的存在，每当数据的变化后，会导致setter方法，从而触发notify通知方法，通知订阅者我的数据改变了，你需要更新。
+     * 5.订阅者会触发内部的update方法，从而改变vm实例的值，以及每个Watcher里面对应node的nodeValue，即视图上面显示的值。
+     * 6.Watcher里面接收到了消息后，会触发改变对应对象里面的node的视图的value值，而改变视图上面的值。
      **/
 
     class Vue {
@@ -77,7 +87,7 @@
             let dep = new Dep()
             Object.defineProperty(obj, key, {
                 get() {
-                    // 创建wather时, 会取到对应的内容，并把wather放到全局上
+                    // 创建watcher时, 会取到对应的内容，并把watcher放到全局上
                     Dep.target && dep.addSub(Dep.target)
                     return value
                 },
