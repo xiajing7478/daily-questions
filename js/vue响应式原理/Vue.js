@@ -3,6 +3,14 @@
      * 1.输入框以及文本节点与data中的数据绑定
      * 2.输入框内容变化时，data中的数据同步变化。即 view => model 的变化。
      * 3.data中的数据变化时，文本节点的内容同步变化。即 model => view 的变化。
+     * 
+     * 
+     * 每当 new 一个 Vue，主要做了两件事：第一个是监听数据：observe(data)，第二个是编译 HTML：nodeToFragement(id)。
+     * 在监听数据的过程中，会为 data 中的每一个属性生成一个主题对象 dep。
+     * 在编译 HTML 的过程中，会为每个与数据绑定相关的节点生成一个订阅者 watcher，watcher 会将自己添加到相应属性的 dep 中。
+     * 我们已经实现：修改输入框内容 => 在事件回调函数中修改属性值 => 触发属性的 set 方法。
+     * 接下来我们要实现的是：发出通知 dep.notify() => 触发订阅者的 update 方法 => 更新视图。
+     * 这里的关键逻辑是：如何将 watcher 添加到关联属性的 dep 中。
      **/
 
     class Vue {
@@ -38,8 +46,9 @@
         }
         get() {
             Dep.target = this
+                // 取值 把这个观察者和数据 关联起来
             let value = Utils.getValue(this.vm, this.expr)
-            Dep.target = null
+            Dep.target = null // 不取消，任何值取值 都会添加watcher
             return value
         }
         update() {
@@ -64,13 +73,20 @@
         defineReactive(obj, key, value) {
             // 如果这个value还是一个对象的话，递归遍历
             this.observe(value)
+                // 给每个属性都加上一个具有发布订阅的功能
+            let dep = new Dep()
             Object.defineProperty(obj, key, {
                 get() {
+                    // 创建wather时, 会取到对应的内容，并把wather放到全局上
+                    Dep.target && dep.addSub(Dep.target)
                     return value
                 },
-                set(newVal) {
+                set: (newVal) => {
                     if (value !== newVal) {
+                        // 如果赋得值也是个对象的话，需要再次转化get,set方法
+                        this.observe(newVal)
                         value = newVal
+                        dep.notify()
                     }
                 }
             })
@@ -138,6 +154,9 @@
 
     var Utils = {
         model: function(node, expr, vm) {
+            new Watcher(vm, expr, (newVal) => {
+                this.updateElement(node, newVal)
+            })
             node.addEventListener('input', (e) => {
                 let value = e.target.value.trim()
                 this.setValue(vm, expr, value)
@@ -147,10 +166,18 @@
         },
         text: function(node, expr, name, vm) {
             let content = expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
+                new Watcher(vm, args[1], (newVal) => {
+                    this.updateText(node, this.getContentValue(vm, expr))
+                })
                 return this.getValue(vm, args[1])
             })
             this.updateText(node, content)
                 // node.nodeValue = this.getValue(vm, name)
+        },
+        getContentValue(vm, expr) {
+            return expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
+                return this.getValue(vm, args[1])
+            })
         },
         getValue(vm, expr) {
             return expr.split('.').reduce((data, current) => {
