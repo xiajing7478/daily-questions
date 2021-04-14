@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES5继承方式+ES6Class继承对比</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // https://zhuanlan.zhihu.com/p/63624812
+    // 寄生组合式继承
+    // 父类
+    function SuperType(name) {
+        this.name = name;
+        this.colors = ["red", "blue", "green"];
+    }
+    SuperType.prototype.sayName = function() {
+        alert(this.name)
+    }
+
+    // 子类
+    function SubType(name, age) {
+        SuperType.call(this, name)
+        this.age = age
+    }
+
+    inheritPrototype(SuperType, SubType)
+
+    SubType.prototype.sayAge = function() {
+        alert(this.age)
+    }
+
+    function inheritPrototype(SuperType, SubType) {
+        var prototype = Object.create(SuperType.prototype)
+        SubType.prototype.constructor = prototype
+    }
+
+    var sub = new SubType('a', 18)
+        // console.log(sub)
+
+
+
+    // ES6中Class继承
+
+    class Person {
+        constructor(name, color) {
+            this.name = name
+            this.color = color
+        }
+        sayName() {
+            alert(this.name)
+        }
+        static sayHello() {
+            alert('hello' + this.name)
+        }
+    }
+
+    class Student extends Person {
+        constructor(name, color, score) {
+            super(name, color)
+            this.score = score
+        }
+        showScore() {
+            alert(this.score);
+        }
+    }
+
+    // let b = new Person('bb')
+    // b.sayHello()
+    // Person('bb').sayHello()
+    Person.sayHello('f')
+    let c = new Student("xuxu", ["white", "black", "pink"], 90)
+    c.sayName()
+    c.showScore()
+        // c.sayHello() // error sayHello is not defined
+</script>
+
+</html>
