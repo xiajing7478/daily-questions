@@ -78,6 +78,21 @@
     c.sayName()
     c.showScore()
         // c.sayHello() // error sayHello is not defined
+
+
+
+
+
+    function person() {
+        this.kind = "person";
+    }
+    person.prototype.eat = function(food) {
+        console.log(this.name + " is eating " + food);
+    }
+
+    function student(name) {
+        this.name = name;
+    }
 </script>
 
 </html>

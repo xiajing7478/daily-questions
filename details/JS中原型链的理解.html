@@ -1,88 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>JS中原型链的理解</title>
+    <meta charset="UTF-8">
+    <title>JS中原型链的理解</title>
 </head>
+
 <body>
-<script type="text/javascript">
-	// function Foo1() {
-	// 	this.name = '1'
-	// }
-	// function Foo2() {
-	// 	this.name = '2'
-	// }
-	// // console.dir(Foo1.prototype)
-	// // console.dir(Foo2.prototype)
-	// Foo2.prototype = new Foo1()
-	// function Foo3() {
-	// 	this.name = '3'
-	// }
-	// Foo3.prototype = new Foo2()
-	// var foo3 = new Foo3()
-	// console.dir(foo3)
-	// // console.dir(Foo2.prototype)
+    <script type="text/javascript">
+        // function Foo1() {
+        // 	this.name = '1'
+        // }
+        // function Foo2() {
+        // 	this.name = '2'
+        // }
+        // // console.dir(Foo1.prototype)
+        // // console.dir(Foo2.prototype)
+        // Foo2.prototype = new Foo1()
+        // function Foo3() {
+        // 	this.name = '3'
+        // }
+        // Foo3.prototype = new Foo2()
+        // var foo3 = new Foo3()
+        // console.dir(foo3)
+        // // console.dir(Foo2.prototype)
 
 
-	// function Animal(name) {
-	// 	this.name = name
-	// }
-	// Animal.prototype.eat = function () {
-	// 	console.log(this.name + ' eat.....')
-	// }
-	// function Dog(color) {
-	// 	Animal.call(this, color)
-	// 	this.color = color
-	// }
-	// function Cat(color) {
-	// 	this.color = color
-	// }
-	//
-	// var m = new Dog('小黑')
-	// console.log(m.name)
-	// m.eat('小黑')
-	//
-	// // Dog.prototype = new Animal()
-	// // Cat.prototype = Object.create(Animal)
-	// // Cat.prototype.constructor = Cat
-	// // var dog = new Animal('dog')
-	// // var cat = new Animal('cat')
-	// // console.log(Dog.prototype)
-	// // console.log(Cat.prototype)
-	// // console.log(Dog.prototype.constructor)
-	// // console.log(Cat.prototype.constructor)
-	// // // console.log(dog.color)
-	// // // console.log(dog.name)
-	// // dog.eat()
-	// // cat.eat()
+        // function Animal(name) {
+        // 	this.name = name
+        // }
+        // Animal.prototype.eat = function () {
+        // 	console.log(this.name + ' eat.....')
+        // }
+        // function Dog(color) {
+        // 	Animal.call(this, color)
+        // 	this.color = color
+        // }
+        // function Cat(color) {
+        // 	this.color = color
+        // }
+        //
+        // var m = new Dog('小黑')
+        // console.log(m.name)
+        // m.eat('小黑')
+        //
+        // // Dog.prototype = new Animal()
+        // // Cat.prototype = Object.create(Animal)
+        // // Cat.prototype.constructor = Cat
+        // // var dog = new Animal('dog')
+        // // var cat = new Animal('cat')
+        // // console.log(Dog.prototype)
+        // // console.log(Cat.prototype)
+        // // console.log(Dog.prototype.constructor)
+        // // console.log(Cat.prototype.constructor)
+        // // // console.log(dog.color)
+        // // // console.log(dog.name)
+        // // dog.eat()
+        // // cat.eat()
 
-	function Person(name) {
-		this.name = name
-	}
-	Person.prototype.showName = function () {
-		console.log(this.name)
-	}
+        function Person(name) {
+            this.name = name
+        }
+        Person.prototype.showName = function() {
+            console.log(this.name)
+        }
 
-	function Student(name, age) {
-		Person.call(this, name)
-		// this.name = name
-		this.age = age
-	}
-	Student.prototype.showAge = function () {
-		console.log(this.age)
-	}
-	console.log(Student.prototype)
-	console.log(Student.prototype.constructor)
-	Student.prototype = Object.create(Person)
-	// Student.prototype = new Person('animal')
-	Student.prototype.constructor = Student
-	console.log(Student.prototype)
-	console.log(Student.prototype.constructor)
-	var student = new Student('zhangsan', 18)
-	// console.log(student.name, student.age)
-	student.showAge()
-	student.showName()
+        function Student(name, age) {
+            Person.call(this, name)
+            this.age = age
+        }
+        Student.prototype = Object.create(Person.prototype)
+        Student.prototype.constructor = Student
+        Student.prototype.showAge = function() {
+            console.log(this.age)
+        }
+        console.log(Student.prototype)
 
-</script>
+        var student = new Student('zhangsan', 18)
+        student.showAge()
+        student.showName()
+    </script>
 </body>
+
 </html>
