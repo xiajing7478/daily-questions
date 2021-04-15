@@ -58,27 +58,58 @@
         // // dog.eat()
         // // cat.eat()
 
-        function Person(name) {
+        // function Person(name) {
+        //     this.name = name
+        // }
+        // Person.prototype.showName = function() {
+        //     console.log(this.name)
+        // }
+
+        // function Student(name, age) {
+        //     Person.call(this, name)
+        //     this.age = age
+        // }
+        // Student.prototype = Object.create(Person.prototype)
+        // Student.prototype.constructor = Student
+        // Student.prototype.showAge = function() {
+        //     console.log(this.age)
+        // }
+        // console.log(Student.prototype)
+
+        // var student = new Student('zhangsan', 18)
+        // student.showAge()
+        // student.showName()
+
+
+        function Sup(grade) {
+            this.grade = grade
+        }
+
+        Sup.prototype.sayGrade = function() {
+            console.log(this.grade)
+        }
+
+        function Sub(name) {
+            Sup.call(this, '1-1班')
             this.name = name
         }
-        Person.prototype.showName = function() {
+
+        console.log('1', Sub.prototype)
+        console.log('1', Sub.prototype.constructor)
+
+        Sub.prototype = Object.create(Sup.prototype)
+        Sub.prototype.constructor = Sub
+        console.log('2', Sub.prototype)
+        console.log('2', Sub.prototype.constructor)
+
+        Sub.prototype.sayName = function() {
             console.log(this.name)
         }
 
-        function Student(name, age) {
-            Person.call(this, name)
-            this.age = age
-        }
-        Student.prototype = Object.create(Person.prototype)
-        Student.prototype.constructor = Student
-        Student.prototype.showAge = function() {
-            console.log(this.age)
-        }
-        console.log(Student.prototype)
-
-        var student = new Student('zhangsan', 18)
-        student.showAge()
-        student.showName()
+        let sub = new Sub('kitt')
+        console.log('3', sub)
+        sub.sayGrade()
+        sub.sayName()
     </script>
 </body>
 
