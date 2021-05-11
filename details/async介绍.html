@@ -1,0 +1,45 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-05-11 17:09:22
+ * @LastEditTime: 2021-05-11 19:46:42
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \daily-questions\details\async介绍.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async介绍</title>
+</head>
+
+<body>
+    <div id="app">
+        <dl>
+            <dt>谈谈对 async/await 的理解，async/await 的实现原理是什么?:</dt>
+            <dd>1）async/await 就是 Generator 的语法糖，使得异步操作变得更加方便</dd>
+            <dd>2）async 函数就是将 Generator 函数的星号（*）替换成 async，将 yield 替换成await</dd>
+            <dd>3）async 是 Generator 的语法糖</dd>
+        </dl>
+    </div>
+    <script>
+        function sleep(delay) {
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, delay)
+            })
+        }
+        async function secs() {
+            for (let i = 1; i <= 5; i++) {
+                console.log(i)
+                await sleep(1000)
+            }
+        }
+
+        secs()
+    </script>
+</body>
+
+</html>
