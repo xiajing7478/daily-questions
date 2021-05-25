@@ -9,54 +9,58 @@
 <body>
     <script type="text/javascript">
         // function Foo1() {
-        // 	this.name = '1'
+        //     this.name = '1'
         // }
+
         // function Foo2() {
-        // 	this.name = '2'
+        //     this.name = '2'
         // }
-        // // console.dir(Foo1.prototype)
-        // // console.dir(Foo2.prototype)
+        // console.dir(Foo1.prototype)
+        // console.dir(Foo2.prototype)
         // Foo2.prototype = new Foo1()
+
         // function Foo3() {
-        // 	this.name = '3'
+        //     this.name = '3'
         // }
         // Foo3.prototype = new Foo2()
         // var foo3 = new Foo3()
         // console.dir(foo3)
-        // // console.dir(Foo2.prototype)
+        // console.dir(Foo2.prototype)
 
 
-        // function Animal(name) {
-        // 	this.name = name
-        // }
-        // Animal.prototype.eat = function () {
-        // 	console.log(this.name + ' eat.....')
-        // }
-        // function Dog(color) {
-        // 	Animal.call(this, color)
-        // 	this.color = color
-        // }
-        // function Cat(color) {
-        // 	this.color = color
-        // }
+        function Animal(name) {
+            this.name = name
+        }
+        Animal.prototype.eat = function() {
+            console.log(this.name + ' eat.....')
+        }
+
+        function Dog(color) {
+            Animal.call(this, color)
+            this.color = color
+        }
+
+        function Cat(color) {
+            this.color = color
+        }
         //
-        // var m = new Dog('小黑')
-        // console.log(m.name)
-        // m.eat('小黑')
-        //
-        // // Dog.prototype = new Animal()
-        // // Cat.prototype = Object.create(Animal)
-        // // Cat.prototype.constructor = Cat
-        // // var dog = new Animal('dog')
-        // // var cat = new Animal('cat')
-        // // console.log(Dog.prototype)
-        // // console.log(Cat.prototype)
-        // // console.log(Dog.prototype.constructor)
-        // // console.log(Cat.prototype.constructor)
-        // // // console.log(dog.color)
-        // // // console.log(dog.name)
-        // // dog.eat()
-        // // cat.eat()
+        var m = new Dog('小黑')
+        console.log(m.name)
+        m.eat('小黑') // m.eat is not a function
+            //
+            // // Dog.prototype = new Animal()
+            // // Cat.prototype = Object.create(Animal)
+            // // Cat.prototype.constructor = Cat
+            // // var dog = new Animal('dog')
+            // // var cat = new Animal('cat')
+            // // console.log(Dog.prototype)
+            // // console.log(Cat.prototype)
+            // // console.log(Dog.prototype.constructor)
+            // // console.log(Cat.prototype.constructor)
+            // // // console.log(dog.color)
+            // // // console.log(dog.name)
+            // // dog.eat()
+            // // cat.eat()
 
         // function Person(name) {
         //     this.name = name

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css常见3列布局</title>
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+        
+        #dem1 {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #demo1::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .left {
+            float: left;
+            width: 200px;
+            background: green;
+            height: 100px;
+        }
+        
+        .mid {
+            margin-left: 200px;
+            margin-right: 200px;
+            background: red;
+            height: 100px;
+        }
+        
+        .right {
+            float: right;
+            width: 200px;
+            background: hotpink;
+            height: 100px;
+        }
+        
+        #demo2 {
+            position: relative;
+        }
+        
+        .left1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            background: green;
+            height: 100px;
+        }
+        
+        .mid1 {
+            margin-left: 200px;
+            margin-right: 200px;
+            background: red;
+            height: 100px;
+        }
+        
+        .right1 {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 200px;
+            background: hotpink;
+            height: 100px;
+        }
+        
+        #demo3 {
+            display: flex;
+        }
+        
+        .left3 {
+            /* position: absolute; */
+            /* top: 0; */
+            /* left: 0; */
+            width: 200px;
+            background: green;
+            height: 100px;
+        }
+        
+        .mid3 {
+            /* margin-left: 200px;
+            margin-right: 200px; */
+            background: red;
+            flex: 1;
+            height: 100px;
+        }
+        
+        .right3 {
+            /* position: absolute; */
+            /* right: 0; */
+            /* top: 0; */
+            width: 200px;
+            background: hotpink;
+            height: 100px;
+        }
+        
+        #a {
+            height: 100%;
+            background: #d3d3d3;
+            position: relative;
+        }
+        
+        #b {
+            background: yellow;
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            /* margin: 0 auto; */
+            top: 50%;
+            left: 50%;
+            /* margin-top: -100px; */
+            /* margin-left: -100px; */
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="demo1">
+        <div class="left">左</div>
+        <div class="right">右</div>
+        <div class="mid">中</div>
+    </div>
+
+    <hr></hr>
+    <div id="demo2">
+        <div class="left1">左</div>
+        <div class="mid1">中</div>
+        <div class="right1">右</div>
+    </div>
+
+    <hr></hr>
+    <div id="demo3">
+        <div class="left3">左</div>
+        <div class="mid3">中</div>
+        <div class="right3">右</div>
+    </div>
+    <hr> -->
+
+    <div id="a">
+        <div id="b">
+            row&col
+        </div>
+    </div>
+</body>
+
+</html>

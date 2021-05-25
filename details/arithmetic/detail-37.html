@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 千分位
+        let num = 12345678;
+        // 12,345,678
+        function Thousands(num) {
+            let arr = num.toString().split('').reverse()
+            let res = ''
+            for (let i = arr.length - 1; i >= 0; i--) {
+                if (i > 0 && (i + 1) % 3 === 0) {
+                    res += ',' + arr[i]
+                } else {
+                    res += arr[i]
+                }
+            }
+            return res
+        }
+        // console.log(Thousands(num))
+
+
+        let str = num.toString();
+        let newStr = str.replace(/(\d)(?=(?:\d{3})+$)/g, "$1,");
+        // console.log(newStr)
+
+        // 比较两个对象的属性和值是否相同
+        function fun(obj1, obj2) {
+            //判断obj1、obj2是否为Object类型
+            let o1 = obj1 instanceof Object;
+            let o2 = obj2 instanceof Object;
+            //如果两者有不是对象类型的，既可以直接进行等值比较
+            if (!o1 || !o2) return obj1 === obj2;
+            //如果两个是对象类型，且两者的键值对个数不同
+            if (Object.keys(obj1).length !== Object.keys(obj2).length) return false;
+            //当以上情况均不是，则进行遍历比较
+            for (let key in obj1) {
+                //需要判断两个对象的此key对应的值是否为对象类型
+                let flag1 = obj1[key] instanceof Object;
+                let flag2 = obj2[key] instanceof Object;
+                if (flag1 && flag2) {
+                    fun(obj1[key], obj2[key])
+                } else if (obj1[key] !== obj2[key]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        let obj1 = {
+            name: 'tim',
+            age: 112,
+            score: [120, 121, 113]
+        };
+        let obj2 = {
+            age: 12,
+            name: 'tim',
+            score: [120, 121, 113]
+        };
+        console.log(fun(obj1, obj2))
+    </script>
+</body>
+
+</html>

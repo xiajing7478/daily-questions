@@ -32,7 +32,7 @@
         age: 38
     }]
 
-    // console.log(_arr.constructor)
+    // console.log(_arr.constructor) //
     // console.log(obj.constructor)
     // console.log(Array.prototype.constructor)
     // console.log(Object.prototype.constructor)
@@ -54,9 +54,9 @@
      * 利用对象或数组的构造函数
      **/
     function deepClone(obj) {
-        if (obj && typeof of === 'object') {
-            var constructor = obj.constructor
-            var result = new constructor()
+        if (obj && typeof obj === 'object') {
+            let constructor = obj.constructor
+            let result = new constructor()
             for (let key in obj) {
                 if (obj.hasOwnProperty(key)) {
                     // 如果这么写，改变数组或对象的某一个属性值,原先的属性值也会被修改

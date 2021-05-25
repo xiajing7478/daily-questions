@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<script>
+		function add() {
+		  let arg = [].slice.call(arguments)
+			function curry() {
+		    arg = arg.concat(...arguments)
+				return curry
+			}
+			curry.toString = () => {
+		    return arg.reduce((prev, current) => {
+		      return prev + current
+		    }, 0)
+			}
+			return curry
+    }
+    console.log(add(1)(2)(3)()(4))
+	</script>
+</body>
+</html>

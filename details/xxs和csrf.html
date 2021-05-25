@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-03-26 16:59:15
+ * @LastEditTime: 2021-05-13 14:03:42
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \daily-questions\details\xxs和csrf.html
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +14,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>xxs&csrf</title>
+    <style type="text/css">
+        #s {
+            color: red;
+            /* text-align: center; */
+        }
+        /* p {
+            border: 1px solid green;
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: pink;
+            margin: 0 auto;
+        } */
+        
+        p {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            /* margin: -100px 0 0 -100px; */
+            background-color: pink;
+        }
+        
+        #s {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+        }
+        
+        .vh {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+        
+        #demo {
+            height: 0;
+            width: 0;
+            border-width: 20px;
+            border-style: solid;
+            /* border-color: yellow green red pink; */
+            border-color: transparent transparent red;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,6 +82,15 @@
             </dd>
         </dl>
     </div>
+
 </body>
+<script>
+    let arr = ["啦啦", "呵呵", "哥哥", "嗯嗯"]
+    let province_list = arr.reduce((acc, cur, idx, arr) => {
+        acc[idx] = cur
+        return acc
+    }, {})
+    console.log('province_list', province_list)
+</script>
 
 </html>

@@ -28,9 +28,7 @@
         SuperType.call(this, name)
         this.age = age
     }
-
     inheritPrototype(SuperType, SubType)
-
     SubType.prototype.sayAge = function() {
         alert(this.age)
     }
@@ -39,10 +37,7 @@
         var prototype = Object.create(SuperType.prototype)
         SubType.prototype.constructor = prototype
     }
-
     var sub = new SubType('a', 18)
-        // console.log(sub)
-
 
 
     // ES6中Class继承
@@ -73,11 +68,11 @@
     // let b = new Person('bb')
     // b.sayHello()
     // Person('bb').sayHello()
-    Person.sayHello('f')
-    let c = new Student("xuxu", ["white", "black", "pink"], 90)
-    c.sayName()
-    c.showScore()
-        // c.sayHello() // error sayHello is not defined
+    // Person.sayHello('f')
+    // let c = new Student("xuxu", ["white", "black", "pink"], 90)
+    // c.sayName()
+    // c.showScore()
+    // c.sayHello() // error sayHello is not defined
 </script>
 
 </html>

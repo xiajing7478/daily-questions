@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<script>
+  const arr = [1, 4, [1, 2, 3, [4, 5, 6, [7, 8, 9]]], 5, "string", { name: "弹铁蛋同学" }];
+
+  Array.prototype.myFlat = function (num = 1) {
+    if (!Number(num) || Number(num) < 0) {
+      return this;
+    }
+    let arr = this.concat();    // 获得调用 fakeFlat 函数的数组
+    while (num > 0) {
+      if (arr.some(x => Array.isArray(x))) {
+        arr = [].concat.apply([], arr);    // 数组中还有数组元素的话并且 num > 0，继续展开一层数组
+      } else {
+        break; // 数组中没有数组元素并且不管 num 是否依旧大于 0，停止循环。
+      }
+      num--;
+    }
+    return arr;
+
+    // return this.reduce((pre, cur, index, arr) => {
+    //   return pre.concat(Array.isArray(cur) ? cur.myFlat() : cur)
+    // }, [])
+  }
+
+  // function myFlat(arr) {
+	//   let result = []
+	//   for(let p of arr) {
+	//     if (Array.isArray(p)) {
+	// 	      result = result.concat(myFlat(p))
+	//     } else {
+	//         result.push(p)
+	//     }
+	//   }
+	//   return result
+  // }
+
+  // function myFlat(arr) {
+  //   return arr.reduce((pre, cur, index, arr) => {
+  //     return pre.concat(Array.isArray(cur) ? myFlat(cur) : cur)
+  //   }, [])
+  // }
+
+
+  console.log(arr.myFlat(Infinity))
+
+</script>
+</body>
+</html>
