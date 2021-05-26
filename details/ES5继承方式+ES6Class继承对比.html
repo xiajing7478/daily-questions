@@ -20,7 +20,7 @@
         this.colors = ["red", "blue", "green"];
     }
     SuperType.prototype.sayName = function() {
-        alert(this.name)
+        console.log(this.name)
     }
 
     // 子类
@@ -30,7 +30,7 @@
     }
     inheritPrototype(SuperType, SubType)
     SubType.prototype.sayAge = function() {
-        alert(this.age)
+        console.log(this.age)
     }
 
     function inheritPrototype(SuperType, SubType) {
@@ -38,20 +38,23 @@
         SubType.prototype.constructor = prototype
     }
     var sub = new SubType('a', 18)
+<<<<<<< Updated upstream
 
+=======
+    console.log(sub)
+>>>>>>> Stashed changes
 
     // ES6中Class继承
-
     class Person {
         constructor(name, color) {
             this.name = name
             this.color = color
         }
         sayName() {
-            alert(this.name)
+            console.log(this.name)
         }
         static sayHello() {
-            alert('hello' + this.name)
+            console.log('hello' + this.name)
         }
     }
 
@@ -61,10 +64,11 @@
             this.score = score
         }
         showScore() {
-            alert(this.score);
+            console.log(this.score);
         }
     }
 
+<<<<<<< Updated upstream
     // let b = new Person('bb')
     // b.sayHello()
     // Person('bb').sayHello()
@@ -73,6 +77,24 @@
     // c.sayName()
     // c.showScore()
     // c.sayHello() // error sayHello is not defined
+=======
+    Person.sayHello('f')
+    let c = new Student("xuxu", ["white", "black", "pink"], 90)
+    c.sayName()
+    c.showScore()
+    // c.sayHello() // error sayHello is not defined
+
+    function person() {
+        this.kind = "person";
+    }
+    person.prototype.eat = function(food) {
+        console.log(this.name + " is eating " + food);
+    }
+
+    function student(name) {
+        this.name = name;
+    }
+>>>>>>> Stashed changes
 </script>
 
 </html>

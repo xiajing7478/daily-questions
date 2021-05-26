@@ -11,7 +11,7 @@
         /**
          * 1.创建一个新对象obj
          * 2.把obj的__proto__指向Dog.prototype 实现继承
-         * 3.执行构造函数，传递参数，改变this指向Dog.call(obj, ..arguments)
+         * 3.执行构造函数，传递参数，改变this指向Dog.apply(obj, ..arguments)
          * 4.最后把obj赋值给dog
          * @param name+
          * @constructor
@@ -21,16 +21,32 @@
             this.sleep = function() {
                 console.log(this.name + ' is sleeping')
             }
+            // return { a: 6};
         }
         Dog.prototype.bark = function() {
             console.log(this.name + ' wang wang')
         }
 
+<<<<<<< Updated upstream
         var dog = new Dog('小黑')
         console.log(dog)
         console.log(dog.__proto__)
             // dog.sleep()
             // dog.bark()
+=======
+        function _new(fn, ...arguments) {
+            let obj = Object.create(fn.prototype)
+            let result = fn.apply(obj, arguments)
+            // return obj 如果构造函数返回的是一个对象，这句话有问题， 如上面的return { a: 6};
+            return result instanceof Object ? result : obj
+        }
+
+        // var obj = _new(Dog, ['xiaohei', 'xiaohua'])
+        // console.log('obj', obj)
+        // var _obj = new Dog(['xiaohei', 'xiaohua'])
+        // console.log('_obj', _obj)
+
+>>>>>>> Stashed changes
 
         /**
          * new 操作符干的三件事
@@ -44,8 +60,45 @@
         // 	const ret = fn.apply(obj, arg)
         // 	return ret instanceof Object ? ret : obj
         // }
-
         // console.log(Object.prototype.toString.call(Dog)) // '[object Function]''
+
+        /**
+         * 手写apply还是函数
+         * @param fn
+         * @param arg
+         * @returns {fn}
+         * @private
+         */
+
+         var info = {
+             name: 'kitt',
+             age: 18
+         }
+
+         function Person(name, age) {
+            this.name = name
+            this.age = age
+            this.getInfo = function() {
+                console.log(`he name is ${this.name}, he age is ${this.age}`)
+            }
+        }
+        Function.prototype.myApply = function(context) {
+            context = context || window
+            context.fn = this
+            console.log(this)
+            // 这个this打印出来是：[function a]
+            // const res = context.fn(...arguments)
+            const res = arguments[1] ? context.fn(...arguments[1]) : context.fn(...arguments)
+            delete context.fn //避免造成全局污染
+        }
+
+        function a(x,y) {
+            console.log(this, x, y)
+        }
+        // var _person = new Person()
+        // _person.getInfo.apply(info)
+        // _person.getInfo.myApply(info)
+        a.myApply(info, ['a', 'b'])
     </script>
 </body>
 

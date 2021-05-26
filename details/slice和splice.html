@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var all = ary(1,2,3,4,5,6,888,9,222);
+    function ary() {
+
+      console.log(arguments)
+      console.log(...arguments)
+      console.log(typeof arguments)
+      console.log(arguments instanceof Object)
+      return [11, 12].slice.call(arguments)
+    }
+    console.log('all', all)
+    console.log(...[1,2,3])
+  </script>
+
+</body>
+</html>
