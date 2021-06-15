@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function randomString() {
+        //     let arrResult = []
+        //     let obj = {}
+        //     while (arrResult.length < 1000) {
+        //         let _random = Math.ceil(Math.random() * 1000000)
+        //         if (!obj[_random]) {
+        //             obj[_random] = true
+        //             arrResult.push(_random)
+        //         }
+        //     }
+        //     console.log(arrResult)
+        //     console.log(arrResult.length)
+        // }
+        // randomString()
+
+        function Person(name, gender) {
+            let _gender = null
+
+            function P(name, gender) {
+                this.name = name
+                _gender = gender
+            }
+            return P
+        }
+
+        let p = new Person()
+        console.log(p('kitt', '男'))
+    </script>
+</body>
+
+</html>

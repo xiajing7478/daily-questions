@@ -66,13 +66,13 @@
     }
 
     // let b = new Person('bb')
-    // b.sayHello()
-    // Person('bb').sayHello()
-    // Person.sayHello('f')
-    // let c = new Student("xuxu", ["white", "black", "pink"], 90)
-    // c.sayName()
-    // c.showScore()
-    // c.sayHello() // error sayHello is not defined
+    // b.sayHello() // b.sayHello is not a function
+    // Person('bb').sayHello() // Class constructor Person cannot be invoked without 'new'
+    // Person.sayHello('fggggg') // helloPerson
+    let c = new Student("xuxu", ["white", "black", "pink"], 90)
+    c.sayName()
+    c.showScore()
+    c.sayHello() // error sayHello is not defined
 </script>
 
 </html>

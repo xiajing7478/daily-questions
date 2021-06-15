@@ -88,6 +88,37 @@
         return new LazyManClass(name)
     }
     LazyMan('Tony').eat('lunch').eat('dinner').sleepFirst(2000).sleep(5000).eat('junk food')
+
+
+    // function Lazy(name) {
+    //     this.name = name
+    //     this.list = []
+    //     console.log(`Hi I am ${this.name}`)
+    //     this.next()
+    //     this.sleep = function(wait) {
+    //         setTimeout(() => {
+    //             console.log(`等待了${wait}秒...`)
+    //         }, wait)
+    //         return this
+    //     }
+    //     this.eat = function(food) {
+    //         const fn = () => {
+
+    //         }
+    //         console.log(`I am eating ${food}`)
+    //     }
+    //     this.next = function() {
+
+    //     }
+    // };
+
+    // function LazyMan(name) {
+    //     if (!(this instanceof LazyMan)) {
+    //         return new Lazy(name)
+    //     }
+    // };
+    // // LazyMan('Tony')
+    // LazyMan('Tony').sleep(10).eat('lunch');
 </script>
 
 </html>

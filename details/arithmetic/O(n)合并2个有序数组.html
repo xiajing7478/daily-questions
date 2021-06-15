@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <script>
+        function sort(a, b) {
+            var i = 0,
+                j = 0,
+                k = 0;
+            var result = []
+            while (i < a.length && j < b.length) {
+                if (a[i] < b[j]) {
+                    result[k++] = a[i++];
+                } else {
+                    result[k++] = b[j++];
+                }
+            }
+            while (i < a.length) {
+                result[k++] = a[i++];
+            }
+            while (j < b.length) {
+                result[k++] = b[j++]
+            }
+            return result
+        };
+        // console.log(sort([1, 4, 6], [2, 3, 5]))
+
+        function Animal(name, color) {
+            this.name = name
+            this.color = color
+            this.init = function() {
+                console.log(`this is ${name}, it is color ${color}`)
+            }
+            return this
+        }
+
+        var obj = {}
+        Function.prototype.myApply = function(ctx, arguments) {
+            // const fn = symbol('fn')
+            ctx.fn = this
+            let result = ctx.fn(...arguments)
+            delete ctx.fn
+            return result
+        }
+
+        Function.prototype.myBind = function(ctx, arguments) {
+            ctx.fn = this
+            return function() {
+                ctx.fn(...arguments)
+                delete ctx.fn
+            }
+        }
+
+        // let b = Animal.myApply(obj, ['dog', 'black'])
+        // let a = Animal.apply(obj, ['dog', 'black'])
+        // a.init()
+        // b.init()
+
+        var _obj = {
+            c: 3
+        }
+
+        function a(x, y) {
+            console.log(this, x, y)
+        }
+
+        // a.call(_obj, 1, 2)
+        // a.myApply(_obj, [1, 2])
+        // let _a = a.bind(_obj)
+        // _a(1, 2)
+
+        let _b = a.myBind(_obj)
+        _b(1, 2)
+
+
+
+
+
+        // Animal.prototype
+
+        // function _new(Animal, argument) {
+        //     let obj = Object.create(Animal.prototype)
+        //     let result = Animal.apply(obj, [...argument])
+        //     return result instanceof Object ? result : obj
+        // }
+
+        // // var animal = new Animal('dog', 'black')
+        // var _animal = _new(Animal, ['dog', 'black'])
+        // _animal.init()
+    </script>
+</body>
+
+</html>

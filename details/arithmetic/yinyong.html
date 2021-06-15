@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+ <script>
+	 debugger
+	 let a = { n: 1 }
+	 let b = a
+	 a = a.x = { n:2 }
+	 console.log(a.x)
+	 console.log(b.x)
+	 console.log(a.n)
+	 console.log(b.n)
+ </script>
+</body>
+</html>

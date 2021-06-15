@@ -55,6 +55,7 @@
         /**
          * 防抖
          */
+        console.log('a')
         var inputDebounce = document.getElementById('debounce')
         inputDebounce.addEventListener('keyup', debounce(fn, 500))
 
@@ -115,24 +116,24 @@
 
 
         //
-      //   function throttle(fn, delay) {
-      //     let start = +Date.now()
-      //     let timer = null
-      //     return function(...args) {
-      //         const now = +Date.now()
-      //         if (now - start >= delay) {
-      //             clearTimeout(timer)
-      //             timer = null
-      //             fn.apply(this, args)
-      //             start = now
-      //         } else if (!timer){
-      //             timer = setTimeout(() => {
-      //                 fn.apply(this, args)
-      //             }, delay)
-      //         }
-      //     }
-      // }
-      // wrap.onmousemove = throttle(getMove, 1000)
+        //   function throttle(fn, delay) {
+        //     let start = +Date.now()
+        //     let timer = null
+        //     return function(...args) {
+        //         const now = +Date.now()
+        //         if (now - start >= delay) {
+        //             clearTimeout(timer)
+        //             timer = null
+        //             fn.apply(this, args)
+        //             start = now
+        //         } else if (!timer){
+        //             timer = setTimeout(() => {
+        //                 fn.apply(this, args)
+        //             }, delay)
+        //         }
+        //     }
+        // }
+        // wrap.onmousemove = throttle(getMove, 1000)
     </script>
 </body>
 

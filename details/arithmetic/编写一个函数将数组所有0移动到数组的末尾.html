@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编写一个函数将所有 0 移动到数组的末尾</title>
+</head>
+
+<body>
+    <script>
+        var arr = [
+            [0, 1, 0, 0, 3, 12]
+        ];
+
+        function zeroMove(array) {
+            let len = array.length;
+            let j = 0;
+            for (let i = 0; i < len - j; i++) {
+                if (array[i] === 0) {
+                    array.push(0);
+                    array.splice(i, 1);
+                    i--;
+                    j++;
+                }
+            }
+            return array;
+        }
+        console.log(zeroMove(arr))
+    </script>
+</body>
+
+</html>
