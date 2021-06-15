@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<script>
+  function changeObjProperty(o) {
+    o.siteUrl = "http://a.com";
+    o = new Object();
+    o.siteUrl = "http://b.com";
+  }
+
+  let s = new Object(); // { s.siteUrl}
+  changeObjProperty(s);
+  console.log(s.siteUrl);
+</script>
+</body>
+</html>

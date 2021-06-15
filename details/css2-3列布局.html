@@ -118,7 +118,24 @@
         </div>
         <div class="sidebar">子列</div>
     </div>
-
 </body>
+
+<script>
+    function randomString() {
+        let result = []
+        let json = {}
+
+        while (result.length < 1000) {
+            let random = parseInt(Math.random().toFixed(6) * 1000000)
+            if (!json[random]) {
+                json[random] = true
+                result.push(random)
+            }
+        }
+        console.log(result)
+        console.log(result.length)
+    }
+    randomString()
+</script>
 
 </html>

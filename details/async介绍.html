@@ -26,57 +26,65 @@
         </dl>
     </div>
     <script>
-      // //输出答案：2,4,3,1,5,6,x1,x2,7,8,x3,x4,x5
-    setTimeout(function () {//宏任务1
-      console.log('1');
-    });
-    new Promise(function (resolve) {
-      console.log('2');//同步任务1
-      resolve();
-    }).then(function () {//微任务1
-      console.log('3');
-    });
-    console.log('4');//同步任务2
-    setTimeout(function () {//宏任务2
-      console.log('5');//宏任务2中的同步任务
-      new Promise(function (resolve) {
-        console.log('6');//宏任务2中的同步任务
-        new Promise(function (resolve) {//宏任务2中的微任务
-            console.log('x1');
-            resolve();
-          }).then(function () {
-            console.log('X2');
-          });
-        setTimeout(function () {//宏任务2中的宏任务
-          console.log('X3');
-          new Promise(function (resolve) {//宏任务2中的宏任务中的同步任务
-            console.log('X4');
-            resolve();
-          }).then(function () {//宏任务2中的宏任务中的微任务
-            console.log('X5');
-          });
-        })
-        resolve();
-      }).then(function () {//宏任务2中的微任务
-        console.log('7');
-      });
-    })
-    setTimeout(function () {//宏任务3
-      console.log('8');
-    });
-  
+        // //输出答案：2,4,3,1,5,6,x1,x2,7,8,x3,x4,x5
+        // setTimeout(function() { //宏任务1
+        //     console.log('1');
+        // });
+        // new Promise(function(resolve) {
+        //     console.log('2'); //同步任务1
+        //     resolve();
+        // }).then(function() { //微任务1
+        //     console.log('3');
+        // });
+        // console.log('4'); //同步任务2
+        // setTimeout(function() { //宏任务2
+        //     console.log('5'); //宏任务2中的同步任务
+        //     new Promise(function(resolve) {
+        //         console.log('6'); //宏任务2中的同步任务
+        //         new Promise(function(resolve) { //宏任务2中的微任务
+        //             console.log('x1');
+        //             resolve();
+        //         }).then(function() {
+        //             console.log('X2');
+        //         });
+        //         setTimeout(function() { //宏任务2中的宏任务
+        //             console.log('X3');
+        //             new Promise(function(resolve) { //宏任务2中的宏任务中的同步任务
+        //                 console.log('X4');
+        //                 resolve();
+        //             }).then(function() { //宏任务2中的宏任务中的微任务
+        //                 console.log('X5');
+        //             });
+        //         })
+        //         resolve();
+        //     }).then(function() { //宏任务2中的微任务
+        //         console.log('7');
+        //     });
+        // })
+        // setTimeout(function() { //宏任务3
+        //     console.log('8');
+        // });
 
-        // function sleep(delay) {
-        //     return new Promise((resolve, reject) => {
-        //         setTimeout(resolve, delay)
-        //     })
-        // }
-        // async function secs() {
-        //     for (let i = 1; i <= 5; i++) {
-        //         console.log(i)
-        //         await sleep(1000)
-        //     }
-        // }
+
+        function sleep(delay) {
+            setTimeout(() => {
+                    return 123
+                }, delay)
+                // return new Promise((resolve, reject) => {
+                //     setTimeout(() => {
+                //         resolve('ok')
+                //     }, delay)
+                // })
+        }
+        async function secs() {
+            let a = await sleep(5000)
+            let b = 'aa'
+            console.log(a, b)
+                // for (let i = 1; i <= 5; i++) {
+                //     console.log(i)
+                //     await sleep(1000)
+                // }
+        }
 
         secs()
     </script>

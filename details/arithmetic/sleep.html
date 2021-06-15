@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class Lazy {
+      constructor(name) {
+        this.list = []
+        this.name = name;
+        console.log(`Hi I am ${this.name}`);
+        setTimeout(() => {
+          this.next()
+        }, 0)
+      }
+      eat(food) {
+        const fn = () => {
+          console.log(`I am eating ${food}`)
+          this.next()
+        }
+        this.list.push(fn)
+        return this
+      }
+      sleepFirst(timer) {
+        const fn = () => {
+          setTimeout(() => {
+            console.log(`等待了${timer}秒...`)
+            this.next()
+          }, timer)
+        }
+        this.list.push(fn)
+        return this
+      }
+      next() {
+        const fn = this.list.shift()
+        fn && fn()
+        // debugger
+        // this.list.forEach(fn => fn())
+        // console.log('next.....')
+      }
+    }
+    function LazyMan(name) {
+      if (!(this instanceof LazyMan)) {
+        return new Lazy(name)
+      }
+    }
+    // LazyMan('Tony').eat('launch').eat('dinner').sleepFirst(2000)
+    LazyMan('Tony').eat('launch').eat('dinner').sleepFirst(2000).eat('junk food')
+    // LazyMan('Tony').eat('lunch').eat('dinner').sleepFirst(2000).sleep(5000).eat('junk food')
+  </script>
+</body>
+</html>

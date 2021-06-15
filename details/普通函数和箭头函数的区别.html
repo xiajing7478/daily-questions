@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>普通函数和箭头函数的区别</title>
+</head>
+
+<body>
+    <div>
+        <p>
+            1. 箭头函数是匿名函数，不能作为构造函数，不能使用new
+        </p>
+        <p>
+            2.箭头函数不绑定arguments，取而代之用rest参数...解决。 每一个普通函数调用后都具有一个arguments对象，用来存储实际传递的参数。但是箭头函数并没有此对象
+        </p>
+        <p>
+            3.this的作用域不同，箭头函数不绑定this，会捕获其所在的上下文的this值，作为自己的this值。
+        </p>
+        <p>
+            4. 箭头函数没有原型属性
+        </p>
+        <p>
+            总结: 1.箭头函数的this永远指向其上下文的this ，任何方法都改变不了其指向，如 call() , bind() , apply()。 2.普通函数总指向调用它的那个对象
+        </p>
+    </div>
+    <script>
+        /**
+         * 1.箭头函数是匿名函数，不能作为构造函数，不能使用new
+         */
+        let a = () => {
+            console.log(111)
+        };
+        // let fn = new a();  // a is not a constructor
+
+        /**
+         * 2. 箭头函数不绑定arguments，取而代之用rest参数...解决
+         * 每一个普通函数调用后都具有一个arguments对象，用来存储实际传递的参数。但是箭头函数并没有此对象。
+         */
+        function A(a) {
+            console.log(arguments);
+        }
+        A(1, 2, 4); // [1,2,4, callee:f, Symbol(Symbol.iterator): ƒ]
+
+        // let B = () => {
+        //     console.log(arguments) // Uncaught ReferenceError: arguments is not defined
+        // }
+        // B(1, 2, 4);
+        let C = (...rest) => {
+            console.log(rest)
+        };
+        C(1, 2, 4);
+
+        /**
+         * this的作用域不同，箭头函数不绑定this，会捕获其所在的上下文的this值，作为自己的this值。
+         **/
+        var obj = {
+            a: 10,
+            b: () => {
+                console.log(this.a) // undefined
+                console.log(this) // Window
+            },
+            c: function() {
+                console.log(this.a) // 10
+                console.log(this) // obj
+            }
+        };
+        obj.b();
+        obj.c();
+
+        /**
+         * 箭头函数没有原型属性
+         **/
+        let cc = () => {
+            return 1;
+        };
+
+        function dd() {
+            return 2;
+        }
+        console.log(cc.prototype) // undefined
+        console.log(dd.prototype) // { constructor: f }
+    </script>
+</body>
+
+</html>

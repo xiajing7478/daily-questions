@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <script>
+        function sum(str1, str2) {
+            const arr1 = str1.split(''),
+                arr2 = str2.split('');
+            const len1 = arr1.length,
+                len2 = arr2.length;
+            const maxLen = Math.max(len1, len2);
+            let res = [];
+            let flag = false;
+            for (let i = 0; i < maxLen; i++) {
+                let temp;
+                let num1 = arr1.pop(),
+                    num2 = arr2.pop();
+                num1 = num1 ? num1 : 0;
+                num2 = num2 ? num2 : 0;
+                if (flag) {
+                    temp = parseInt(num1) + parseInt(num2) + 1;
+                } else {
+                    temp = parseInt(num1) + parseInt(num2);
+                }
+                if (parseInt(temp / 10) > 0) {
+                    // 有进位
+                    res.push(temp % 10);
+                    flag = true;
+                } else {
+                    res.push(temp);
+                    flag = false;
+                }
+                if (i == maxLen - 1 && flag) {
+                    res.push(1);
+                }
+            }
+            return res.reverse().join('');
+        }
+
+        // 验证
+        sum('987654321111234', '99900334444') // '987754221445678'
+    </script>
+</body>
+
+</html>

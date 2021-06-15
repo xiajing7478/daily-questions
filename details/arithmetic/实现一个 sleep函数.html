@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现一个 sleep 函数</title>
+    <style type="text/css">
+        img {
+            /* transform: scale(0.625, 0.625); */
+            /* max-width: 300px; */
+            /* box-sizing: border-box; */
+            /* padding: 0 90px; */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div>
+        <img src='../../imgs/cmd&amd.jpg' style="width: 480px!important;">
+    </div> -->
+    <script>
+        // function sleep(time) {
+        //     return new Promise(resolve => setTimeout(resolve, time))
+        // };
+
+        // sleep(3000).then(() => {
+        //     console.log(1)
+        // })
+
+
+        // function sleep1(fn, wait) {
+        //     setTimeout(fn, wait)
+        // };
+
+        // function fn() {
+        //     console.log(1)
+        // };
+        // sleep1(fn, 3000);
+
+        // function fn(time) {
+        //     return new Promise(resolve => setTimeout(resolve, time))
+        // }
+        // async function sleep2() {
+        //     let p = await fn(3000)
+        //     console.log(1)
+        // }
+        // sleep2()
+
+        // function* sleep4(time) {
+        //     yield new Promise(resolve => setTimeout(resolve, time))
+        // }
+        // sleep4(3000).next().value.then(() => console.log(1))
+
+        var arr = [0, 1, 0, 0, 3, 12]
+
+        function findZero(arr) {
+            if (arr.indexOf(0) <= -1) {
+                return arr
+            }
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] === 0) {
+                    arr.push(0)
+                    arr.splice(i, 1)
+                }
+            }
+            return arr
+        }
+
+        function zeroMove(array) {
+            let len = array.length;
+            let j = 0;
+            for (let i = 0; i < len - j; i++) {
+                if (array[i] === 0) {
+                    array.push(0);
+                    array.splice(i, 1);
+                    i--;
+                    j++;
+                }
+            }
+            return array;
+        }
+        console.log(zeroMove(arr))
+    </script>
+</body>
+
+</html>
