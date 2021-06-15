@@ -27,13 +27,11 @@
             console.log(this.name + ' wang wang')
         }
 
-<<<<<<< Updated upstream
         var dog = new Dog('小黑')
         console.log(dog)
         console.log(dog.__proto__)
             // dog.sleep()
             // dog.bark()
-=======
         function _new(fn, ...arguments) {
             let obj = Object.create(fn.prototype)
             let result = fn.apply(obj, arguments)
@@ -46,7 +44,6 @@
         // var _obj = new Dog(['xiaohei', 'xiaohua'])
         // console.log('_obj', _obj)
 
->>>>>>> Stashed changes
 
         /**
          * new 操作符干的三件事
