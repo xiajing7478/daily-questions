@@ -1,0 +1,74 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-06-30 11:00:13
+ * @LastEditTime: 2021-06-30 11:05:46
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \daily-questions\details\vue路由原理.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <dl>
+            <dt>hash优点:</dt>
+            <dd>1.只需要前端配置路由表, 不需要后端的参与</dd>
+            <dd>2.兼容性好, 浏览器都能支持</dd>
+            <dd>3.hash值改变不会向后端发送请求, 完全属于前端路由</dd>
+            <dt>hash缺点:</dt>
+            <dd>1.hash值前面需要加#, 不符合url规范,也不美观</dd>
+        </dl>
+        <dl>
+            <dt>history优点:</dt>
+            <dd>1.符合url地址规范, 不需要#, 使用起来比较美观</dd>
+            <dt>hash缺点:</dt>
+            <dd>1.兼容性不如 hash，且需要服务端支持重定向，否则一刷新页面就404了</dd>
+            <dd>2.兼容性比较差, 利用了 HTML5 History对象中新增的 pushState() 和 replaceState() 方法,需要特定浏览器的支持.</dd>
+        </dl>
+    </div>
+
+    <h1>hash演示</h1>
+    <a href="#/a">A页面</a>
+    <a href="#/b">B页面</a>
+    <div id="#app1">
+        这里演示hash
+    </div>
+
+    <h1>history演示</h1>
+    <a href="javascript:toC();">C页面</a>
+    <a href="javascript:toD();">D页面</a>
+    <div id="#app2">
+        这里演示history
+    </div>
+    <script>
+        // hash
+        window.addEventListener('hashchange', function() {
+            let el = document.getElementById('#app1')
+            el.innerText = window.location.hash || 'a'
+        })
+
+
+        // history
+        function toC() {
+            window.history.pushState(null, 'C', `${window.location.pathname}/c`)
+        }
+
+        function toD() {
+            window.history.pushState(null, 'D', `${window.location.pathname}/d`)
+        }
+        window.addEventListener('popstate', function() {
+            let el = document.getElementById('#app2')
+            el.innerText = decodeURIComponent(window.location.pathname)
+        })
+    </script>
+</body>
+
+</html>
