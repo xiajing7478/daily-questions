@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3列布局</title>
+    <style type="text/css">
+        .wrap {
+            margin: 0;
+            padding: 0;
+        }
+        /* 第1种 float */
+        
+        .one .left {
+            float: left;
+            width: 180px;
+            background-color: blue;
+        }
+        
+        .one .mid {
+            margin-left: 180px;
+            margin-right: 200px;
+            background-color: green;
+        }
+        
+        .one .right {
+            width: 200px;
+            float: right;
+            background-color: pink;
+        }
+        /* 第2种 flex */
+        
+        .two {
+            display: flex;
+        }
+        
+        .two .left {
+            width: 180px;
+            background-color: blue;
+        }
+        
+        .two .right {
+            width: 200px;
+            background-color: pink;
+        }
+        
+        .two .mid {
+            background-color: green;
+            flex: 1;
+        }
+        /* 第3种 绝对定位 */
+        
+        .three .left {
+            left: 0;
+            position: absolute;
+            width: 180px;
+            background-color: blue;
+        }
+        
+        .three .right {
+            position: absolute;
+            width: 200px;
+            background-color: pink;
+            right: 0;
+        }
+        
+        .three .mid {
+            position: absolute;
+            background-color: green;
+            left: 180px;
+            right: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- <div class="one">
+            <div class="left">left</div>
+            <div class="right">right</div>
+            <div class="mid">
+                <p>mid1</p>
+                <p>mid2</p>
+                <p>mid3</p>
+            </div>
+        </div> -->
+
+        <!-- <div class="two">
+            <div class="left">left</div>
+            <div class="mid">
+                <p>mid1</p>
+                <p>mid2</p>
+                <p>mid3</p>
+            </div>
+            <div class="right">right</div>
+        </div> -->
+
+
+        <div class="three">
+            <div class="left">left</div>
+            <div class="mid">
+                <p>mid1</p>
+                <p>mid2</p>
+                <p>mid3</p>
+            </div>
+            <div class="right">right</div>
+        </div>
+    </div>
+
+    <p>float兼容性较好，一般需要清除浮动</p>
+    <p>absolute方便易用，脱离文档流，可使用性较差</p>
+    <p>flex：没什么明显缺点，且移动端友好</p>
+</body>
+
+</html>

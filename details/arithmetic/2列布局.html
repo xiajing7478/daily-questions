@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2列布局</title>
+    <style type="text/css">
+        .wrap {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .one .bgLeft {
+            float: left;
+            width: 180px;
+            height: 400px;
+            background-color: blue;
+        }
+        
+        .one .bgRight {
+            margin-left: 180px;
+            height: 400px;
+            background-color: green;
+        }
+        
+        .two {
+            display: flex;
+        }
+        
+        .two .bgLeft {
+            width: 180px;
+            background-color: blue;
+        }
+        
+        .two .bgRight {
+            background-color: green;
+            flex: 1;
+            height: 500px;
+        }
+         
+        .three .bgLeft {
+            position: absolute;
+            width: 180px;
+            background-color: blue;
+        }
+        
+        .three .bgRight {
+            background-color: green;
+            margin-left: 180px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- <div class="one">
+            <div class="bgLeft">left</div>
+            <div class="bgRight">
+                <p>right1</p>
+                <p>right2</p>
+                <p>right3</p>
+            </div>
+        </div> -->
+        <!-- <div class="two">
+            <div class="bgLeft">left</div>
+            <div class="bgRight">
+                <p>right1</p>
+                <p>right2</p>
+                <p>right3</p>
+            </div>
+        </div> -->
+        <div class="three">
+            <div class="bgLeft">left</div>
+            <div class="bgRight">
+                <p>right1</p>
+                <p>right2</p>
+                <p>right3</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-26 11:13:36
+ * @LastEditTime: 2021-07-26 11:34:46
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \daily-questions\details\arithmetic\垂直居中方式.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>垂直居中方式</title>
+    <style type="text/css">
+        .way1 {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .way1 .sub1 {
+            width: 200px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        
+        .sub2 {
+            width: 200px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: -50px;
+        }
+        
+        .sub3 {
+            width: 200px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .way2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 600px;
+            border: 1px solid #0000FF;
+        }
+        
+        .sub4 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 100px;
+            background-color: green;
+            border: 1px solid #00C1B3;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <!-- <div class="way1"> -->
+        <!-- <div class="sub1"></div> -->
+        <!-- <div class="sub2"></div> -->
+        <!-- <div class="sub3"></div> -->
+        <!-- </div> -->
+
+        <div class="way2">
+            <div class="sub4">1</div>
+            <div class="sub4">2</div>
+            <div class="sub4">3</div>
+            <div class="sub4">4</div>
+        </div>
+    </div>
+</body>
+
+</html>
