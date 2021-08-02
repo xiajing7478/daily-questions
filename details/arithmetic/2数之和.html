@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2数之和.html</title>
+</head>
+
+<body>
+    <script>
+        // const twoSum = (arr, target) => {
+        //     const obj = {};
+        //     for (let i = 0; i < arr.length; i++) {
+        //         if (obj[arr[i]] != null) {
+        //             return [obj[arr[i]], i];
+        //         } else {
+        //             obj[target - arr[i]] = i;
+        //         }
+        //     }
+        //     return [];
+        // };
+
+
+        // const twoSum = (arr, target) => {
+        //     const res = [];
+        //     for (let i = 0; i < arr.length - 1; i++) {
+        //         for (let j = i + 1; j < arr.length; j++) {
+        //             if (arr[i] + arr[j] === target) {
+        //                 res.push([i, j]);
+        //             }
+        //         }
+        //     }
+        //     return res;
+        // }
+
+
+        const twoSum = (arr, target) => {
+            let obj = {};
+            let res = [];
+            for (let i = 0; i < arr.length; i++) {
+                if (obj[arr[i]]) {
+                    let temp = obj[arr[i]];
+                    for (let j = 0; j < temp.length; j++) {
+                        res.push([temp[j], i]); // res.push([temp[j], i); 当时这里少打一个 ]
+                    }
+                } else {
+                    let temp = target - arr[i];
+                    obj[temp] = obj[temp] ? [...obj[temp], i] : [i];
+                }
+            }
+            return res;
+        }
+
+        console.log(twoSum([2, 7, 11, 7], 9))
+    </script>
+</body>
+
+</html>
