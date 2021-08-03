@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOP(切面编程思想)</title>
+</head>
+
+<body>
+    <div>
+        <dt>
+        <dl>
+          AOP: AOP(面向切面编程)的主要作用是把一些跟核心业务逻辑模块无关的功能抽离出来，这些跟业务逻辑无关的功能通常包括日志统计、安全控制、异常处理等。
+          把这些功能抽离出来之后， 再通过“动态织入”的方式掺入业务逻辑模块中。
+        </dl>
+        <dd>
+          好处: 首先是可以保持业务逻辑模块的纯净和高内聚性，其次是可以很方便地复用日志统计等功能模块
+        </dd>
+        <dd>
+          实现: 通常，在 JavaScript 中实现 AOP，都是指把一个函数“动态织入”到另外一个函数之中，具体的实现技术有很多，下面我用扩展 Function.prototype 来做到这一点。  
+        </dd>
+        <dd>
+          应用：  
+          <p>1.无侵入统计某个函数的执行时间</p>
+          <p>2.表单校验</p>
+          <p>3.统计埋点</p>
+          <p>4.防止csrf攻击</p>
+        </dd>
+      </dt>
+    </div>
+    <script>
+        function Aop(options) {
+            this.options = options
+        }
+
+        Aop.prototype.before = function(fn) {
+            fn.apply(this, arguments)
+        }
+
+        Aop.prototype.after = function(fn) {
+            fn.apply(this, arguments)
+        }
+
+        Aop.prototype.execute = function(beforeFn, runnerFn, afterFn) {
+            this.before(beforeFn)
+            runnerFn.apply(this)
+            this.after(afterFn)
+        }
+
+        var aop = new Aop({
+            afterInfo: '执行后',
+            runnerInfo: '执行中',
+            beforeInfo: '执行前'
+        })
+
+        var beforeFn = function() {
+            console.log(this.options.beforeInfo)
+        }
+        var afterFn = function() {
+            console.log(this.options.afterInfo)
+        }
+        var runnerFn = function() {
+            console.log(this.options.runnerInfo)
+        }
+
+        aop.execute(beforeFn, runnerFn, afterFn)
+    </script>
+</body>
+
+</html>
