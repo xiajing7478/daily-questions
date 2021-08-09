@@ -21,16 +21,16 @@
     <script>
         // 普通的函数
         const add = (x, y) => {
+            return x + y
+        };
+        // 柯里化
+        const curryingAdd = (x) => {
+            return (y) => {
                 return x + y
             }
-            // 柯里化
-        const curryingAdd = (x) => {
-                return (y) => {
-                    return x + y
-                }
-            }
-            // console.log(add(5,8))
-            // console.log(curryingAdd(5)(8))
+        };
+        // console.log(add(5,8))
+        // console.log(curryingAdd(5)(8))
 
 
         // 正常正则验证字符串 reg.test(txt)
@@ -55,18 +55,6 @@
         // hasNumber('testtest')   // false
         // hasLetter('21212')      // false
 
-        const currying = function(fn) {
-            // 获取第一个方法内的全部参数
-            let args = Array.prototype.slice.call(arguments, 1)
-            return function() {
-                console.log(fn)
-                    // 将后面参数方法里的全部参数和args进行合并
-                let newArgs = args.concat(Array.prototype.slice.call(arguments))
-                    // 合并后的参数通过apply作为fn的参数，并且执行
-                return fn.apply(this, newArgs)
-            }
-        }
-
         // const progressCurrying = (fn, args) => {
         //   let _this = this
         // 	let len = fn.length
@@ -84,14 +72,12 @@
         // }
 
         function curryFun() {
+            // 获取第一个方法内的全部参数
             // const args = Array.prototype.slice.call(arguments)
             const args = [].slice.call(arguments)
-            console.log(arguments)
-            console.log(...arguments)
-            let argssss = [...arguments]
-            console.log('argssss', argssss)
-                // const args = ()...arguments
+
             function adder() {
+                // 将后面参数方法里的全部参数和args进行合并
                 args.push(...arguments)
                 return adder
             }
@@ -103,7 +89,7 @@
             }
             return adder
         }
-        console.log(curryFun(10, 50)(40)()(30))
+        // console.log(curryFun(10, 50)(40)()(30))
 
 
         /**
@@ -120,11 +106,13 @@
          */
         let arr = [10, 20, 30, 40, 50]
 
+        // reduce 如果提供默认值，index会从0开始， a为提供的默认值， b为arr[1],
+        // reduce 如果不提供默认值，index会从1开始， a为arr[1]， b为arr[2],
         function ss(arr) {
             return arr.reduce(function(a, b, index) {
-                console.log('a', a)
-                console.log('b', b)
-                console.log('index', index)
+                // console.log('a', a)
+                // console.log('b', b)
+                // console.log('index', index)
                 if (index <= 3) {
                     return a + b
                 } else {

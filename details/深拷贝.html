@@ -13,13 +13,24 @@
         let obj = {
             age: 18,
             name: 'vue',
-            info: { a: 'a', b: 'b'}
-        }
-        let arr = [
-          { id: 1, name: 'tim', age: 18},
-          { id: 2, name: 'jimmy', age: 28},
-          { id: 3, name: 'alice', age: 38}
-        ]
+            info: {
+                a: 'a',
+                b: 'b'
+            }
+        };
+        let arr = [{
+            id: 1,
+            name: 'tim',
+            age: 18
+        }, {
+            id: 2,
+            name: 'jimmy',
+            age: 28
+        }, {
+            id: 3,
+            name: 'alice',
+            age: 38
+        }];
         // console.log(arr.constructor) // f Array() {}
         // console.log(obj.constructor) // f Object() {}
         // console.log(Array.prototype.constructor) // f Object() {}
@@ -41,50 +52,6 @@
                 return obj
             }
         }
-
-        function deepClone2(obj) {
-            let buf = null
-            if (obj instanceof Array) {
-                let i = obj.length
-                while (i --) {
-                   buf[i] = deepClone2(obj[i])
-               }
-               return buf
-            } else if (obj instanceof Object) {
-                buf = {}
-                for (let key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        buf[key] = deepClone2(obj[key])
-                    }
-                }
-                return buf
-            } else {
-                return obj
-            }
-        }
-        // console.log(deepClone(obj))
-        // console.log(deepClone2(obj))
-
-        async function async1() {
-            console.log('async1 start'); // 2
-            await async2();
-            console.log('async1 end'); // 6
-        }
-        async function async2() {
-            console.log('async2'); // 3
-        }
-        console.log('script start'); // 1
-        setTimeout(function() {
-            console.log('setTimeout'); //8
-        }, 0)
-        async1();
-        new Promise(function(resolve) {
-            console.log('promise1'); // 4
-            resolve();
-        }).then(function() {
-            console.log('promise2'); // 7
-        });
-        console.log('script end'); // 5
     </script>
 </body>
 
