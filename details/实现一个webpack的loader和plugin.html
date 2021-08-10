@@ -9,10 +9,58 @@
 </head>
 
 <body>
-
+    <div>
+        <dl>
+            <dt>loader:loader 其实是一个函数，它的参数是匹配文件的源码，返回结果是处理后的源码。</dt>
+        </dl>
+    </div>
     <script>
         // 参考 https://segmentfault.com/a/1190000024431022?utm_source=sf-related
+
+
+        // loader
+        // 同步loader
+        module.exports = function(source) {
+            return source.replace(/var/g, 'const')
+        };
+        // 异步loader
+        // 异步 loader 需要调用 webpack 的 async() 生成一个 callback，它的第一个参数是 error，这里可设为 null，第二个参数就是处理后的源码。当你异步处理完源码后，调用 callback 即可。
+        module.exports = function(source) {
+            let callback = this.async()
+            setTimeout(() => {
+                callback(null, `${source.replace(/var/g, 'const')}`)
+            }, 1000)
+        }
+
+        // plugin
+
+
+        function Plugin(options) {
+            this.options = options
+        }
+
+        Plugin.prototype.apply = function(compiler) {
+                // 所有文件资源都被 loader 处理后触发这个事件
+                compiler.plugin('emit', (compilation, callback) => {
+                            // 获取打包后的 js 文件名
+                            const filename = compiler.option.output.filename;
+                            // 生成一个 index.html 并引入打包后的 js 文件
+                            const html = `<!DOCTYPE html>
+              <html lang="en">
+              <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Document</title>
+                  <script src="${filename}">
     </script>
+    </head>
+
+    <body>
+
+    </body>
+
+</html>`; // 所有处理后的资源都放在 compilation.assets 中 compilation.asset['index.html'] = { source: function () { return html }, size: function () { return html.length } }; // console.log('hello world...') // 功能完成后调用 webpack 提供的回调 callback() }) } module.exports = Plugin
+</script>
 </body>
 
 </html>
