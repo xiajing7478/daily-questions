@@ -1,49 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>css2-3列布局</title>
+    <title>css2列布局</title>
     <style type="text/css">
         .main {
             padding: 0;
             margin: 0;
         }
-        
         .left {
             background: #555;
             width: 200px;
             height: 250px;
             float: left;
         }
-        
         .right {
             background: #ddd;
             margin-left: 200px;
             height: 250px;
         }
-        
         .main1 {
             display: flex;
         }
-        
         .left1 {
             width: 200px;
             width: 200px;
             background: #555;
         }
-        
         .right1 {
             flex: 1;
             background: #ddd;
         }
-        
         .main2 {
             position: relative;
         }
-        
         .left2 {
             position: absolute;
             left: 0;
@@ -52,24 +44,20 @@
             height: 300px;
             background: #555;
         }
-        
         .right2 {
             background: #ddd;
             height: 300px;
             margin-left: 210px;
         }
-        
         .main-wrapper {
             float: left;
             width: 100%;
         }
-        
         .main {
             height: 100px;
             margin-left: 210px;
             background-color: rgba(255, 0, 0, .5);
         }
-        
         .sidebar {
             float: left;
             width: 200px;
@@ -112,30 +100,11 @@
     </div> -->
 
     <!-- float + 负margin 方式 -->
-    <div>
+    <!-- <div>
         <div class="main-wrapper">
             <div class="main">主列</div>
         </div>
         <div class="sidebar">子列</div>
-    </div>
+    </div> -->
 </body>
-
-<script>
-    function randomString() {
-        let result = []
-        let json = {}
-
-        while (result.length < 1000) {
-            let random = parseInt(Math.random().toFixed(6) * 1000000)
-            if (!json[random]) {
-                json[random] = true
-                result.push(random)
-            }
-        }
-        console.log(result)
-        console.log(result.length)
-    }
-    randomString()
-</script>
-
 </html>
