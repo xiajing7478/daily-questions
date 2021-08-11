@@ -9,85 +9,133 @@
 </head>
 
 <body>
-
 </body>
 <script>
-    // https://zhuanlan.zhihu.com/p/63624812
-    // 寄生组合式继承
+    // https://www.cnblogs.com/ranyonsue/p/11201730.html
+
     // 父类
-    function SuperType(name) {
+    function Animal(name) {
         this.name = name;
-        this.colors = ["red", "blue", "green"];
-    }
-    SuperType.prototype.sayName = function() {
-        console.log(this.name)
-    }
-
-    // 子类
-    function SubType(name, age) {
-        SuperType.call(this, name)
-        this.age = age
-    }
-    inheritPrototype(SuperType, SubType)
-    SubType.prototype.sayAge = function() {
-        console.log(this.age)
-    }
-
-    function inheritPrototype(SuperType, SubType) {
-        var prototype = Object.create(SuperType.prototype)
-        SubType.prototype.constructor = prototype
-    }
-    var sub = new SubType('a', 18)
-
-    console.log(sub)
-
-    // ES6中Class继承
-    class Person {
-        constructor(name, color) {
-            this.name = name
-            this.color = color
-        }
-        sayName() {
-            console.log(this.name)
-        }
-        static sayHello() {
-            console.log('hello' + this.name)
+        this.sayName = function() {
+            console.log(`hello, ${this.name}`)
         }
     }
-
-    class Student extends Person {
-        constructor(name, color, score) {
-            super(name, color)
-            this.score = score
-        }
-        showScore() {
-            console.log(this.score);
-        }
+    Animal.prototype.age = 18;
+    /**
+     * 1.原型式继承
+     * 重点：让新实例的原型等于父类的实例
+     * 特点：1、实例可继承的属性有：实例的构造函数的属性，父类构造函数属性，父类原型的属性。
+     * （新实例不会继承父类实例的属性！）
+     * 缺点：1：新实例无法向父类构造函数传参
+     * 2：继承单一
+     * 3：所有新实例都会共享父类实例的属性。
+     * （原型上的属性是共享的，一个实例修改了原型属性，另一个实例的原型属性也会被修改！）
+     */
+    function Dog(name) {
+        this.name = name
     }
+    Dog.prototype.color = 'black'
+    Dog.prototype = new Animal()
+    let dog = new Dog('small dog')
+    console.log(dog.name) // dog.name
+    console.log(dog.age) // 18
+    dog.sayName() // hello, small dog
+    console.log(dog instanceof Animal) // true
+    console.log(dog.color) //undefined
 
-    Person.sayHello('f')
-    let c = new Student("xuxu", ["white", "black", "pink"], 90)
-    c.sayName()
-    c.showScore()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // // https://zhuanlan.zhihu.com/p/63624812
+    // // 寄生组合式继承
+    // // 父类
+    // function SuperType(name) {
+    //     this.name = name;
+    //     this.colors = ["red", "blue", "green"];
+    // }
+    // SuperType.prototype.sayName = function() {
+    //     console.log(this.name)
+    // }
+
+    // // 子类
+    // function SubType(name, age) {
+    //     SuperType.call(this, name)
+    //     this.age = age
+    // }
+    // inheritPrototype(SuperType, SubType)
+    // SubType.prototype.sayAge = function() {
+    //     console.log(this.age)
+    // }
+
+    // function inheritPrototype(SuperType, SubType) {
+    //     var prototype = Object.create(SuperType.prototype)
+    //     SubType.prototype.constructor = SubType
+    // }
+    // var sub = new SubType('a', 18)
+
+    // console.log(sub)
+
+    // // ES6中Class继承
+    // class Person {
+    //     constructor(name, color) {
+    //         this.name = name
+    //         this.color = color
+    //     }
+    //     sayName() {
+    //         console.log(this.name)
+    //     }
+    //     static sayHello() {
+    //         console.log('hello' + this.name)
+    //     }
+    // }
+
+    // class Student extends Person {
+    //     constructor(name, color, score) {
+    //         super(name, color)
+    //         this.score = score
+    //     }
+    //     showScore() {
+    //         console.log(this.score);
+    //     }
+    // }
+
+    // Person.sayHello('f')
+    // let c = new Student("xuxu", ["white", "black", "pink"], 90)
+    // c.sayName()
+    // c.showScore()
+    //     // c.sayHello() // error sayHello is not defined
+
+    // function person() {
+    //     this.kind = "person";
+    // }
+    // person.prototype.eat = function(food) {
+    //     console.log(this.name + " is eating " + food);
+    // }
+
+    // function student(name) {
+    //     this.name = name;
+    // }
+    // // b.sayHello() // b.sayHello is not a function
+    // // Person('bb').sayHello() // Class constructor Person cannot be invoked without 'new'
+    // // Person.sayHello('fggggg') // helloPerson
+    // let c = new Student("xuxu", ["white", "black", "pink"], 90)
+    // c.sayName()
+    // c.showScore()
     // c.sayHello() // error sayHello is not defined
-
-    function person() {
-        this.kind = "person";
-    }
-    person.prototype.eat = function(food) {
-        console.log(this.name + " is eating " + food);
-    }
-
-    function student(name) {
-        this.name = name;
-    }
-    // b.sayHello() // b.sayHello is not a function
-    // Person('bb').sayHello() // Class constructor Person cannot be invoked without 'new'
-    // Person.sayHello('fggggg') // helloPerson
-    let c = new Student("xuxu", ["white", "black", "pink"], 90)
-    c.sayName()
-    c.showScore()
-    c.sayHello() // error sayHello is not defined
 </script>
 
 </html>
