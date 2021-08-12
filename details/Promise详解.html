@@ -27,230 +27,172 @@
 
     <script>
         // 参考 https://zhuanlan.zhihu.com/p/183801144
-        const PENDING = 'PENDING'
-        const FULFILLED = 'FULFILLED'
-        const REJECTED = 'REJECTED'
-
-        class MyPromise {
-            // executor: MyPromise实例对象在构造器种传入的参数，一般是一个函数function(resolve, reject){}
-            // status: 每当被调用到resolve和reject方式时，就会改变其值，在后面的then方法中会用到
-            // _resolve：声明_resolve方法在构造器内，通过传入的executor方法传入其中，用以给使用者回调
-            constructor(executor) {
-                this.status = PENDING
-                this.error = undefined
-                this.value = undefined
-                this.onResolveCbs = []
-                this.onRejectCbs = []
-                let _resolve = (data) => {
-                    if (this.status === PENDING) {
-                        this.status = FULFILLED
-                        this.value = data
-                        this.onResolveCbs.forEach(cb => cb())
-                    }
-                }
-                let _reject = (error) => {
-                    if (this.status === PENDING) {
-                        this.status = REJECTED
-                        this.error = error
-                        this.onRejectCbs.forEach(cb => cb())
-                    }
-                }
-                try {
-                    // 将resolve和reject函数给使用者
-                    executor(_resolve, _reject)
-                } catch (error) {
-                    _reject(error)
-                }
-            }
-            then(onFulfilled, onRejected) {
-
-                /**
-                 * then 的链式调用
-                 * 值的穿透
-                 **/
-                // onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
-                // //因为错误的值要让后面访问到，所以这里也要跑出个错误，不然会在之后 then 的 resolve 中捕获
-                // onRejected = typeof onRejected === 'function' ? onRejected: err => { throw err }
-                //
-                // let promise2 = new MyPromise((resolve, reject) => {
-                //   if (this.status === FULFILLED) {
-                //     setTimeout(() => {
-                //       try {
-                //         let x = onFulfilled(this.value)
-                //         resolvePromise(promise2, x, resolve, reject)
-                //       } catch (e) {
-                //         reject(e)
-                //       }
-                //     }, 0)
-                //   }
-                //
-                //   if (this.status === REJECTED) {
-                //     setTimeout(() => {
-                //       try {
-                //         let x = onRejected(this.error);
-                //         resolvePromise(promise2, x, resolve, reject);
-                //       } catch (e) {
-                //         reject(e)
-                //       }
-                //     }, 0);
-                //   }
-                //
-                //   if (this.status === PENDING) {
-                //     this.onResolveCbs.push(() => {
-                //       setTimeout(() => {
-                //         try {
-                //           let x = onFulfilled(this.value);
-                //           resolvePromise(promise2, x, resolve, reject);
-                //         } catch (e) {
-                //           reject(e)
-                //         }
-                //       }, 0);
-                //     });
-                //
-                //     this.onRejectCbs.push(()=> {
-                //       setTimeout(() => {
-                //         try {
-                //           let x = onRejected(this.reason);
-                //           resolvePromise(promise2, x, resolve, reject)
-                //         } catch (e) {
-                //           reject(e)
-                //         }
-                //       }, 0);
-                //     });
-                //   }
-                // })
-                // return promise2
-                if (this.status === FULFILLED) {
-                    onFulfilled(this.value)
-                }
-                if (this.status === REJECTED) {
-                    onRejected(this.error)
-                }
-                if (this.status === PENDING) {
-                    this.onResolveCbs.push(() => onFulfilled(this.value))
-                    this.onRejectCbs.push(() => onRejected(this.error))
-                }
-            }
-        }
+        const PENDING = 'PENDING';
+        const FULFILLED = 'FULFILLED';
+        const REJECTED = 'REJECTED';
 
         const resolvePromise = (promise2, x, resolve, reject) => {
-            if (promise2 === x) { // 自己等待自己完成是错误的实现，用一个类型错误，结束掉 promise
+            // 自己等待自己完成是错误的实现，用一个类型错误，结束掉 promise  Promise/A+ 2.3.1
+            if (promise2 === x) {
                 return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
             }
-            let called
+            // Promise/A+ 2.3.3.3.3 只能调用一次
+            let called;
+            // 后续的条件要严格判断 保证代码能和别的库一起使用
             if ((typeof x === 'object' && x != null) || typeof x === 'function') {
                 try {
-                    // 为了判断 resolve 过的就不用再 reject 了（比如 reject 和 resolve 同时调用的时候）
-                    let then = x.then
+                    // 为了判断 resolve 过的就不用再 reject 了（比如 reject 和 resolve 同时调用的时候）  Promise/A+ 2.3.3.1
+                    let then = x.then;
                     if (typeof then === 'function') {
-                        then.call(x, y => {
-                            if (called) return
-                            called = true
-                                // 递归解析的过程（因为可能 promise 中还有 promise）
-                            resolvePromise(promise2, y, resolve, reject)
+                        // 不要写成 x.then，直接 then.call 就可以了 因为 x.then 会再次取值，Object.defineProperty  Promise/A+ 2.3.3.3
+                        then.call(x, y => { // 根据 promise 的状态决定是成功还是失败
+                            if (called) return;
+                            called = true;
+                            // 递归解析的过程（因为可能 promise 中还有 promise） Promise/A+ 2.3.3.3.1
+                            resolvePromise(promise2, y, resolve, reject);
                         }, r => {
-                            // 只要失败就失败
-                            if (called) return
-                            called = true
-                            reject(r)
-                        })
+                            // 只要失败就失败 Promise/A+ 2.3.3.3.2
+                            if (called) return;
+                            called = true;
+                            reject(r);
+                        });
                     } else {
-                        // 如果 x.then 是个普通值就直接返回 resolve 作为结果
-                        resolve(x)
+                        // 如果 x.then 是个普通值就直接返回 resolve 作为结果  Promise/A+ 2.3.3.4
+                        resolve(x);
                     }
                 } catch (e) {
-                    if (called) return
-                    called = true
+                    // Promise/A+ 2.3.3.2
+                    if (called) return;
+                    called = true;
                     reject(e)
                 }
+            } else {
+                // 如果 x 是个普通值就直接返回 resolve 作为结果  Promise/A+ 2.3.4  
+                resolve(x)
             }
         }
 
-        const p = new MyPromise((resolve, reject) => {
-            // resolve('成功') // 同步
-            setTimeout(() => { // 异步,其实是一个发布订阅模式，这种收集依赖->触发通知->取出依赖执行
-                resolve('成功')
-            }, 1000)
+        class Promise {
+            constructor(executor) {
+                this.status = PENDING;
+                this.value = undefined;
+                this.reason = undefined;
+                this.onResolvedCallbacks = [];
+                this.onRejectedCallbacks = [];
+
+                let resolve = (value) => {
+                    if (this.status === PENDING) {
+                        this.status = FULFILLED;
+                        this.value = value;
+                        this.onResolvedCallbacks.forEach(fn => fn());
+                    }
+                }
+
+                let reject = (reason) => {
+                    if (this.status === PENDING) {
+                        this.status = REJECTED;
+                        this.reason = reason;
+                        this.onRejectedCallbacks.forEach(fn => fn());
+                    }
+                }
+
+                try {
+                    executor(resolve, reject)
+                } catch (error) {
+                    reject(error)
+                }
+            }
+
+            // 基本的promise，不能then(res).then(res), 不能值穿透
+            // then(onFulFilled, onReject) {
+            // if (this.status === FULFILLED) {
+            //     onFulFilled(this.value)
+            // }
+            // if (this.status === REJECTED) {
+            //     onReject(this.reason)
+            // }
+            // if (this.status === PENDING) {
+            //     this.callbackSuccessList.push(() => onFulFilled(this.value))
+            //     this.callbackFailedList.push(() => onReject(this.reason))
+            // }
+            // }
+
+            then(onFulfilled, onRejected) {
+                //解决 onFufilled，onRejected 没有传值的问题
+                //Promise/A+ 2.2.1 / Promise/A+ 2.2.5 / Promise/A+ 2.2.7.3 / Promise/A+ 2.2.7.4
+                onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v;
+                //因为错误的值要让后面访问到，所以这里也要跑出个错误，不然会在之后 then 的 resolve 中捕获
+                onRejected = typeof onRejected === 'function' ? onRejected : err => {
+                    throw err
+                };
+                // 每次调用 then 都返回一个新的 promise  Promise/A+ 2.2.7
+                let promise2 = new Promise((resolve, reject) => {
+                    if (this.status === FULFILLED) {
+                        //Promise/A+ 2.2.2
+                        //Promise/A+ 2.2.4 --- setTimeout
+                        setTimeout(() => {
+                            try {
+                                //Promise/A+ 2.2.7.1
+                                let x = onFulfilled(this.value);
+                                // x可能是一个proimise
+                                resolvePromise(promise2, x, resolve, reject);
+                            } catch (e) {
+                                //Promise/A+ 2.2.7.2
+                                reject(e)
+                            }
+                        }, 0);
+                    }
+
+                    if (this.status === REJECTED) {
+                        //Promise/A+ 2.2.3
+                        setTimeout(() => {
+                            try {
+                                let x = onRejected(this.reason);
+                                resolvePromise(promise2, x, resolve, reject);
+                            } catch (e) {
+                                reject(e)
+                            }
+                        }, 0);
+                    }
+
+                    if (this.status === PENDING) {
+                        this.onResolvedCallbacks.push(() => {
+                            setTimeout(() => {
+                                try {
+                                    let x = onFulfilled(this.value);
+                                    resolvePromise(promise2, x, resolve, reject);
+                                } catch (e) {
+                                    reject(e)
+                                }
+                            }, 0);
+                        });
+
+                        this.onRejectedCallbacks.push(() => {
+                            setTimeout(() => {
+                                try {
+                                    let x = onRejected(this.reason);
+                                    resolvePromise(promise2, x, resolve, reject)
+                                } catch (e) {
+                                    reject(e)
+                                }
+                            }, 0);
+                        });
+                    }
+                });
+
+                return promise2;
+            }
+        }
+
+        const promise = new Promise((resolve, reject) => {
+            resolve('success');
         }).then(res => {
-            console.log('res', res)
-        }, error => {
-            console.log('error', error)
-        })
-
-        /**
-         * then 的链式调用
-         * 值的穿透
-         **/
-        // const promise = new MyPromise((resolve, reject) => {
-        //   reject('失败');
-        // }).then().then().then(data=>{
-        //   console.log(data);
-        // },err=>{
-        //   console.log('err',err);
-        // })
-
-
-
-        // Promise.all([1, read2(file1), 3]).then(data => {
-        //   console.log(data)
-        // },error => {
-        //   console.log(error)
-        // })
-
-        Promise.all = function(values) {
-            if (!Array.isArray(values)) {
-                const type = typeof values
-                return new TypeError(`TypeError: ${type} ${values} is not iterable`)
-            }
-
-            return new Promise((resolve, reject) => {
-                let result = []
-                let counter = 0
-                const processData = (value, key) => {
-                    result[key] = value
-                        //  每成功一次计数器就会加1，直到所有都成功的时候会与values长度一致，则认定为都成功了，所以能避免异步问题
-                    if (++counter === values.length) {
-                        resolve(result)
-                    }
-                }
-                for (let i = 0; i < values.length; i++) {
-                    let value = values[i]
-                    if (isPromise(value)) {
-                        value.then(data => {
-                            processData(data, i)
-                        }, reject)
-                    } else {
-                        processData(value, i)
-                    }
-                }
-            })
-        }
-
-        function isPromise(value) {
-            if ((typeof value === 'object' && value !== null) || typeof value === 'function') {
-                if (typeof value.then === 'function') {
-                    return true
-                }
-            }
-            return false
-        }
-
-        let p1 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve('ok1');
-            }, 1000);
-        })
-
-        let p2 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve('ok2');
-            }, 1000);
-        })
-
-        Promise.all([1, p1, p2]).then(data => {
-            console.log('resolve', data);
+            res = res + '!'
+            return res
+        }).then(data => {
+            console.log(data);
         }, err => {
-            console.log('reject', err);
+            console.log('err', err);
         })
     </script>
 </body>
