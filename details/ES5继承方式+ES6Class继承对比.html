@@ -12,36 +12,155 @@
 </body>
 <script>
     // https://www.cnblogs.com/ranyonsue/p/11201730.html
-
+    // https://www.jianshu.com/p/85899e287694
     // 父类
     function Animal(name) {
         this.name = name;
+        this.colors = ['red', 'blue', 'yellow']
         this.sayName = function() {
             console.log(`hello, ${this.name}`)
         }
     }
-    Animal.prototype.age = 18;
+    Animal.prototype.getName = function() {
+        console.log(this.name)
+    };
     /**
-     * 1.原型式继承
+     * 一.原型链继承
      * 重点：让新实例的原型等于父类的实例
-     * 特点：1、实例可继承的属性有：实例的构造函数的属性，父类构造函数属性，父类原型的属性。
-     * （新实例不会继承父类实例的属性！）
-     * 缺点：1：新实例无法向父类构造函数传参
-     * 2：继承单一
-     * 3：所有新实例都会共享父类实例的属性。
+     * 特点：
+     * 1. 实例可继承的属性有：实例的构造函数的属性，父类构造函数属性，父类原型的属性。（新实例不会继承父类实例的属性！）
+     * 缺点：
+     * 1. 新实例无法向父类构造函数传参
+     * 2. 继承单一
+     * 3. 所有新实例都会共享父类实例的属性。
      * （原型上的属性是共享的，一个实例修改了原型属性，另一个实例的原型属性也会被修改！）
      */
-    function Dog(name) {
-        this.name = name
+    // function Dog(name) {}
+    // Dog.prototype = new Animal()
+    // let dog1 = new Dog()
+    // let dog2 = new Dog()
+    // dog1.colors.push('yellow')
+    // console.log(dog1.colors) // ["red", "blue", "yellow", "yellow"]
+    // console.log(dog2.colors) // ["red", "blue", "yellow", "yellow"]
+    // console.log(dog1 instanceof Animal) // true
+
+
+    /**
+     * 二.构造函数继承(经典继承)
+     * 优点：
+     * 1.避免了引用类型的属性被所有实例共享
+     * 2.可以在Child中向Parent传参
+     * 缺点：
+     * 1. 只是子类的实例，不是父类的实例
+     * 2. 方法都在构造函数中定义，每次创建实例都会创建一遍方法
+     */
+    // function Dog(name) {
+    //     Animal.call(this, name)
+    // }
+    // let dog1 = new Dog('white')
+    // let dog2 = new Dog('black')
+    // dog1.colors.push('yellow');
+    // console.log(dog1.name); // white
+    // console.log(dog1.colors) // ["red", "blue", "yellow", "yellow"]
+    // console.log(dog2.colors) // ["red", "blue", "yellow"]
+    // console.log(dog1 instanceof Animal) // false
+
+
+    /**
+     * 三.组合继承
+     * 优点：
+     * 1.融合原型链继承和构造函数的优点，是JavaScript中最常用的继承模式
+     * 缺点：
+     * 1. 调用了两次父类构造函数
+     */
+    // function Dog(name, age) {
+    //     Animal.call(this, name)
+    //     this.age = age
+    // }
+    // Dog.prototype = new Animal()
+    // let dog1 = new Dog('white', 2)
+    // let dog2 = new Dog('black', 3)
+    // dog1.getName() // white
+    // dog2.getName() // black
+    // console.log(dog1.age) // 2
+    // console.log(dog2.age) // 3
+    // dog1.colors.push('yellow')
+    // console.log(dog1.colors) //  ["red", "blue", "yellow", "yellow"]
+    // console.log(dog2.colors) //  ["red", "blue", "yellow"]
+    // console.log(dog1 instanceof Animal) // true
+    // console.log(dog1 instanceof Dog) // true
+
+
+    /**
+     * 四.寄生组合式继承
+     * 优点：
+     * 这种方式的高效率体现它只调用了一次Parent构造函数，并且因此避免了再Animal.prototype上面创建不必要的，多余的属性。
+     * 普遍认为寄生组合式继承是引用类型最理想的继承方式
+     */
+    // function CreateObj(o) {
+    //   function F() {}
+    //   F.prototype = o
+    //   console.log(o.__proto__ === Object.prototype)
+    //   console.log(F.prototype.constructor === Object)
+    //   return new F()
+    // }
+
+    // function Dog(name, age) {
+    //     Animal.call(this, name)
+    //     this.age = age
+    // }
+    // Dog.prototype = Object.create(Animal.prototype)
+    // Dog.prototype.constructor = Dog
+    // let dog1 = new Dog('white', 2)
+    // let dog2 = new Dog('black', 3)
+    // dog1.getName() // white
+    // dog2.getName() // black
+    // console.log(dog1.age) // 2
+    // console.log(dog2.age) // 3
+    // dog1.colors.push('pink')
+    // console.log(dog1.colors) //  ["red", "blue", "yellow", "pink"]
+    // console.log(dog2.colors) //  ["red", "blue", "yellow"]
+    // console.log(dog1 instanceof Animal) // true
+    // console.log(dog1 instanceof Dog) // true
+
+
+
+
+
+    function Animal() {
+        this.name = "Animal";
+        this.showName = function() {
+            console.log(this.name);
+        }
     }
-    Dog.prototype.color = 'black'
-    Dog.prototype = new Animal()
-    let dog = new Dog('small dog')
-    console.log(dog.name) // dog.name
-    console.log(dog.age) // 18
-    dog.sayName() // hello, small dog
-    console.log(dog instanceof Animal) // true
-    console.log(dog.color) //undefined
+
+    function Cat() {
+        this.name = 'Cat'
+        this.showName1 = function() {
+            console.log(this.name);
+        }
+
+        this.showName2 = function() {
+            console.log(this.name);
+        }
+
+        this.showName3 = function() {
+            console.log(this.__proto__.name + "=>" + this.name);
+        }
+    }
+
+    Cat.prototype = new Animal()
+
+    var cat = new Cat();
+    console.log(cat instanceof Animal); // 得到：true
+    cat.showName1(); // 得到："Cat" (需要读到Cat中的name属性) 
+    cat.showName2.call(Cat.prototype); //  得到：”Animal" (需要读到Animal中的name属性) 
+    cat.showName3(); //得到：”Animal" => "Cat" (需要同时读到Cat中的name和Animal中的name)
+
+
+
+
+
 
 
 
