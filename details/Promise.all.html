@@ -10,152 +10,52 @@
 
 <body>
     <script>
-        const PENDING = 'PENDING'
-        const FULFILLED = 'FULFILLED'
-        const REJECTED = 'REJECTED'
-        class MyPromise {
-            constructor(executor) {
-                this.status = PENDING
-                this.reason = null
-                this.value = null
-                this.fulFilledCbs = []
-                this.rejectedCbs = []
-                try {
-                    executor(this._resolve, this._reject)
-                } catch (err) {
-                    this._reject(err)
-                }
+        // Promise all
+        Promise.all = function(values) {
+            if (!Array.isArray(values)) {
+                const type = typeof values;
+                return new TypeError(`TypeError: ${type} ${values} is not iterable`)
             }
-            _resolve = (data) => {
-                if (this.status === PENDING) {
-                    this.status = FULFILLED
-                    this.value = data
-                        // this.fulFilledCbs.forEach(fn => fn(data))
-                    this.fulFilledCbs.forEach(fn => fn())
-                    this.rejectedCbs.forEach(fn => fn())
-                }
-            }
-            _reject = (reason) => {
-                if (this.status === PENDING) {
-                    this.status = REJECTED
-                    this.reason = reason
-                }
-            }
-            then(onFulFilled, onRejected) {
-                if (this.status === FULFILLED) {
-                    onFulFilled(this.value)
-                }
-                if (this.status === REJECTED) {
-                    onRejected(this.reason)
-                }
-                if (this.status === PENDING) {
-                    // this.fulFilledCbs.push(onFulFilled)
-                    this.fulFilledCbs.push(() => onFulFilled(this.value))
-                    this.rejectedCbs.push(() => onRejected(this.reason))
-                }
-            }
-            all(arr) {
-                if (!Array.isArray(arr)) {
-                    const type = typeof values;
-                    return new TypeError(`TypeError: ${type} ${values} is not iterable`)
-                }
-                return new MyPromise((resolve, reject) => {
-                    let resultArr = []
-                    let oldIndex = 0
-                    const processResultByKey = (value, index) => {
-                        resultArr[index] = value
-                        if (++oldIndex === arr.length) {
-                            resolve(resultArr)
-                        }
-                    }
-                    for (let i = 0; i < arr.length; i++) {
-                        let value = arr[i]
-                        if (value && typeof value.then === 'function') {
-                            value.then((val) => {
-                                processResultByKey(val, i)
-                            }, reject)
-                        } else {
-                            processResultByKey(value, i)
-                        }
-                    }
-                })
-            }
-        }
-
-        // 测试myPromise
-        // let p = new MyPromise((resolve, reject) => {
-        //     setTimeout(() => { // 异步
-        //             resolve('ok')
-        //         })
-        //         // resolve('ok') // 同步
-        // })
-
-        // p.then(res => {
-        //     console.log(res)
-        // }, err => {
-        //     console.log(err)
-        // })
-
-        // 测试myPromise all
-        // let p1 = new MyPromise((resolve, reject) => {
-        //     // setTimeout(() => {
-        //     resolve('ok1');
-        //     // }, 1000);
-        // })
-        // let p2 = new MyPromise((resolve, reject) => {
-        //     // setTimeout(() => {
-        //     resolve('ok2');
-        //     // }, 1000);
-        // })
-        // new MyPromise().all([1, 3, 5, p1, p2]).then(data => {
-        //     console.log(data)
-        // }, err => {
-        //     console.log(err)
-        // })
-
-        let p1 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve('ok1');
-            }, 1000);
-        })
-        let p2 = new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    resolve('ok2');
-                }, 2000);
-            })
-            // promise all
-        Promise.all([1, 3, p1, 5, p2]).then(data => {
-            console.log(data)
-        }, err => {
-            console.log(err)
-        })
-
-        Promise.all = (arr) => {
-            if (!Array.isArray(arr)) {
-                console.log('arr is not array....')
-            }
-            let resultArr = []
-            let oldIdx = 0
             return new Promise((resolve, reject) => {
-                const setValue = (value, idx) => {
-                    resultArr.push(value)
-                    if (++oldIdx === arr.length) {
+                let resultArr = [];
+                let orderIndex = 0;
+                const processResultByKey = (value, index) => {
+                    resultArr[index] = value;
+                    if (++orderIndex === values.length) {
                         resolve(resultArr)
                     }
                 }
-                for (let p in arr) {
-                    if (arr[p] && arr[p].then === 'function') {
-                        arr[p].then(value => {
-                            setValue(value, p)
-                        }, reject)
+                for (let i = 0; i < values.length; i++) {
+                    let value = values[i];
+                    if (value && typeof value.then === 'function') {
+                        value.then((value) => {
+                            processResultByKey(value, i);
+                        }, reject);
                     } else {
-                        setValue(arr[p], p)
+                        processResultByKey(value, i);
                     }
                 }
-            })
+            });
         }
+        let fn1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('sleep 100ms......')
+            }, 100)
+        });
+        let fn2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('sleep 50ms......')
+            }, 50)
+        });
+        // Promise.all([1, fn1, 2, fn2]).then(data => {
+        //     console.log('resolve', data)
+        // }, err => {
+        //     console.log('reject', err)
+        // })
 
-        // promise race //  用来处理多个请求，采用最快的（谁先完成用谁的）
+
+
+        //  promise race  用来处理多个请求，采用最快的（谁先完成用谁的）
         Promise.race = (arr) => {
             if (!Array.isArray(arr)) {
                 return arr
@@ -172,11 +72,12 @@
             })
         }
 
-        Promise.race([p2, p1, 5]).then(data => {
-            console.log(data)
-        }, err => {
-            console.log(err)
-        })
+        // Promise.race([p2, p1, 5]).then(data => {
+        //     console.log(data)
+        // }, err => {
+        //     console.log(err)
+        // })
+
 
         /**
          * 特别需要注意的是：因为Promise是没有中断方法的，xhr.abort()、ajax 有自己的中断方法，
@@ -185,7 +86,7 @@
          **/
 
         function wrap(promise) {
-            let abort = null
+            let abort;
             let newPromise = new Promise((resolve, reject) => {
                 abort = reject
             })
@@ -193,21 +94,18 @@
             p.abort = abort
             return p
         }
-        const promise = new Promise((resolve, reject) => {
-            setTimeout(() => { // 模拟的接口调用 ajax 肯定有超时设置
-                resolve('成功');
-            }, 1000);
-        });
-
-        let newPromise = wrap(
-            
-        );
+        let p = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('success')
+            }, 5000)
+        })
 
         setTimeout(() => {
             // 超过3秒 就算超时 应该让 proimise 走到失败态
             newPromise.abort('超时了');
         }, 3000);
 
+        let p1 = wrap(p)
         newPromise.then((data => {
             console.log('成功的结果' + data)
         })).catch(e => {
