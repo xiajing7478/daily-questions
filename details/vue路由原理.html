@@ -58,15 +58,22 @@
 
         // history
         function toC() {
-            window.history.pushState(null, 'C', `${window.location.pathname}/c`)
+            // window.history.pushState(null, 'C', `${window.location.pathname}/c`)
+            window.history.replaceState({
+                name: 'tim'
+            }, 'hello', `${window.location.pathname}/c`)
         }
 
         function toD() {
-            window.history.pushState(null, 'D', `${window.location.pathname}/d`)
+            // window.history.pushState(null, 'D', `${window.location.pathname}/d`)
+            window.history.replaceState({
+                name: 'jimmy'
+            }, 'world', `${window.location.pathname}/d`)
         }
+        // JS使用 popstate 事件监听物理返回键
         window.addEventListener('popstate', function() {
             let el = document.getElementById('#app2')
-            el.innerText = decodeURIComponent(window.location.pathname)
+            el.innerText = decodeURIComponent(window.location.pathname || `${window.location.pathname}/d`)
         })
     </script>
 </body>
