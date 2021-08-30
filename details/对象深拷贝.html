@@ -13,6 +13,12 @@
     let obj = {
         age: 18,
         name: 'vue',
+        a: undefined,
+        b: function(x, y) {
+          return x + y
+        },
+        c: Symbol(55),
+        d:null,
         info: {
             a: 'a',
             b: 'b'
@@ -93,10 +99,48 @@
         }
     }
 
-    let newResult = deepClone(_arr)
-    console.log(newResult)
-    let _newResult = clone(_arr)
-    console.log(_newResult)
+    // let newResult = deepClone(_arr)
+    // console.log(newResult)
+    // let _newResult = clone(_arr)
+    // console.log(_newResult)
+
+
+    function sss(obj) {
+      if (typeof obj === 'object' && obj) {
+        let c = obj.constructor
+        let _c = new c()
+        for(let key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            _c[key] = typeof obj[key] ? sss(obj[key]) : obj[key]   
+          }
+        }
+        return _c
+      } else {
+        return obj
+      }
+    }
+
+    let result = sss(obj)
+    console.log(result)
+    // console.log(obj)
+    // obj.c = 66
+    // obj.age= 25
+    // console.log(obj)
+    // let s = JSON.parse(JSON.stringify(obj))
+    // console.log(s)
+    // console.log(obj.b(3,5))
+
+
+
+    let obj11 = { asd: 'asd'}
+    let obj22 = {name:'aaaaa'};
+    obj11.t1 = obj22
+    obj11.t2 = obj22
+    let cp = JSON.parse(JSON.stringify(obj11))
+    obj11.t1.name = 'change'
+    cp.t1.name= 'change'
+    console.log(obj11)
+    console.log(cp)
 </script>
 
 </html>

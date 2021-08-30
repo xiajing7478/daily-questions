@@ -1,0 +1,47 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-08-16 10:58:13
+ * @LastEditTime: 2021-08-16 11:00:29
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \daily-questions\details\前端异常监控\window.onerror.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>window.onerror</title>
+</head>
+
+<body>
+    <script>
+        // 都能在运行时捕获错误信息
+        /**
+         * 阻止冒泡
+         * 不能对一些静态资源，比如link、js、image
+         */
+        // window.onerror = function(msg, source, lineno, colno, error) {
+        //     console.log(msg) // Uncaught ReferenceError: haha is not defined
+        //     console.log(source) // http://localhost:52330/details/%E5%89%8D%E7%AB%AF%E5%BC%82%E5%B8%B8%E7%9B%91%E6%8E%A7/window.onerror.html
+        //     console.log(lineno) // 35
+        //     console.log(colno) // 25
+        //     console.log(error) // ReferenceError: haha is not defined at say (window.onerror.html:35) at window.onerror.html:37
+        // }
+
+        // 对一些静态资源，比如link、js、image
+        // 不能阻止冒泡
+        window.addEventListener('error', (error) => {
+            console.log('error', error)
+        })
+
+        function say() {
+            console.log(haha)
+        }
+        say()
+    </script>
+</body>
+
+</html>

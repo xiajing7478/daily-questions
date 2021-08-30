@@ -1,37 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>mvvm</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
-
 <body>
-    <div id="app">
-        <input type="text" v-model="msg"></input>{{msg}}
-        <ul>
-            <li>姓名: {{school.name}}</li>
-            <li>年龄: {{school.age}}</li>
-            <li>年级: {{school.grade}}</li>
-        </ul>
-    </div>
-    <!-- <script src="./MVVM.js"></script> -->
-    <script src="./Vue.js"></script>
-    <script>
-        const vm = new Vue({
-            el: '#app',
-            data: {
-                msg: 'hello, vue',
-                otherMsg: '!!!!!!!!!!!!',
-                school: {
-                    name: '珠峰',
-                    age: 18,
-                    grade: '高三'
-                }
-            }
-        })
-        console.log(vm)
-    </script>
-</body>
+  <script>
+    class Node {
+      constructor(element, next) {
+        this.element = element
+        this.next = null
+      }
+    }
 
+    class LinkList {
+      constructor() {
+        this.head = null
+        this.size = 0
+      }
+      getNode(index) {
+        if (index < 0 || index >= this.size) {
+          throw new Error('index outrange')
+        }
+        let current = this.head
+        for(let i = 0; i<index; i++ ) {
+          current = current.next 
+        }
+        return current
+      }
+      append(node) {
+        if (this.size === 0) {
+          this.head = node
+        } else {
+          let current = this.getNode(this.size - 1)
+          current.next = node
+        }
+        this.size++
+      }
+      appendAt(pos, node) {
+        if (pos === 0) {
+          node.next = this.head
+          this.head = node
+        } else {
+          let prev = this.getNode(pos - 1)
+          node.next = prev.next
+          prev.next = node
+        }
+        this.size ++ 
+      }
+      removeAt(pos) {
+        let current = this.head
+        if (pos === 0) {
+          this.head = current.head
+        } else {
+          let prev = this.getNode(pos - 1)
+          current = prev.next
+          prev.next = current.next
+        }
+        this.size--
+      }
+      removeAll() {
+        this.head = null
+        this.size = 0
+      }
+      indexOf(element) {
+        let current = this.head
+        for(let i = 0; i<this.size; i++) {
+          if (current.element === element) {
+            return i
+          }
+          current = current.next
+        }
+      }
+      reverse(head) {
+        let prev = null
+        let current = head
+        while(current !== null) {
+          let context = current.next
+          current.next = prev === null ? null : prev
+          prev = current
+          current = context
+        }
+        return prev
+      }
+      hasCiycle(head) {
+        let set = new Set()
+        let p = head
+        while(p) {
+          if (set.has(p)) {
+            return true
+          }
+          set.add(p)
+          p = p.next
+        }
+        return false
+      }
+    }
+
+    let ll = new LinkList()
+    let node1 = new Node('1')
+    let node2 = new Node('2')
+    let node3 = new Node('3')
+    let node4 = new Node('4')
+    let node5 = new Node('5')
+    let node6 = new Node('6')
+    ll.append(node1)
+    ll.append(node2)
+    ll.append(node3)
+    ll.append(node4)
+    ll.append(node5)
+    ll.append(node6)
+    // 强制设置链表有环
+    // ll.head.next.next = node2 
+    
+    // 指定位置插入node
+    // ll.appendAt(4, node5)
+    
+    // 指定位置删除
+    // ll.removeAt(4)
+    
+    // 查找指定位置
+    // ll.indexOf('5')
+    
+    // 反转链表
+    // ll.reverse(ll.head)
+    
+    // 删除所有链表元素
+    // ll.removeAll()
+    
+    // 判断是否有环
+    ll.hasCiycle(ll.head)
+    
+    console.log(ll)
+  </script>
+</body>
 </html>
